@@ -1,0 +1,14 @@
+@(userForm : Form[User])
+
+@import helper._
+
+
+@layout("ユーザー編集です"){
+    <h1>ユーザー編集</h1>
+    <p>変更したい名前を入力してください</p>
+    @helper.form(action = routes.UserController.update()){
+    @helper.inputText(userForm("id"),'id ->"id")
+    @helper.inputText(userForm("name"),'id ->"name")
+    <input type="submit" value="更新">
+    }
+}

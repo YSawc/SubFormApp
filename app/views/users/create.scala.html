@@ -1,0 +1,12 @@
+@(userForm : Form[User])
+
+@import helper._
+
+@layout("ユーザー作成"){
+    <h1>新規ユーザー登録</h1>
+    @helper.form(action = routes.UserController.save()){
+    @helper.inputText(userForm("id"))
+    @helper.inputText(userForm("name"))
+    <input type="submit" value="送信">
+    }
+}

@@ -1,0 +1,7 @@
+@(users: List[User])
+
+@layout("ユーザー一覧"){
+    @for(user <- users){
+    <li><a href="@routes.UserController.show(user.id)">@user.name</a></li>
+    }
+}
