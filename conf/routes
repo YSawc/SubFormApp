@@ -20,3 +20,9 @@ GET     /users/edit/:id             controllers.UsersController.edit(id: Integer
 POST    /users/edit                 controllers.UsersController.update()
 POST    /users/create               controllers.UsersController.save()
 DELETE  /users/delete/:id           controllers.UsersController.destroy(id: Integer)
+
+#ツイッター用
+GET     /users/tweets               controllers.TweetsController.index()
+GET     /users/tweets/create        controllers.TweetsController.create()
+GET     /users/tweets/:id           controllers.TweetsController.show(id: Integer)
+GET     /users/tweets/delete/:id    controllers.TweetsController.destroy(id: Integer)

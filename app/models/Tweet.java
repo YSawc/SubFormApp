@@ -4,14 +4,20 @@ import com.avaje.ebean.Model;
 import play.data.validation.Constraints;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.List;
 
 @Entity
 public class Tweet extends Model {
+    @Id
+    @Constraints.Required
+    public Integer id;
     @Constraints.Max(140)
     public String tweet;
 
     @ManyToOne
     public User user;
+
+    public static Finder<Integer, Tweet> find = new Finder<>(Tweet.class);
 }
