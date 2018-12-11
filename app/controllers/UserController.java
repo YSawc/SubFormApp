@@ -7,6 +7,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import views.html.users.*;
+import views.html.errors.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -29,6 +30,12 @@ public class UserController extends Controller {
 
     public Result save(){
         Form<User> userForm = formFactory.form(User.class).bindFromRequest();
+
+        if(userForm.hasErrors()){
+            System.out.println(userForm);
+//            flash("無効です", "正しい値を入力し直してください");
+            return badRequest(create.render(userForm));
+        }
         User user = userForm.get();
         user.save();
         return redirect(routes.UserController.index());
@@ -37,7 +44,7 @@ public class UserController extends Controller {
     public Result edit(Integer id){
         User user = User.find.byId(id);
         if(user == null){
-            return notFound("ユーザーが見つかりません");
+            return notFound(_404.render());
         }
         Form<User> userForm = formFactory.form(User.class).fill(user);
         return ok(edit.render(userForm));
@@ -52,6 +59,9 @@ public class UserController extends Controller {
         }
 
         oldUser.name = user.name;
+        oldUser.username = user.username;
+        oldUser.password = user.password;
+        oldUser.email = user.email;
         oldUser.update();
 
         flash("ユーザー情報を更新しました");

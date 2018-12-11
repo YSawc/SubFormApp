@@ -7,6 +7,10 @@
     @helper.form(action = routes.UserController.save()){
     @helper.inputText(userForm("id"))
     @helper.inputText(userForm("name"))
-    <input type="submit" value="送信">
+    @helper.inputText(userForm("username"))
+    @helper.inputText(userForm("password"))
+    @helper.inputText(userForm("email"))
+    <input type="submit" value="送信" class="btn btn-primary">
+    <button class="btn btn-primary">testButton</button>
     }
 }
