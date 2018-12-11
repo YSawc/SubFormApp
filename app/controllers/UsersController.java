@@ -14,7 +14,7 @@ import javax.inject.Singleton;
 import java.util.List;
 
 @Singleton
-public class UserController extends Controller {
+public class UsersController extends Controller {
     @Inject
     private FormFactory formFactory;
 
@@ -38,7 +38,7 @@ public class UserController extends Controller {
         }
         User user = userForm.get();
         user.save();
-        return redirect(routes.UserController.index());
+        return redirect(routes.UsersController.index());
     }
 
     public Result edit(Integer id){
@@ -65,7 +65,7 @@ public class UserController extends Controller {
         oldUser.update();
 
         flash("ユーザー情報を更新しました");
-        return redirect(routes.UserController.index());
+        return redirect(routes.UsersController.index());
     }
 
     public Result show(Integer id){
@@ -83,6 +83,6 @@ public class UserController extends Controller {
         if(user == null){
             return notFound("ユーザーが見つかりません");
         }
-        return redirect(routes.UserController.index());
+        return redirect(routes.UsersController.index());
     }
 }

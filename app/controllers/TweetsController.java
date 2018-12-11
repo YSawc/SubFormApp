@@ -7,9 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class TweetController extends Controller {
+public class TweetsController extends Controller {
     @Inject
     private FormFactory formFactory;
-
-
 }

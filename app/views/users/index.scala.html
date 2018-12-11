@@ -3,7 +3,7 @@
 @layout("ユーザー一覧"){
     <br>
     @for(user <- users){
-    <li><a href="@routes.UserController.show(user.id)" class="col">@user.name</a></li>
+    <li><a href="@routes.UsersController.show(user.id)" class="col">@user.name</a></li>
     }
 
 <button class="btn">button</button>

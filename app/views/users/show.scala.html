@@ -1,5 +1,5 @@
 @(user : User)
 
 @layout("ユーザー詳細"){
-    <li>ユーザー名 <a href="@routes.UserController.edit(user.id)">@user.name</a></li>
+    <li>ユーザー名 <a href="@routes.UsersController.edit(user.id)">@user.name</a></li>
 }

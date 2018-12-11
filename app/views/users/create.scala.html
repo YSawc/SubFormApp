@@ -4,7 +4,7 @@
 
 @layout("ユーザー作成"){
     <h1>新規ユーザー登録</h1>
-    @helper.form(action = routes.UserController.save()){
+    @helper.form(action = routes.UsersController.save()){
     @helper.inputText(userForm("id"))
     @helper.inputText(userForm("name"))
     @helper.inputText(userForm("username"))
