@@ -4,6 +4,7 @@ import com.avaje.ebean.Finder;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.Constraint;
 import java.util.*;
 
@@ -24,8 +25,12 @@ public class User extends Model{
     @Constraints.Required
     @Constraints.MinLength(6)
     public String password;
+    @Constraints.Required
     @Constraints.Email
     public String email;
+
+    @OneToMany
+    public Tweet tweet;
 
     public static Finder<Integer, User> find = new Finder<>(User.class);
 

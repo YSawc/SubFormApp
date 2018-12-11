@@ -1,9 +1,10 @@
 @(users: List[User])
 
 @layout("ユーザー一覧"){
-    <a href="@routes.UserController.create()">新規ユーザー作成</a>
     <br>
     @for(user <- users){
-    <li><a href="@routes.UserController.show(user.id)">@user.name</a></li>
+    <li><a href="@routes.UserController.show(user.id)" class="col">@user.name</a></li>
     }
+
+<button class="btn">button</button>
 }
