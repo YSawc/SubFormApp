@@ -26,19 +26,22 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
+
+
                     <!--ログインセッション次第で、出力を変える-->
-                    @if(session.get("id") != null){
-                    <li><a href="@routes.LoginController.logout()"><span class="glyphicon glyphicon-log-in"></span> ログアウト</a></li>
+                    @if(session.get("username") != null && session.get("password" != null)){
+                        <li><a href="@routes.LoginController.logout()"><span class="glyphicon glyphicon-log-in"></span> ログアウト</a></li>
                     }
-                    @if(session.get("id") == null){
+                    @if(session.get("username") == null || session.get("password" == null)){
                     <li><a href="@routes.LoginController.login()"><span class="glyphicon glyphicon-log-in"></span> ログイン</a></li>
                     }
+
 
                 </ul>
             </div>
 
             @if(flash.get("message") != null){<p>flash.get("message")</p>}
-
+            <p>セッション(username)=>@session.get("username")</p>
             @body
         </div>
 
