@@ -31,6 +31,10 @@ public class TweetsController extends Controller {
         return TODO;
     }
 
+    public Result save(){
+        return  TODO;
+    }
+
     public Result destroy(Integer id){
         return TODO;
     }

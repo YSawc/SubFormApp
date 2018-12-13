@@ -21,8 +21,14 @@ POST    /users/edit                 controllers.UsersController.update()
 POST    /users/create               controllers.UsersController.save()
 DELETE  /users/delete/:id           controllers.UsersController.destroy(id: Integer)
 
-#ツイッター用
-GET     /users/tweets               controllers.TweetsController.index()
-GET     /users/tweets/create        controllers.TweetsController.create()
-GET     /users/tweets/:id           controllers.TweetsController.show(id: Integer)
-GET     /users/tweets/delete/:id    controllers.TweetsController.destroy(id: Integer)
+#ツイート用
+GET     /tweets                     controllers.TweetsController.index()
+GET     /tweets/create              controllers.TweetsController.create()
+GET     /tweets/:id                 controllers.TweetsController.show(id: Integer)
+POST    /tweets/create              controllers.TweetsController.save()
+DELETE  /tweets/delete/:id          controllers.TweetsController.destroy(id: Integer)
+
+#ログイン用
+GET     /login                      controllers.LoginController.login()
+POST    /login                      controllers.LoginController.doLogin()
+GET     /logout                     controllers.LoginController.logout()

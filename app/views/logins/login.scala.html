@@ -1,0 +1,12 @@
+@(userForm : Form[User])
+
+@import helper._
+
+@layout("ログイン画面"){
+    <h1>ログインフォーム</h1>
+    @helper.form(action = routes.LoginController.doLogin()){
+    @helper.inputText(userForm("username"))
+    @helper.inputText(userForm("password"))
+    <input type="submit" value="送信" class="btn btn-primary">
+    }
+}

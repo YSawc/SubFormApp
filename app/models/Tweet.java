@@ -13,8 +13,9 @@ public class Tweet extends Model {
     @Id
     @Constraints.Required
     public Integer id;
+    @Constraints.Required
     @Constraints.Max(140)
-    public String tweet;
+    public String mutter;
 
     @ManyToOne
     public User user;
