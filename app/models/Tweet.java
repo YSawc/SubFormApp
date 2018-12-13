@@ -18,7 +18,7 @@ public class Tweet extends Model {
     public String mutter;
 
     @ManyToOne
-    public User user;
+    public User PostUser;
 
     public static Finder<Integer, Tweet> find = new Finder<>(Tweet.class);
 }

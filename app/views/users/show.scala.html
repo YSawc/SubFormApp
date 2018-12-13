@@ -1,5 +1,8 @@
 @(user : User)
 
 @layout("ユーザー詳細"){
+    @if(session.get("id") == user.id ){
+        ハロー。idテスト
+    }
     <li>ユーザー名 <a href="@routes.UsersController.edit(user.id)">@user.name</a></li>
 }

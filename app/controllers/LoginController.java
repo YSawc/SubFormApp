@@ -2,6 +2,7 @@ package controllers;
 
 import dto.LoginRequest;
 import models.User;
+import play.api.mvc.Session;
 import play.data.Form;
 import play.data.FormFactory;
 import play.mvc.Controller;
@@ -20,7 +21,7 @@ public class LoginController extends Controller {
     private FormFactory formFactory;
 
     @Inject
-    Authenticator auth;
+    private Authenticator auth;
 
     public Result login(){
         Form<User> userForm = formFactory.form(User.class);
@@ -32,17 +33,13 @@ public class LoginController extends Controller {
         User user = auth.login(req);
 
         if(user == null){
+            flash("danger", "ログインに失敗しました");
             return redirect(routes.LoginController.login());
         }
 
-        session("uesrname", user.username);
-
-        //デバグ用
-        System.out.println(user.username + "  バインドリクエストの情報 user.username");
-        System.out.println(user.password + "  バインドリクエストの情報 user.passoword");
-        System.out.println(user.id + "  バインドリクエストの情報 user.id");
-
         setSession(user);
+        System.out.println(session() + "session()");
+        flash("success", "ログインに成功しました");
         return redirect(routes.UsersController.index());
     }
 
@@ -52,8 +49,9 @@ public class LoginController extends Controller {
     }
 
     private void setSession(User user){
-        session("uesrname", user.username);
+        session("username", user.username);
         session("password", user.password);
+        session("id", user.id.toString());
     }
 
     private void clearSession(){

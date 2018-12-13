@@ -33,7 +33,7 @@ public class UsersController extends Controller {
 
         if(userForm.hasErrors()){
             System.out.println(userForm);
-//            flash("無効です", "正しい値を入力し直してください");
+            flash("danger", "正しい値を入力し直してください");
             return badRequest(create.render(userForm));
         }
         User user = userForm.get();
@@ -74,7 +74,17 @@ public class UsersController extends Controller {
         if(user == null){
             return notFound("ユーザーが見つかりません");
         }
-        return ok(show.render(user));
+//        return ok(show.render(user));
+
+        System.out.println(user.id.getClass() + "クリックしたユーザーのIDのクラス");
+        System.out.println(session("id").getClass() + "セッションIDのクラス" );
+
+        //ユーザーのidと、ログインのidが同じかどうかでアクションを変える
+        if(session("id").equals(user.id.toString())){
+            return ok(show.render(user));
+        }else{
+            return TODO;
+        }
     }
 
     public Result destroy(Integer id){

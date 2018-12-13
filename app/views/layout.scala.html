@@ -1,5 +1,7 @@
 @(title: String)(body: Html)
 
+@import play.api.i18n._
+
 <html>
     <head>
         <title>
@@ -10,38 +12,41 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/bootstrap.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/bootstrap-theme.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/style.css")">
-
-
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
 
     </head>
 
     <body>
-
-        <div class="container">
+        <div class="container navber navbar-default">
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="@routes.UsersController.index()">Twitter</a></li>
+                    <li>
+                        <img src="~/../public/images/twitter.png" width="376" height="50" alt="ツイッター" />
+                        <a href="@routes.UsersController.index()">Twitter</a>
+                    </li>
                     <li><a href="@routes.UsersController.create()">ユーザー作成</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-
-
-
-                    <!--ログインセッション次第で、出力を変える-->
-                    @if(session.get("username") != null && session.get("password" != null)){
-                        <li><a href="@routes.LoginController.logout()"><span class="glyphicon glyphicon-log-in"></span> ログアウト</a></li>
-                    }
-                    @if(session.get("username") == null || session.get("password" == null)){
-                    <li><a href="@routes.LoginController.login()"><span class="glyphicon glyphicon-log-in"></span> ログイン</a></li>
-                    }
-
-
+                    <li>
+                        <!--ログインセッション次第で、出力を変える-->
+                        @if(session.get("username") != null){
+                        <a href="@routes.LoginController.logout()">ログアウト</a>
+                        }
+                        @if(session.get("username") == null){
+                        <a href="@routes.LoginController.login()">ログイン</a>
+                        }
+                    </li>
                 </ul>
             </div>
 
-            @if(flash.get("message") != null){<p>flash.get("message")</p>}
-            <p>セッション(username)=>@session.get("username")</p>
+            <!--フラッシュがあれば出力-->
+            @if(flash.get("message") != null){<p class="alert alert-success">@flash.get("success")</p>}
+            @if(flash.get("danger") != null){<p class="alert alert-danger">@flash.get("danger")</p>}
+            @if(flash.get("info") != null){<p class="alert alert-info">@flash.get("info")</p>}
+
+            @session.get("id")
+
+
             @body
         </div>
 
