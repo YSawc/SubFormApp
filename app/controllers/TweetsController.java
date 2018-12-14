@@ -21,16 +21,18 @@ public class TweetsController extends Controller {
     //idは0から始める。publicにし昇順に自動付与していく
     private Integer pubInt = 0;
 
-    public Result index(Integer focs){
+    public Result index(){
 
         List<Tweet> tweetList = Tweet.find.all();
 
-        //場合によって表示するツイートを変更する
-        if (focs == 0){
-            return ok(index.render(tweetList));
-        }else{
-            return ok(index.render(tweetList));
-        }
+//        //場合によって表示するツイートを変更する
+//        if (focs == 0){
+//            return ok(index.render(tweetList));
+//        }else{
+//            return ok(index.render(tweetList));
+//        }
+
+        return TODO;
     }
 
     public Result create(){
@@ -67,7 +69,7 @@ public class TweetsController extends Controller {
 
         pubInt += 1;
         tweet.save();
-        return  redirect(routes.TweetsController.index( 0));
+        return  redirect(routes.TweetsController.index());
     }
 
     public Result destroy(Integer id){
