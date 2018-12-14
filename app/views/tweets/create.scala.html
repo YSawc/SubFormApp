@@ -1,0 +1,11 @@
+@(tweetForm : Form[Tweet])
+
+@import helper._
+
+@layout("ツイート"){
+    <h1>ツイートする</h1>
+    @helper.form(action = routes.TweetsController.save()){
+        @helper.inputText(tweetForm("mutter"))
+        <input type="submit" value="送信" class="btn btn-primary">
+    }
+}

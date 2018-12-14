@@ -17,26 +17,39 @@
     </head>
 
     <body>
-        <div class="container navber navbar-default">
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <img src="~/../public/images/twitter.png" width="376" height="50" alt="ツイッター" />
-                        <a href="@routes.UsersController.index()">Twitter</a>
-                    </li>
-                    <li><a href="@routes.UsersController.create()">ユーザー作成</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <!--ログインセッション次第で、出力を変える-->
-                        @if(session.get("username") != null){
-                        <a href="@routes.LoginController.logout()">ログアウト</a>
-                        }
-                        @if(session.get("username") == null){
-                        <a href="@routes.LoginController.login()">ログイン</a>
-                        }
-                    </li>
-                </ul>
+        <div class="container">
+            <div class="nav navbar-default">
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <img src="~/../public/images/twitter.png" width="50" height="50" alt="ツイッター" />
+                            <a href="@routes.UsersController.index()">Twitter</a>
+                        </li>
+                        <li>
+                            <a href="@routes.TweetsController.index(0)">ツイート一覧</a>
+                        </li>
+                        <li>
+                            @if(session.get("username") == null){
+                            <a href="@routes.UsersController.create()">ユーザー作成</a>
+                            }
+                            <!--ツイート画面の表示-->
+                            @if(session.get("username") != null){
+                            <a href="@routes.TweetsController.create()">ツイートする</a>
+                            }
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <!--ログインセッション次第で、出力を変える-->
+                            @if(session.get("username") != null){
+                            <a href="@routes.LoginController.logout()">ログアウト</a>
+                            }
+                            @if(session.get("username") == null){
+                            <a href="@routes.LoginController.login()">ログイン</a>
+                            }
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             <!--フラッシュがあれば出力-->
@@ -44,8 +57,17 @@
             @if(flash.get("danger") != null){<p class="alert alert-danger">@flash.get("danger")</p>}
             @if(flash.get("info") != null){<p class="alert alert-info">@flash.get("info")</p>}
 
-            @session.get("id")
-
+            <!--横並びの割合制御-->
+            <div class="row">
+                <div class="col-sm-3" style="background-color:lavender;">
+                    @session.get("id") <=ログイン中のid
+                </div>
+                <div class="col-sm-9" style="background-color:lavenderblush;">
+                    (割合3)
+                </div>
+                <div class="col-sm-0">
+                </div>
+            </div>
 
             @body
         </div>

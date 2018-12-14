@@ -22,7 +22,7 @@ POST    /users/create               controllers.UsersController.save()
 DELETE  /users/delete/:id           controllers.UsersController.destroy(id: Integer)
 
 #ツイート用
-GET     /tweets                     controllers.TweetsController.index()
+GET     /tweets/:cast               controllers.TweetsController.index(cast: Integer)
 GET     /tweets/create              controllers.TweetsController.create()
 GET     /tweets/:id                 controllers.TweetsController.show(id: Integer)
 POST    /tweets/create              controllers.TweetsController.save()

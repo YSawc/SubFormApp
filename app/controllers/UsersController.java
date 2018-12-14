@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Tweet;
 import models.User;
 import play.data.Form;
 import play.data.FormFactory;
@@ -11,12 +12,15 @@ import views.html.errors.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
 public class UsersController extends Controller {
     @Inject
     private FormFactory formFactory;
+
+    private Integer pubInt = 0;
 
     public Result index(){
         List<User> users = User.find.all();
@@ -37,6 +41,8 @@ public class UsersController extends Controller {
             return badRequest(create.render(userForm));
         }
         User user = userForm.get();
+        user.id = pubInt;
+        pubInt += 1;
         user.save();
         return redirect(routes.UsersController.index());
     }
@@ -69,18 +75,19 @@ public class UsersController extends Controller {
     }
 
     public Result show(Integer id){
-
         User user = User.find.byId(id);
+
+        //パターン1
         if(user == null){
             return notFound("ユーザーが見つかりません");
         }
 //        return ok(show.render(user));
 
-        System.out.println(user.id.getClass() + "クリックしたユーザーのIDのクラス");
-        System.out.println(session("id").getClass() + "セッションIDのクラス" );
+        //パターン2
 
-        //ユーザーのidと、ログインのidが同じかどうかでアクションを変える
-        if(session("id").equals(user.id.toString())){
+        if(session("id") == null){
+            return TODO;
+        }else if(session("id").equals(user.id.toString())){
             return ok(show.render(user));
         }else{
             return TODO;

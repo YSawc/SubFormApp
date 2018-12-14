@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.Finder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -16,7 +17,6 @@ public class User extends Model{
 
     //ユーザーがidを指定するのはおかしいので、変更が必要
     @Id
-    @Constraints.Required
     public Integer id;
     @Constraints.Required
     public String name;
@@ -29,8 +29,8 @@ public class User extends Model{
     @Constraints.Email
     public String email;
 
-    @OneToMany
-    public Tweet tweet;
+    @OneToMany(cascade = CascadeType.ALL)
+    public List<Tweet> tweets;
 
     public static Finder<Integer, User> find = new Finder<>(User.class);
 
