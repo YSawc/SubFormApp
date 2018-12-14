@@ -1,14 +1,10 @@
 package models;
-
 import com.avaje.ebean.Model;
-import com.avaje.ebean.annotation.CreatedTimestamp;
 import play.data.validation.Constraints;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.List;
 
 @Entity
 public class Tweet extends Model {
@@ -22,7 +18,6 @@ public class Tweet extends Model {
 //    public Integer createDate;
 
     @ManyToOne
-    @Column(name = "tweetUser_id")
     public User PostUser;
 
     public static Finder<Integer, Tweet> find = new Finder<>(Tweet.class);

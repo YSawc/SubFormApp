@@ -1,12 +1,9 @@
 package models;
 
-import com.avaje.ebean.Finder;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.Constraint;
 import java.util.*;
 
 import com.avaje.ebean.Model;

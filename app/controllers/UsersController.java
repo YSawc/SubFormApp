@@ -1,6 +1,5 @@
 package controllers;
 
-import models.Tweet;
 import models.User;
 import play.data.Form;
 import play.data.FormFactory;
@@ -12,7 +11,6 @@ import views.html.errors.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.ArrayList;
 import java.util.List;
 
 @Singleton

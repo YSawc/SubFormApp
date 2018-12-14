@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 
-
 import views.html.tweets.*;
 
 @Singleton
@@ -22,12 +21,12 @@ public class TweetsController extends Controller {
     //idは0から始める。publicにし昇順に自動付与していく
     private Integer pubInt = 0;
 
-    public Result index(Integer cast){
+    public Result index(Integer focs){
 
         List<Tweet> tweetList = Tweet.find.all();
 
         //場合によって表示するツイートを変更する
-        if (cast == 0){
+        if (focs == 0){
             return ok(index.render(tweetList));
         }else{
             return ok(index.render(tweetList));
@@ -35,9 +34,10 @@ public class TweetsController extends Controller {
     }
 
     public Result create(){
-        System.out.println("test");
+        System.out.println("テストです");
         Form<Tweet> tweetForm = formFactory.form(Tweet.class);
         return ok(create.render(tweetForm));
+//        return redirect(routes.UsersController.index());
     }
 
     public Result show(Integer id){
@@ -63,11 +63,11 @@ public class TweetsController extends Controller {
         //セッションのidからユーザーのidを照らし合わせ、マッチさせる
         User user = User.find.byId(Integer.parseInt(session("id")));
         tweet.setPostUserName(user.name);
-        System.out.println(tweet.PostUser.name + "<<tweet.PostUser.name");
+        System.out.println(tweet.getPostUserName() + "<<tweet.PostUser.name");
 
         pubInt += 1;
         tweet.save();
-        return  redirect(routes.TweetsController.index(0));
+        return  redirect(routes.TweetsController.index( 0));
     }
 
     public Result destroy(Integer id){

@@ -38,7 +38,6 @@ public class LoginController extends Controller {
         }
 
         setSession(user);
-        System.out.println(session() + "session()");
         flash("success", "ログインに成功しました");
         return redirect(routes.UsersController.index());
     }
