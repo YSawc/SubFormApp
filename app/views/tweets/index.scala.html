@@ -2,9 +2,15 @@
 
 @import models.Tweet
 
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
 @layout("つぶやき一覧"){
     @for(tweet <- tweets){
-    <div class="panel panel-info pd-10">
+    <div class="panel panel-info m-3">
         <p>
             <!--セッションの場合に分けてリンク先を変える-->
             <a href="">
@@ -16,7 +22,12 @@
 
         if(){
         }
-
+        <br>
+        <br>
+        　　<!--空白注意-->
+        <a href="" class="mx-auto"><span class="glyphicon glyphicon-retweet mx-5">　　<!--空白注意--></span></a>
+        <a href="" class="mx-auto"><span class="glyphicon glyphicon-heart mx-5">　　<!--空白注意--></span></a>
+        <a href="" class="mx-auto"><span class="glyphicon glyphicon-trash mx-5">　　<!--空白注意--></span></a>
     </div>
     }
 }
