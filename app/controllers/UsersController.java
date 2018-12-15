@@ -33,11 +33,13 @@ public class UsersController extends Controller {
     public Result save(){
         Form<User> userForm = formFactory.form(User.class).bindFromRequest();
 
+        //エラーチェック
         if(userForm.hasErrors()){
             System.out.println(userForm);
             flash("danger", "正しい値を入力し直してください");
             return badRequest(create.render(userForm));
         }
+
         User user = userForm.get();
         user.id = pubInt;
         pubInt += 1;

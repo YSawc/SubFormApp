@@ -10,7 +10,7 @@ import javax.validation.Constraint;
 @Entity
 public class Tweet extends Model {
     @Id
-//    IDは自動生成するので必須にしない
+//    idは自動生成するので必須にしない
     public Integer id;
     @Constraints.Required
     @Constraints.MaxLength(140)
