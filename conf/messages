@@ -12,13 +12,9 @@ user.save.success=正常に登録できました
 user.delete.success=正常に削除できました
 user.delete.error=削除に失敗しました
 user.name.required=名前は必須です
-user.height.range=身長は{0}から{1}の範囲で入力してください
-user.blood.kind=血液型はA,B,AB,Oのどれかを入力してください
-user.birthday.pattern=誕生日は'yyyy-MM-dd'の形式で入力してください
-user.birthplace.range=出身地は北海道から沖縄までの都道府県を選んでください
 
 # --- Constraints
-constraint.required=必須です
+constraint.required=
 constraint.min=最大: {0} 文字
 constraint.max=最小: {0} 文字
 constraint.minLength=最大: {0} 文字

@@ -29,13 +29,6 @@ public class TweetsController extends Controller {
         List<User> userList = User.find.query().findList();
         tweetList = Tweet.find.all();
 
-        //場合によって表示するツイートを変更する
-//        if (focs == 0){
-//            return ok(index.render(tweetList));
-//        }else{
-//            return ok(index.render(tweetList));
-//        }
-
         return ok(index.render(tweetList));
     }
 

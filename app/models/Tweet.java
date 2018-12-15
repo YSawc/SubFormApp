@@ -5,6 +5,7 @@ import play.data.validation.Constraints;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.Constraint;
 
 @Entity
 public class Tweet extends Model {
@@ -14,11 +15,11 @@ public class Tweet extends Model {
     @Constraints.Required
     @Constraints.MaxLength(140)
     public String mutter;
-//    @CreatedTimestamp
-//    public Integer createDate;
 
     @ManyToOne
     public User user;
+
+
 
     public static Finder<Integer, Tweet> find = new Finder<>(Tweet.class);
 

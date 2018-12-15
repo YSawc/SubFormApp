@@ -7,11 +7,10 @@
     <h1>ユーザー編集</h1>
     <p>変更したい名前を入力してください</p>
     @helper.form(action = routes.UsersController.update()){
-    @helper.inputText(userForm("id"))
-    @helper.inputText(userForm("name"))
-    @helper.inputText(userForm("userName"))
-    @helper.inputText(userForm("password"))
-    @helper.inputText(userForm("email"))
+    @helper.inputText(userForm("name"), '_label->"名前")
+    @helper.inputText(userForm("userName"), '_label->"ユーザー名")
+    @helper.inputText(userForm("password"), '_label->"パスワード")
+    @helper.inputText(userForm("email"), '_label->"Eメール")
     <input type="submit" value="更新" class="btn btn-primary">
     }
 }

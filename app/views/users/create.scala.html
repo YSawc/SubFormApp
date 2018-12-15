@@ -5,11 +5,10 @@
 @layout("ユーザー作成"){
     <h1>新規ユーザー登録</h1>
     @helper.form(action = routes.UsersController.save()){
-        @helper.inputText(userForm("name"))
-        @helper.inputText(userForm("userName"))
-        @helper.inputText(userForm("password"))
-        @helper.inputText(userForm("email"))
-        <input type="submit" value="送信" class="btn btn-primary">
-        <button class="btn btn-primary">testButton</button>
+        @helper.inputText(userForm("name"), '_label->"名前")
+        @helper.inputText(userForm("userName"), '_label->"ユーザー名")
+        @helper.inputText(userForm("password"), '_labal->"パスワード")
+        @helper.inputText(userForm("email"), '_label->"Eメール")
+        <input type="submit" value="作成" class="btn btn-primary">
     }
 }

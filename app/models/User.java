@@ -26,6 +26,10 @@ public class User extends Model{
     @Constraints.Email
     public String email;
 
+    public Integer follower = 0;
+
+    public Integer follow = 0;
+
     @OneToMany(cascade = CascadeType.ALL)
     public List<Tweet> tweets;
 
