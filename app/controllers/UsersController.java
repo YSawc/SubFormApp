@@ -63,7 +63,7 @@ public class UsersController extends Controller {
         }
 
         oldUser.name = user.name;
-        oldUser.username = user.username;
+        oldUser.userName = user.userName;
         oldUser.password = user.password;
         oldUser.email = user.email;
         oldUser.update();

@@ -18,15 +18,19 @@ public class Tweet extends Model {
 //    public Integer createDate;
 
     @ManyToOne
-    public User PostUser;
+    public User user;
 
     public static Finder<Integer, Tweet> find = new Finder<>(Tweet.class);
 
-    public String getPostUserName(){
-        return this.PostUser.name;
+    public User getUser() {
+        return user;
     }
 
-    public void setPostUserName(String setName){
-        this.PostUser.name = setName;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getPostUser(){
+        return this.user;
     }
 }

@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 @Singleton
 public class Authenticator {
     public User login(LoginRequest req){
-       return User.find.where().eq("username", req.username)
+       return User.find.where().eq("userName", req.userName)
                .eq("password", req.password).findUnique();
     }
 }

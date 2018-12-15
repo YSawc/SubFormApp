@@ -1,7 +1,7 @@
 # label name
 user.id=ID
 user.name=名前
-user.username=ユーザー名
+user.userName=ユーザー名
 user.passowrd=パスワード
 user.email=Eメール
 user.update_at=更新日

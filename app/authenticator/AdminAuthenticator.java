@@ -10,8 +10,8 @@ public class AdminAuthenticator extends Security.Authenticator {
 
     @Override
     public String getUsername(Http.Context ctx){
-        String username = ctx.session().get("username");
-        return("admin".equals(username)) ? username: null;
+        String userName = ctx.session().get("userName");
+        return("admin".equals(userName)) ? userName: null;
     }
 
     @Override

@@ -11,7 +11,7 @@ public class MemberAuthenticator extends Security.Authenticator {
 
     @Override
     public String getUsername(Http.Context ctx){
-        return ctx.session().get("username");
+        return ctx.session().get("userName");
     }
 
     @Override

@@ -9,6 +9,7 @@ import play.mvc.Result;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.ArrayList;
 import java.util.List;
 
 import views.html.tweets.*;
@@ -23,16 +24,19 @@ public class TweetsController extends Controller {
 
     public Result index(){
 
-        List<Tweet> tweetList = Tweet.find.all();
+        //userListは定義済み
+        List<Tweet> tweetList = new ArrayList<Tweet>();
+        List<User> userList = User.find.query().findList();
+        tweetList = Tweet.find.all();
 
-//        //場合によって表示するツイートを変更する
+        //場合によって表示するツイートを変更する
 //        if (focs == 0){
 //            return ok(index.render(tweetList));
 //        }else{
 //            return ok(index.render(tweetList));
 //        }
 
-        return TODO;
+        return ok(index.render(tweetList));
     }
 
     public Result create(){
@@ -54,6 +58,7 @@ public class TweetsController extends Controller {
     public Result save(){
         Form<Tweet> tweetForm = formFactory.form(Tweet.class).bindFromRequest();
 
+        System.out.println(tweetForm + "tweetForm");
         if(tweetForm.hasErrors()){
             flash("danger", "ツイート内容に誤りがあります");
             return redirect(routes.TweetsController.create());
@@ -61,12 +66,12 @@ public class TweetsController extends Controller {
 
         Tweet tweet = tweetForm.get();
         tweet.id = pubInt;
+        System.out.println(tweet);
 
         //セッションのidからユーザーのidを照らし合わせ、マッチさせる
         User user = User.find.byId(Integer.parseInt(session("id")));
-        tweet.setPostUserName(user.name);
-        System.out.println(tweet.getPostUserName() + "<<tweet.PostUser.name");
-
+        tweet.setUser(user);
+        System.out.println(tweet.getPostUser().getName() + "<<tweet.getPostUser().getName()");
         pubInt += 1;
         tweet.save();
         return  redirect(routes.TweetsController.index());

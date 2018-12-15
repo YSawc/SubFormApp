@@ -18,7 +18,7 @@ public class User extends Model{
     @Constraints.Required
     public String name;
     @Constraints.Required
-    public String username;
+    public String userName;
     @Constraints.Required
     @Constraints.MinLength(6)
     public String password;
@@ -30,5 +30,17 @@ public class User extends Model{
     public List<Tweet> tweets;
 
     public static Finder<Integer, User> find = new Finder<>(User.class);
+
+    public String getName(){
+        return this.name;
+    }
+
+    public String getUserName(){
+        return this.userName;
+    }
+
+    public List<Tweet> getTweets(){
+        return this.tweets;
+    }
 
 }

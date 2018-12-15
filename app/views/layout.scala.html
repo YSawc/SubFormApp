@@ -29,11 +29,11 @@
                             <a href="@routes.TweetsController.index()">ツイート一覧</a>
                         </li>
                         <li>
-                            @if(session.get("username") == null){
+                            @if(session.get("userName") == null){
                             <a href="@routes.UsersController.create()">ユーザー作成</a>
                             }
                             <!--ツイート画面の表示-->
-                            @if(session.get("username") != null){
+                            @if(session.get("userName") != null){
                             <a href="@routes.TweetsController.create()">ツイートする</a>
                             }
                         </li>
@@ -41,10 +41,10 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <!--ログインセッション次第で、出力を変える-->
-                            @if(session.get("username") != null){
+                            @if(session.get("userName") != null){
                             <a href="@routes.LoginController.logout()">ログアウト</a>
                             }
-                            @if(session.get("username") == null){
+                            @if(session.get("userName") == null){
                             <a href="@routes.LoginController.login()">ログイン</a>
                             }
                         </li>
