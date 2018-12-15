@@ -4,9 +4,9 @@
 
 @layout("つぶやき一覧"){
     @for(tweet <- tweets){
-    <div class="well">
-        <p>@tweet.getUser.getName \@@tweet.getUser.getUserName</p>
-        <li><a href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</a></li>
+    <div class="panel panel-info">
+        <p><strong>@tweet.getUser.getName</strong> <span class="">@@</span>@tweet.getUser.getUserName</p>
+        <a href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</a>
     </div>
     }
 }

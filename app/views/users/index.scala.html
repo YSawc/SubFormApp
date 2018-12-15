@@ -1,9 +1,11 @@
 @(users: List[User])
 
 @layout("ユーザー一覧"){
-    <br>
-    @for(user <- users){
-    <li><a href="@routes.UsersController.show(user.id)" class="col">@user.name</a></li>
-    }
-
+    <div class="row">
+        <div class="col-sm4">
+            @for(user <- users){
+            <a href="@routes.UsersController.show(user.id)" class="col bg-info">@user.name</a>
+            }
+        </div>
+    </div>
 }
