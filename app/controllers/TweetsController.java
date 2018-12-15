@@ -58,20 +58,26 @@ public class TweetsController extends Controller {
     public Result save(){
         Form<Tweet> tweetForm = formFactory.form(Tweet.class).bindFromRequest();
 
-        System.out.println(tweetForm + "tweetForm");
         if(tweetForm.hasErrors()){
             flash("danger", "ツイート内容に誤りがあります");
             return redirect(routes.TweetsController.create());
         }
 
         Tweet tweet = tweetForm.get();
+
+        //ツイート内容が文頭スペース、改行のみの連鎖の場合不正エラーを出力
+        if(tweet.mutter.matches("^[\\s]*?$")){
+            flash("danger", "不正なツイートです");
+            return redirect(routes.TweetsController.create());
+        }
+        //正規表現チェックの終わり--------
+
         tweet.id = pubInt;
         System.out.println(tweet);
 
         //セッションのidからユーザーのidを照らし合わせ、マッチさせる
         User user = User.find.byId(Integer.parseInt(session("id")));
         tweet.setUser(user);
-        System.out.println(tweet.getPostUser().getName() + "<<tweet.getPostUser().getName()");
         pubInt += 1;
         tweet.save();
         return  redirect(routes.TweetsController.index());
