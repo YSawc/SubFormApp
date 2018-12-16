@@ -19,7 +19,8 @@ public class Tweet extends Model {
     @ManyToOne
     public User user;
 
-
+    //いいね機能
+    public Integer good;
 
     public static Finder<Integer, Tweet> find = new Finder<>(Tweet.class);
 
