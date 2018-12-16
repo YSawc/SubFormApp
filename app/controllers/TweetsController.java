@@ -86,6 +86,6 @@ public class TweetsController extends Controller {
         }
 
         tweet.delete();
-        return TODO;
+        return redirect(routes.TweetsController.index());
     }
 }
