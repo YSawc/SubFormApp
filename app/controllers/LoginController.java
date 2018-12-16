@@ -48,7 +48,7 @@ public class LoginController extends Controller {
     }
 
     private void setSession(User user){
-        session("userName", user.userName);
+        session("userID", user.userID);
         session("password", user.password);
         session("id", user.id.toString());
     }

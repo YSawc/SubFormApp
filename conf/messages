@@ -1,8 +1,8 @@
 # label name
 user.id=ID
 user.name=名前
-user.userName=ユーザー名
-user.passowrd=パスワード
+user.userID=ユーザー名
+user.passoword=パスワード
 user.email=Eメール
 user.update_at=更新日
 
@@ -15,9 +15,29 @@ user.name.required=名前は必須です
 
 # --- Constraints
 constraint.required=
-constraint.min=最大: {0} 文字
-constraint.max=最小: {0} 文字
-constraint.minLength=最大: {0} 文字
-constraint.maxLength=最小: {0} 文字
-constraint.email=Eメール
-constraint.pattern=Required pattern: {0}
+constraint.min=最小: {0} 文字
+constraint.max=最大: {0} 文字
+constraint.minLength=最小 {0} 文字
+constraint.maxLength=最大 {0} 文字
+constraint.email=
+#constraint.pattern=Required pattern: {0}
+#constraint.pattern=記号は利用しないでください: {0}
+constraint.pattern=
+
+# --- Errors
+error.invalid=無効な入力です
+error.invalid.java.util.Date=無効な入力です
+error.required=必須項目です
+error.number=無効な入力です
+error.real=無効な入力です
+error.real.precision=
+error.min=
+error.min.strict=
+error.max=
+error.max.strict=
+error.minLength=
+error.maxLength=
+error.email=
+error.pattern=
+error.date=
+error.uuid=

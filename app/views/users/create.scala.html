@@ -6,8 +6,8 @@
     <h1>新規ユーザー登録</h1>
     @helper.form(action = routes.UsersController.save()){
         @helper.inputText(userForm("name"), '_label->"名前")
-        @helper.inputText(userForm("userName"), '_label->"ユーザー名")
-        @helper.inputText(userForm("password"), '_labal->"パスワード")
+        @helper.inputText(userForm("userID"), '_label->"ユーザー名")
+        @helper.inputText(userForm("password"), '_label->"パスワード")
         @helper.inputText(userForm("email"), '_label->"Eメール")
         <input type="submit" value="作成" class="btn btn-primary">
     }

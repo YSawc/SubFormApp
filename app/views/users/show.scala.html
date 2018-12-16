@@ -1,8 +1,38 @@
-@(user : User)
+@(tweets : List[Tweet] )
+
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
 @layout("ユーザー詳細"){
-    @if(session.get("id") == user.id ){
-        ハロー。idテスト
+    @for(tweet <- tweets){
+    <div class="panel panel-info">
+        <p>
+            <!--セッションの場合に分けてリンク先を変える-->
+            <a href="@routes.UsersController.show(tweet.id)">
+                <strong>@tweet.getUser.getName</strong>
+            </a>
+            <span class="">@@</span>@tweet.getUser.getUserName
+        </p>
+        <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
+
+
+
+        <!--if(){-->
+        <!--}-->
+
+        <br>
+        <br>
+        　　　　　<!--空白注意-->
+        <a href="" class="mx-auto"><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
+        <a href="" class="mx-auto"><span class="glyphicon glyphicon-heart">　　　　<!--空白注意--></span></a>
+        <!--セッション制御で、削除を表示-->
+        @if(session.get("userID").equals(tweet.getUser.userID)){
+            <a href="" class="mx-auto"><span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span></a>
+        }
+    </div>
     }
-    <li>ユーザー名 <a href="@routes.UsersController.edit(user.id)">@user.name</a></li>
 }

@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Tweet;
 import models.User;
 import play.data.Form;
 import play.data.FormFactory;
@@ -11,6 +12,7 @@ import views.html.errors.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
@@ -65,7 +67,7 @@ public class UsersController extends Controller {
         }
 
         oldUser.name = user.name;
-        oldUser.userName = user.userName;
+        oldUser.userID = user.userID;
         oldUser.password = user.password;
         oldUser.email = user.email;
         oldUser.update();
@@ -74,24 +76,23 @@ public class UsersController extends Controller {
         return redirect(routes.UsersController.index());
     }
 
-    public Result show(Integer id){
-        User user = User.find.byId(id);
+    public Result show(Integer id) {
+        Tweet tweet = Tweet.find.byId(id);
+        User user = tweet.getUser();
 
-        //パターン1
-        if(user == null){
+//        パターン1
+        if (user == null) {
             return notFound("ユーザーが見つかりません");
         }
-//        return ok(show.render(user));
 
-        //パターン2
+        System.out.println(user.id + "クリックしたユーザーID");
 
-        if(session("id") == null){
-            return TODO;
-        }else if(session("id").equals(user.id.toString())){
-            return ok(show.render(user));
-        }else{
-            return TODO;
-        }
+        //作成中
+        List<Tweet> tweetList = new ArrayList<Tweet>();
+        tweetList = User.find.ref(user.id).getTweets();
+
+        return ok(show.render(tweetList));
+
     }
 
     public Result destroy(Integer id){

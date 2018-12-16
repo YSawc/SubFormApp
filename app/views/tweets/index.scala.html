@@ -10,10 +10,10 @@
 
 @layout("つぶやき一覧"){
     @for(tweet <- tweets){
-    <div class="panel panel-info m-3">
+    <div class="panel panel-info">
         <p>
             <!--セッションの場合に分けてリンク先を変える-->
-            <a href="">
+            <a href="@routes.UsersController.show(tweet.id)">
                 <strong>@tweet.getUser.getName</strong>
             </a>
             <span class="">@@</span>@tweet.getUser.getUserName
@@ -26,9 +26,12 @@
         <br>
         <br>
         　　　　　<!--空白注意-->
-        <a href="" class="mx-auto"><span class="glyphicon glyphicon-retweet mx-5">　　　　<!--空白注意--></span></a>
-        <a href="" class="mx-auto"><span class="glyphicon glyphicon-heart mx-5">　　<!--空白注意--></span></a>
-        <a href="" class="mx-auto"><span class="glyphicon glyphicon-trash mx-5">　　　　<!--空白注意--></span></a>
+        <a href="" class="mx-auto"><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
+        <a href="" class="mx-auto"><span class="glyphicon glyphicon-heart">　　　　<!--空白注意--></span></a>
+        <!--セッション制御で、削除を表示-->
+        @if(session.get("userID").equals(tweet.getUser.userID)){
+        <a href="" class="mx-auto"><span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span></a>
+        }
     </div>
     }
 }

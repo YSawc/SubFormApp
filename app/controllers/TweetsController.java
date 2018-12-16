@@ -33,7 +33,6 @@ public class TweetsController extends Controller {
     }
 
     public Result create(){
-        System.out.println("テストです");
         Form<Tweet> tweetForm = formFactory.form(Tweet.class);
         return ok(create.render(tweetForm));
 //        return redirect(routes.UsersController.index());
@@ -41,9 +40,12 @@ public class TweetsController extends Controller {
 
     public Result show(Integer id){
         Tweet tweet = Tweet.find.byId(id);
+        User user = tweet.getUser();
+
+        System.out.println(user.userID + "ユーザーID");
 
         if(tweet == null){
-            return redirect(routes.UsersController.index());
+            return redirect(routes.TweetsController.index());
         }
         return TODO;
     }
@@ -66,7 +68,6 @@ public class TweetsController extends Controller {
         //正規表現チェックの終わり--------
 
         tweet.id = pubInt;
-        System.out.println(tweet);
 
         //セッションのidからユーザーのidを照らし合わせ、マッチさせる
         User user = User.find.byId(Integer.parseInt(session("id")));
