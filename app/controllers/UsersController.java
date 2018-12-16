@@ -101,6 +101,8 @@ public class UsersController extends Controller {
         if(user == null){
             return notFound("ユーザーが見つかりません");
         }
+
+        user.delete();
         return redirect(routes.UsersController.index());
     }
 }

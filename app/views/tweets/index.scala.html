@@ -30,7 +30,7 @@
         <a href="" class="mx-auto"><span class="glyphicon glyphicon-heart">　　　　<!--空白注意--></span></a>
         <!--セッション制御で、削除を表示-->
         @if(session.get("userID").equals(tweet.getUser.userID)){
-        <a href="" class="mx-auto"><span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span></a>
+        <a href="@routes.TweetsController.destroy(tweet.id)" class="mx-auto"><span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span></a>
         }
     </div>
     }

@@ -78,6 +78,14 @@ public class TweetsController extends Controller {
     }
 
     public Result destroy(Integer id){
+
+        Tweet tweet = Tweet.find.byId(id);
+        if(tweet == null){
+            flash("dandger", "ツイートが見つかりません");
+            return redirect(routes.TweetsController.index());
+        }
+
+        tweet.delete();
         return TODO;
     }
 }
