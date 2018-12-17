@@ -39,13 +39,13 @@ public class LoginController extends Controller {
 
         setSession(user);
         flash("info", "ログインに成功しました");
-        return redirect(routes.UsersController.index());
+        return redirect(routes.TweetsController.index());
     }
 
     public  Result logout(){
         clearSession();
         flash("info", "ログアウトしました");
-        return redirect(routes.UsersController.index());
+        return redirect(routes.LoginController.login());
     }
 
     private void setSession(User user){

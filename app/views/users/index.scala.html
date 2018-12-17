@@ -5,7 +5,7 @@
         <div class="col-sm4">
             @for(user <- users){
             <!--クリック先のユーザーidのずれが1あるので修正する-->
-            <a href="@routes.UsersController.show(user.id - 1)" class="col bg-info">@user.name @user.id</a>
+            <!--<a href="@routes.UsersController.show(user.id - 1)" class="col bg-info">@user.name @user.id</a>-->
             }
         </div>
     </div>

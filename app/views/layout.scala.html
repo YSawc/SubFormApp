@@ -24,25 +24,28 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
+                @if(session.get("id") != null){
                 <a href="@routes.TweetsController.index()" class="">
                     <i class="fa fa-twitter" style="font-size:48px;color:LightSkyBlue"></i>
                 </a>
                 　<!--空白注意-->
+                }
+                @if(session.get("id") == null){
+                <i class="fa fa-twitter" style="font-size:48px;color:LightSkyBlue"></i>
+                　<!--空白注意-->
+                }
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
+                    @if(session.get("id") != null){
                     <li><a href="@routes.TweetsController.index()">ツイート一覧</a></li>
-
+                    }
                     <li class="active">
                         @if(session.get("name") != null){
                             <a>@session.get("name")</a>
                         }
                     </li>
-
                 </ul>
-
-
-
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <!--ログインセッション次第で、出力を変える-->
@@ -69,6 +72,8 @@
     </nav>
     <!--nav_end-->
 
+    <br><br><br>
+
     <br><br>
 
         <div class="container">
@@ -80,18 +85,18 @@
             @if(flash.get("info") != null){<p class="alert alert-info">@flash.get("info")</p>}
             <br>
 
-            <!--横並びの割合制御-->
-            <div class="row">
-                <div class="col-sm-3" style="background-color:lavender;">
-                    　<!--空白注意-->
-                </div>
-                <div class="col-sm-9" style="background-color:lavenderblush;">
-                    　<!--空白注意-->
-                </div>
-                <div class="col-sm-0">
-                </div>
+            <!--横並びの割合制御(未実装)-->
+            <!--<div class="row">-->
+                <!--<div class="col-sm-3" style="background-color:lavender;">-->
+                    <!--　&lt;!&ndash;空白注意&ndash;&gt;-->
+                <!--</div>-->
+                <!--<div class="col-sm-9" style="background-color:lavenderblush;">-->
+                    <!--　&lt;!&ndash;空白注意&ndash;&gt;-->
+                <!--</div>-->
+                <!--<div class="col-sm-0">-->
+                <!--</div>-->
 
-            </div>
+            <!--</div>-->
             <br>
             <div>
                 @body

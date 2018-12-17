@@ -10,6 +10,8 @@ import play.data.validation.Constraints;
 @Entity
 public class User extends Model{
 
+    //gitテスト
+
     //idは1から自動で渡される
     //ユーザーからは見えない
     @Id
@@ -36,12 +38,20 @@ public class User extends Model{
     @Constraints.Email
     public String email;
 
-    public Integer follower = 0;
-
-    public Integer follow = 0;
-
     @OneToMany(cascade = CascadeType.ALL)
     public List<Tweet> tweets;
+
+//    @ManyToOne
+//    public Follow follow;
+//
+//    @ManyToOne
+//    public Follower follower;
+//
+//    @ManyToOne
+//    public Good good;
+
+//    @OneToOne(cascade = CascadeType.ALL)
+//    public <User> follower;
 
     public static Finder<Integer, User> find = new Finder<>(User.class);
 

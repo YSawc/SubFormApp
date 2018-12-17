@@ -20,7 +20,7 @@ public class UsersController extends Controller {
     @Inject
     private FormFactory formFactory;
 
-    private Integer pubInt = 0;
+//    private Integer pubInt = 0;
 
     public Result index(){
         List<User> users = User.find.all();
@@ -43,8 +43,8 @@ public class UsersController extends Controller {
         }
 
         User user = userForm.get();
-        user.id = pubInt;
-        pubInt += 1;
+//        user.id = pubInt;
+//        pubInt += 1;
         user.save();
         return redirect(routes.UsersController.index());
     }
@@ -84,8 +84,6 @@ public class UsersController extends Controller {
         if (user == null) {
             return notFound("ユーザーが見つかりません");
         }
-
-        System.out.println(user.id + "クリックしたユーザーID");
 
         //作成中
         List<Tweet> tweetList = new ArrayList<Tweet>();
