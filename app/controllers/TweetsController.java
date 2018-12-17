@@ -90,22 +90,22 @@ public class TweetsController extends Controller {
     }
 
     //いいね機能
-    public void addGood(Integer id){
-        Tweet tweet = Tweet.find.byId(id);
-
-        //不具合対策
-        if(tweet == null){
-            flash("dandger", "ツイートが見つかりません");
-        }
-
-        Boolean swt = false;
-        if(swt == false){
-            tweet.good += 1;
-            swt = true;
-        }else if(swt == true){
-            tweet.good -= 1;
-            swt = false;
-        }
-
-    }
+//    public void addGood(Integer id){
+//        Tweet tweet = Tweet.find.byId(id);
+//
+//        //不具合対策
+//        if(tweet == null){
+//            flash("dandger", "ツイートが見つかりません");
+//        }
+//
+//        Boolean swt = false;
+//        if(swt == false){
+//            tweet.good += 1;
+//            swt = true;
+//        }else if(swt == true){
+//            tweet.good -= 1;
+//            swt = false;
+//        }
+//
+//    }
 }

@@ -41,17 +41,14 @@ public class User extends Model{
     @OneToMany(cascade = CascadeType.ALL)
     public List<Tweet> tweets;
 
-//    @ManyToOne
-//    public Follow follow;
-//
-//    @ManyToOne
-//    public Follower follower;
-//
-//    @ManyToOne
-//    public Good good;
+    @ManyToOne
+    public Follow follow;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    public <User> follower;
+    @ManyToOne
+    public Follower follower;
+
+    @ManyToOne
+    public Good good;
 
     public static Finder<Integer, User> find = new Finder<>(User.class);
 
@@ -66,5 +63,6 @@ public class User extends Model{
     public List<Tweet> getTweets(){
         return this.tweets;
     }
+
 
 }
