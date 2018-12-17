@@ -10,7 +10,7 @@ import play.data.validation.Constraints;
 @Entity
 public class User extends Model{
 
-    //gitテスト
+    //gitテストです
 
     //idは1から自動で渡される
     //ユーザーからは見えない
