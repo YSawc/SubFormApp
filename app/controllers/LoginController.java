@@ -52,6 +52,7 @@ public class LoginController extends Controller {
         session("userID", user.userID);
         session("password", user.password);
         session("id", user.id.toString());
+        session("name", user.name);
     }
 
     private void clearSession(){
