@@ -20,7 +20,7 @@ public class TweetsController extends Controller {
     private FormFactory formFactory;
 
     //idは0から始める。publicにし昇順に自動付与していく
-    private Integer pubInt = 0;
+//    private Integer pubInt = 0;
 
     public Result index(){
 
@@ -67,12 +67,12 @@ public class TweetsController extends Controller {
         }
         //正規表現チェックの終わり--------
 
-        tweet.id = pubInt;
+//        tweet.id = pubInt;
 
         //セッションのidからユーザーのidを照らし合わせ、マッチさせる
         User user = User.find.byId(Integer.parseInt(session("id")));
         tweet.setUser(user);
-        pubInt += 1;
+//        pubInt += 1;
         tweet.save();
         return  redirect(routes.TweetsController.index());
     }
@@ -87,5 +87,25 @@ public class TweetsController extends Controller {
 
         tweet.delete();
         return redirect(routes.TweetsController.index());
+    }
+
+    //いいね機能
+    public void addGood(Integer id){
+        Tweet tweet = Tweet.find.byId(id);
+
+        //不具合対策
+        if(tweet == null){
+            flash("dandger", "ツイートが見つかりません");
+        }
+
+        Boolean swt = false;
+        if(swt == false){
+            tweet.good += 1;
+            swt = true;
+        }else if(swt == true){
+            tweet.good -= 1;
+            swt = false;
+        }
+
     }
 }

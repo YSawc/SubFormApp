@@ -1,9 +1,6 @@
 package models;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.Constraint;
 import java.util.*;
 
@@ -27,6 +24,7 @@ public class User extends Model{
     @Constraints.Pattern(value = "^[a-zA-Z0-9_-]*$", message = "記号は(_,-)だけ利用できます")
     @Constraints.MinLength(4)
     @Constraints.MaxLength(20)
+    @Column(unique = true)
     public String userID;
     @Constraints.Required
     @Constraints.Pattern(value = "^[a-zA-Z0-9]*$", message = "記号を使わないでください")
