@@ -63,10 +63,12 @@ public class User extends Model{
         return this.tweets;
     }
 
+    //フォローモデルの呼び出し
     public Follow getFollow() {
         return this.follow;
     }
 
+    //フォローモデルのセッティング
     public void setFollowUser(Follow follow){
         this.follow = follow;
     }

@@ -62,8 +62,11 @@
                         </li>
                         <li>
                             @if(!(session.get("userID").equals(tweet.getUser.userID))){
-                            <a href="@routes.FollowsController.show(tweet.getUser.id)">フォローする</a>
+                            <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
                             }
+                        </li>
+                        <li>
+                            <a>ツイート数 : <strong class="text-primary">@tweet.getUser.getTweets.size()</strong></a>
                         </li>
                     </ul>
                 </div><!--/.nav-collapse -->
