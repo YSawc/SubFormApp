@@ -35,3 +35,6 @@ POST    /login                      controllers.LoginController.doLogin()
 GET     /logout                     controllers.LoginController.logout()
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+#フォロー機能用
+GET     /follow/:id                 controllers.FollowsController.show(id: Integer)

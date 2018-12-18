@@ -18,4 +18,5 @@ public class Follow extends Model {
 
     @OneToMany(cascade = CascadeType.ALL)
     public List<User> users;
+
 }

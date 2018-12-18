@@ -63,5 +63,12 @@ public class User extends Model{
         return this.tweets;
     }
 
+    public Follow getFollow() {
+        return this.follow;
+    }
+
+    public void setFollowUser(Follow follow){
+        this.follow = follow;
+    }
 
 }
