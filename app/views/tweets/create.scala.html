@@ -5,7 +5,8 @@
 @layout("ツイート"){
     <h4>ツイートする</h4>
     @helper.form(action = routes.TweetsController.save()){
-        @helper.textarea(tweetForm("mutter") , 'maxlength->"140", 'rows-> 4, '_label-> "", 'class->"form-control")
+        @helper.textarea(tweetForm("mutter") , 'maxlength->"140",
+            'rows-> 4, '_label-> "", 'class->"form-control", 'size->"30")
         <input type="submit" value="送信" class="btn btn-primary">
     }
 }

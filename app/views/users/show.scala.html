@@ -23,11 +23,6 @@
                     <li><a href="" class="col bg-info">@tweet.getUser.getUserName</a></li>
                     </li>
 
-                    <li class="active">
-                        @if(session.get("name") != null){
-                        <a>@session.get("name")</a>
-                        }
-                    </li>
 
                 </ul>
 
@@ -39,6 +34,11 @@
                         }
                         @if(session.get("userID") == null){
                         <a href="@routes.LoginController.login()">ログイン</a>
+                        }
+                    </li>
+                    <li class="active">
+                        @if(session.get("name") != null){
+                        <a>@session.get("name")</a>
                         }
                     </li>
                     <li>

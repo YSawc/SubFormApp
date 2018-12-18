@@ -40,11 +40,6 @@
                     @if(session.get("id") != null){
                     <li><a href="@routes.TweetsController.index()">ツイート一覧</a></li>
                     }
-                    <li class="active">
-                        @if(session.get("name") != null){
-                            <a>@session.get("name")</a>
-                        }
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -54,6 +49,11 @@
                         }
                         @if(session.get("userID") == null){
                         <a href="@routes.LoginController.login()">ログイン</a>
+                        }
+                    </li>
+                    <li class="active">
+                        @if(session.get("name") != null){
+                        <a>@session.get("name")</a>
                         }
                     </li>
                     <li>
@@ -76,14 +76,24 @@
 
     <br><br>
 
-        <div class="container">
+    <br>
+    <!--フラッシュがあれば出力-->
+    @if(flash.get("message") != null){<p class="alert alert-success" data-dismiss="alert">@flash.get("success")</p>}
+    @if(flash.get("danger") != null){<p class="alert alert-danger" data-dismiss="alert">@flash.get("danger")</p>}
+    @if(flash.get("info") != null){<p class="alert alert-info" data-dismiss="alert">@flash.get("info")</p>}
+    <br>
 
-            <br>
-            <!--フラッシュがあれば出力-->
-            @if(flash.get("message") != null){<p class="alert alert-success">@flash.get("success")</p>}
-            @if(flash.get("danger") != null){<p class="alert alert-danger">@flash.get("danger")</p>}
-            @if(flash.get("info") != null){<p class="alert alert-info">@flash.get("info")</p>}
-            <br>
+    <!--フラッシュ制御 javascript埋め込み-->
+    <script type="text/javascript">
+            window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove();
+            });
+            }, 1500);
+            </script>
+    <!-- ------------------------------- -->
+
+        <div class="container">
 
             <!--横並びの割合制御(未実装)-->
             <!--<div class="row">-->

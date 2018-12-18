@@ -17,19 +17,18 @@ public class User extends Model{
     @Id
     public Integer id;
     @Constraints.Required
-    @Constraints.Pattern(value = "^[a-zA-Z0-9]*$", message = "記号を使わないでください")
-    //全角文字入らないバグあり [^\x01-\x7E\xA1-\xDF]
+    @Constraints.Pattern(value = "^[a-zA-Z0-9]*$", message = "ローマ字と半角英数字を利用できます")
     @Constraints.MinLength(4)
     @Constraints.MaxLength(20)
     public String name;
     @Constraints.Required
-    @Constraints.Pattern(value = "^[a-zA-Z0-9_-]*$", message = "記号は(_,-)だけ利用できます")
+    @Constraints.Pattern(value = "^[a-zA-Z0-9_-]*$", message = "ローマ字を利用してください。記号は(_,-)だけ利用できます")
     @Constraints.MinLength(4)
     @Constraints.MaxLength(20)
     @Column(unique = true)
     public String userID;
     @Constraints.Required
-    @Constraints.Pattern(value = "^[a-zA-Z0-9]*$", message = "記号を使わないでください")
+    @Constraints.Pattern(value = "^[a-zA-Z0-9]*$", message = "ローマ字と半角英数字を利用できます\"")
     @Constraints.MinLength(4)
     @Constraints.MaxLength(8)
     public String password;

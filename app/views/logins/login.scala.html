@@ -5,8 +5,8 @@
 @layout("ログイン画面"){
     <h1>ログインフォーム</h1>
     @helper.form(action = routes.LoginController.doLogin()){
-    @helper.inputText(userForm("userID"), 'placeholder ->"ユーザー名", '_label->"ユーザー名")
-    @helper.inputText(userForm("password"), 'placeholder ->"パスワード", '_label->"パスワード")
+    @helper.inputText(userForm("userID"), 'placeholder ->"ユーザー名", '_label->"ユーザー名", 'size->"30")
+    @helper.inputText(userForm("password"), 'placeholder ->"パスワード", '_label->"パスワード", 'size->"30")
     <input type="submit" value="送信" class="btn btn-primary">
     }
 }
