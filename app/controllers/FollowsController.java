@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Follow;
 import models.Tweet;
 import models.User;
 import play.mvc.Controller;
@@ -17,34 +18,38 @@ public class FollowsController extends Controller {
 
     public Result follow(Integer id){
 
+        System.out.println("てすと");
+
+
         User user_beFollowed = User.find.byId(id);
-        User user_followed = User.find.byId(Integer.parseInt(session("id")));
+        User user_doneFollowed = User.find.byId(Integer.parseInt(session("id")));
         System.out.println(user_beFollowed.getName() + "フォローされたユーザーの名前");
-        System.out.println(user_followed.getName() + "フォローをしたユーザーの名前");
+        System.out.println(user_doneFollowed.getName() + "フォローをしたユーザーの名前");
+//
+//        List<User> beFollowedtUserList = new ArrayList<>();
+//        beFollowedtUserList = User.find.ref(user_beFollowed.id).getFollow().getBeFollowed();
+//
+//        beFollowedtUserList.save();
 
-        //作成中
-        List<User> beFollowedtUserList = new ArrayList<User>();
-//        beFollowedtUserList = User.find.ref(user_beFollowed.id).getTweets();
-
-        //フォロー済みかどうか判定する
-        if(beFollowedtUserList.contains(user_followed)){
-            beFollowedtUserList.remove(user_followed);
-            System.out.println("削除した");
-        }else{
-            beFollowedtUserList.add(user_followed);
-            System.out.println("登録した");
-        }
+        //コピー用
+//        List<Tweet> tweetList = new ArrayList<Tweet>();
+//        tweetList = User.find.ref(user.id).getTweets();
 
 
-        System.out.println(beFollowedtUserList + "フォローしたユーザーのモデルを出力");
+//        beFollowedtUserList = user_beFollowed.getFollow().getBeFollowed();
 
-        System.out.println(user_beFollowed.getTweets().size() + "ツイート数");
-
-        for(User userModel : beFollowedtUserList){
-            System.out.println(userModel.getName() + "フォローしたユーザーの名前をfor分で出力");
-        }
-
-
+//        //フォロー済みかどうか判定する
+//        if(beFollowedtUserList.contains(user_doneFollowed)){
+//            beFollowedtUserList.remove(user_doneFollowed);
+//            System.out.println("削除した");
+//        }else{
+//            beFollowedtUserList.add(user_doneFollowed);
+//            System.out.println("登録した");
+//            System.out.println(beFollowedtUserList + "登録後の確認");
+//            beFollowedtUserList.remove(user_doneFollowed);
+//            System.out.println("削除した");
+//            System.out.println(beFollowedtUserList + "削除後の確認");
+//        }
 
         //user_followed.se
 

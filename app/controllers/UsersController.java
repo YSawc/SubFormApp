@@ -46,6 +46,7 @@ public class UsersController extends Controller {
 //        user.id = pubInt;
 //        pubInt += 1;
         user.save();
+        flash("info", "ユーザーを作成しました");
         return redirect(routes.UsersController.index());
     }
 

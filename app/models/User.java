@@ -40,10 +40,10 @@ public class User extends Model{
     @OneToMany(cascade = CascadeType.ALL)
     public List<Tweet> tweets;
 
-    @ManyToOne
+    @OneToMany
     public Follow follow;
 
-    @ManyToOne
+    @OneToMany
     public Follower follower;
 
     @ManyToOne
@@ -66,11 +66,6 @@ public class User extends Model{
     //フォローモデルの呼び出し
     public Follow getFollow() {
         return this.follow;
-    }
-
-    //フォローモデルのセッティング
-    public void setFollowUser(Follow follow){
-        this.follow = follow;
     }
 
 }
