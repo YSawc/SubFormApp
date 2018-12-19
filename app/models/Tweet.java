@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Constraint;
+import java.util.List;
 
 @Entity
 public class Tweet extends Model {

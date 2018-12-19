@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Relationship;
 import models.Tweet;
 import models.User;
 
@@ -87,9 +88,15 @@ public class UsersController extends Controller {
             return notFound("ユーザーが見つかりません");
         }
 
-        //作成中
+        ///このユーザーのツイートの検索
         List<Tweet> tweetList = new ArrayList<Tweet>();
         tweetList = User.find.ref(user.id).getTweets();
+
+        //このユーザーの
+        user.getRelationships();
+        System.out.println(user.getRelationships());
+//        System.out.println(relationshipList + "　このユーザーをフォローするユーザーの総計");
+
 
         return ok(show.render(tweetList));
 

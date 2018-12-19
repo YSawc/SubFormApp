@@ -1,10 +1,13 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
+import models.Relationship;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.inject.Singleton;
+import java.util.List;
 
 @Singleton
 public class FollowsController extends Controller {
@@ -14,17 +17,34 @@ public class FollowsController extends Controller {
 
     public Result follow(Integer id){
 
-        System.out.println("てすと");
-
         User user_beFollowed = User.find.byId(id);
         User user_doneFollowed = User.find.byId(Integer.parseInt(session("id")));
         System.out.println(user_beFollowed.getName() + "フォローされたユーザーの名前");
         System.out.println(user_doneFollowed.getName() + "フォローをしたユーザーの名前");
 
-        System.out.println();
+        Relationship relationship = new Relationship();
 
-//        List<User> list = User.find.where().eq("", "")
+        List<Relationship> list = Relationship.find.where()
+                .eq("follower_id", user_beFollowed.id)
+                .setDistinct(true).select("followed_id")
+                .findList();
+
+        System.out.println(list + "  list表示");
+
+        relationship.setFollower_id(user_doneFollowed.id);
+        relationship.setFollowed_id(user_beFollowed.id);
+//        relationship.follower_id = user_doneFollowed.id;
+//        relationship.followed_id = user_beFollowed.id;
+
+        relationship.save();
+
+        System.out.println(list + "  list表示");
 
         return redirect(routes.TweetsController.index());
+    }
+
+    public Result show(Integer id){
+
+        return TODO;
     }
 }

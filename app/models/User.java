@@ -51,4 +51,8 @@ public class User extends Model{
     public List<Tweet> getTweets(){
         return this.tweets;
     }
+
+    public Relationship getRelationships() {
+        return relationships;
+    }
 }
