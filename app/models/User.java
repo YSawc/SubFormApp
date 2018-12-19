@@ -36,7 +36,7 @@ public class User extends Model{
     public List<Tweet> tweets = new ArrayList<>();
 
     @ManyToOne
-    public Relationship relationships;
+    private Follow Follow;
 
     public static Finder<Integer, User> find = new Finder<>(User.class);
 
@@ -52,11 +52,11 @@ public class User extends Model{
         return this.tweets;
     }
 
-    public Relationship getRelationships() {
-        return relationships;
+    public Follow getFollow() {
+        return Follow;
     }
 
-    public void setRelationships(Relationship relationships) {
-        this.relationships = relationships;
+    public void setFollow(Follow follow) {
+        this.Follow = follow;
     }
 }

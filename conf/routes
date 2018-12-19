@@ -17,8 +17,8 @@ GET     /message                    controllers.AsyncController.message
 GET     /users                      controllers.UsersController.index()
 GET     /users/create               controllers.UsersController.create()
 GET     /users/:id                  controllers.UsersController.show(id: Integer)
-GET     /users/edit/:id             controllers.UsersController.edit(id: Integer)
-POST    /users/edit                 controllers.UsersController.update()
+#GET     /users/edit/:id             controllers.UsersController.edit(id: Integer)
+#POST    /users/edit                 controllers.UsersController.update()
 POST    /users/create               controllers.UsersController.save()
 DELETE  /users/delete/:id           controllers.UsersController.destroy(id: Integer)
 

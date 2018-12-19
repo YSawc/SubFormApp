@@ -3,53 +3,58 @@ package models;
 import com.avaje.ebean.Model;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 //いいね機能で利用する
 
 
-@Entity
+
 //@Table(
 //        uniqueConstraints =
 //        @UniqueConstraint(columnNames = {"follower_id", "followed_id"})
 //)
-public class Relationship extends Model {
+@Entity
+public class Follow extends Model {
     @Id
     public Integer id;
     @Column
-    public Integer follower_id;
+    public Integer follow_id;
     @Column
-    public Integer relationships_id;
+    public Integer beFollowed_id;
 
-
-
+    @Valid
     @OneToMany(cascade = CascadeType.ALL)
     public List<User> users = new ArrayList<>();
 
-    public static Finder<Integer, Relationship> find = new Finder<>(Relationship.class);
+    public static Finder<Integer, Follow> find = new Finder<>(Follow.class);
 
     public List<User> getUsers() {
         return users;
     }
 
-    public Integer getFollowed_id(){
-        return this.relationships_id;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
-    public void setFollowed_id(Integer relationships_id){
-        this.relationships_id = relationships_id;
+    public Integer getFollow_id() {
+        return follow_id;
     }
 
-    public Integer getFollower_id() {
-        return follower_id;
+    public void setFollow_id(Integer follow_id) {
+        this.follow_id = follow_id;
     }
 
-    public void setFollower_id(Integer follower_id) {
-        this.follower_id = follower_id;
+    public Integer getBeFollowed_id() {
+        return beFollowed_id;
     }
 
-//    public List<Relationship> getFollowerList(){
+    public void setBeFollowed_id(Integer beFollowed_id) {
+        this.beFollowed_id = beFollowed_id;
+    }
+
+//    public List<Follow> getFollowerList(){
 //        return this.find.where()
 //                .eq("followed_id", this.getFollowed_id())
 //                .setDistinct(true).select("followed_id")

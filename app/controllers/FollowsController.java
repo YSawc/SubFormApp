@@ -1,7 +1,6 @@
 package controllers;
 
-import com.avaje.ebean.Ebean;
-import models.Relationship;
+import models.Follow;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -18,33 +17,37 @@ public class FollowsController extends Controller {
     public Result follow(Integer id){
 
         User user_beFollowed = User.find.byId(id);
-        User user_doneFollowed = User.find.byId(Integer.parseInt(session("id")));
+        User user_doneFollow = User.find.byId(Integer.parseInt(session("id")));
         System.out.println(user_beFollowed.getName() + "フォローされたユーザーの名前");
-        System.out.println(user_doneFollowed.getName() + "フォローをしたユーザーの名前");
+        System.out.println(user_doneFollow.getName() + "フォローをしたユーザーの名前");
 
-        Relationship relationship = new Relationship();
+        Follow follow = new Follow();
 
-        relationship = Relationship.find.ref(user_beFollowed.id);
+        follow.setFollow_id(user_doneFollow.id);
+        follow.setBeFollowed_id(user_beFollowed.id);
 
-        user_beFollowed.setRelationships(relationship);
-//        relationship.setFollowed_id(user_beFollowed.id);
-//
-//        List<Relationship> list = Relationship.find.where()
-//                .eq("follower_id", user_beFollowed.id)
-//                .setDistinct(true).select("followed_id")
-//                .findList();
+        //実験
+        follow = Follow.find.ref(user_doneFollow.id);
 
-//        System.out.println(list + "  list表示");
+        List<Follow> list = Follow.find.where()
+                .eq("follow_id", user_doneFollow.id)
+                .setDistinct(true).select("followed_id")
+                .findList();
 
-//        relationship.setFollower_id(user_doneFollowed.id);
-//        relationship.setFollowed_id(user_beFollowed.id);
+        System.out.println(list + "  list表示");
 
-        relationship.follower_id = user_doneFollowed.id;
-//        relationship.relationships_id = user_beFollowed.id;
 
-        System.out.println(relationship + "リレーションシップのユーザー所有？");
+//        follow.setFollower_id(user_doneFollowed.id);
+//        follow.setFollowed_id(user_beFollowed.id);
 
-        relationship.save();
+//        follow.follow_id = user_doneFollow.id;
+//        follow.relationships_id = user_beFollowed.id;
+
+//        System.out.println(follow + "リレーションシップのユーザー所有？");
+
+        user_doneFollow.save();
+        user_doneFollow.setFollow(follow);
+        follow.save();
 
 //        System.out.println(list + "  list表示");
 

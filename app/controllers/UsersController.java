@@ -1,6 +1,5 @@
 package controllers;
 
-import models.Relationship;
 import models.Tweet;
 import models.User;
 
@@ -52,32 +51,34 @@ public class UsersController extends Controller {
         return redirect(routes.UsersController.index());
     }
 
-    public Result edit(Integer id){
-        User user = User.find.byId(id);
-        if(user == null){
-            return notFound(_404.render());
-        }
-        Form<User> userForm = formFactory.form(User.class).fill(user);
-        return ok(edit.render(userForm));
-    }
+    //editは実装しない
+//    public Result edit(Integer id){
+//        User user = User.find.byId(id);
+//        if(user == null){
+//            return notFound(_404.render());
+//        }
+//        Form<User> userForm = formFactory.form(User.class).fill(user);
+//        return ok(edit.render(userForm));
+//    }
 
-    public Result update(){
-        User user = formFactory.form(User.class).bindFromRequest().get();
-        User oldUser = User.find.byId(user.id);
-        if(oldUser==null){
-            flash("danger", "ユーザーが見つかりません");
-            return badRequest();
-        }
-
-        oldUser.name = user.name;
-        oldUser.userID = user.userID;
-        oldUser.password = user.password;
-        oldUser.email = user.email;
-        oldUser.update();
-
-        flash("ユーザー情報を更新しました");
-        return redirect(routes.UsersController.index());
-    }
+//    public Result update(){
+//        User user = formFactory.form(User.class).bindFromRequest().get();
+//        User oldUser = User.find.byId(user.id);
+//        if(oldUser==null){
+//            flash("danger", "ユーザーが見つかりません");
+//            return badRequest();
+//        }
+//
+//        oldUser.id = user.id;
+//        oldUser.name = user.name;
+//        oldUser.userID = user.userID;
+//        oldUser.password = user.password;
+//        oldUser.email = user.email;
+//        oldUser.update();
+//
+//        flash("ユーザー情報を更新しました");
+//        return redirect(routes.UsersController.index());
+//    }
 
     public Result show(Integer id) {
         Tweet tweet = Tweet.find.byId(id);
@@ -93,8 +94,6 @@ public class UsersController extends Controller {
         tweetList = User.find.ref(user.id).getTweets();
 
         //このユーザーの
-        user.getRelationships();
-        System.out.println(user.getRelationships());
 //        System.out.println(relationshipList + "　このユーザーをフォローするユーザーの総計");
 
 
