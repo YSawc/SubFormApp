@@ -33,7 +33,4 @@ public class Tweet extends Model {
         this.user = user;
     }
 
-    public User getPostUser(){
-        return this.user;
-    }
 }

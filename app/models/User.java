@@ -1,7 +1,6 @@
 package models;
 
 import javax.persistence.*;
-import javax.validation.Constraint;
 import java.util.*;
 
 import com.avaje.ebean.Model;
@@ -10,10 +9,6 @@ import play.data.validation.Constraints;
 @Entity
 public class User extends Model{
 
-    //gitテストです
-
-    //idは1から自動で渡される
-    //ユーザーからは見えない
     @Id
     public Integer id;
     @Constraints.Required
@@ -38,16 +33,10 @@ public class User extends Model{
     public String email;
 
     @OneToMany(cascade = CascadeType.ALL)
-    public List<Tweet> tweets;
-
-    @OneToMany
-    public Follow follow;
-
-    @OneToMany
-    public Follower follower;
+    public List<Tweet> tweets = new ArrayList<>();
 
     @ManyToOne
-    public Good good;
+    public Relationship relationships;
 
     public static Finder<Integer, User> find = new Finder<>(User.class);
 
@@ -62,10 +51,4 @@ public class User extends Model{
     public List<Tweet> getTweets(){
         return this.tweets;
     }
-
-    //フォローモデルの呼び出し
-    public Follow getFollow() {
-        return this.follow;
-    }
-
 }
