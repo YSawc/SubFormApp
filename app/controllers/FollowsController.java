@@ -24,21 +24,29 @@ public class FollowsController extends Controller {
 
         Relationship relationship = new Relationship();
 
-        List<Relationship> list = Relationship.find.where()
-                .eq("follower_id", user_beFollowed.id)
-                .setDistinct(true).select("followed_id")
-                .findList();
+        relationship = Relationship.find.ref(user_beFollowed.id);
 
-        System.out.println(list + "  list表示");
+        user_beFollowed.setRelationships(relationship);
+//        relationship.setFollowed_id(user_beFollowed.id);
+//
+//        List<Relationship> list = Relationship.find.where()
+//                .eq("follower_id", user_beFollowed.id)
+//                .setDistinct(true).select("followed_id")
+//                .findList();
 
-        relationship.setFollower_id(user_doneFollowed.id);
-        relationship.setFollowed_id(user_beFollowed.id);
-//        relationship.follower_id = user_doneFollowed.id;
-//        relationship.followed_id = user_beFollowed.id;
+//        System.out.println(list + "  list表示");
+
+//        relationship.setFollower_id(user_doneFollowed.id);
+//        relationship.setFollowed_id(user_beFollowed.id);
+
+        relationship.follower_id = user_doneFollowed.id;
+//        relationship.relationships_id = user_beFollowed.id;
+
+        System.out.println(relationship + "リレーションシップのユーザー所有？");
 
         relationship.save();
 
-        System.out.println(list + "  list表示");
+//        System.out.println(list + "  list表示");
 
         return redirect(routes.TweetsController.index());
     }

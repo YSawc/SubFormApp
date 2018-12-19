@@ -55,4 +55,8 @@ public class User extends Model{
     public Relationship getRelationships() {
         return relationships;
     }
+
+    public void setRelationships(Relationship relationships) {
+        this.relationships = relationships;
+    }
 }

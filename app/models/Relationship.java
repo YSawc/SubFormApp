@@ -7,33 +7,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 //いいね機能で利用する
-@Table(
-        uniqueConstraints =
-            @UniqueConstraint(columnNames = {"follower_id", "followed_id"})
-)
+
 
 @Entity
+//@Table(
+//        uniqueConstraints =
+//        @UniqueConstraint(columnNames = {"follower_id", "followed_id"})
+//)
 public class Relationship extends Model {
     @Id
     public Integer id;
     @Column
     public Integer follower_id;
     @Column
-    public Integer followed_id;
+    public Integer relationships_id;
 
 
 
     @OneToMany(cascade = CascadeType.ALL)
-    public List<User> users = new ArrayList<>();;
+    public List<User> users = new ArrayList<>();
 
     public static Finder<Integer, Relationship> find = new Finder<>(Relationship.class);
 
-    public Integer getFollowed_id(){
-        return this.followed_id;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setFollowed_id(Integer followed_id){
-        this.followed_id = followed_id;
+    public Integer getFollowed_id(){
+        return this.relationships_id;
+    }
+
+    public void setFollowed_id(Integer relationships_id){
+        this.relationships_id = relationships_id;
     }
 
     public Integer getFollower_id() {
