@@ -7,7 +7,7 @@ import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-//import views.html.follows.*;
+import views.html.follows.*;
 import views.html.users.show;
 
 import javax.inject.Singleton;
@@ -18,9 +18,6 @@ import java.util.List;
 @Singleton
 public class FollowsController extends Controller {
 
-    //フォローすると、フォローされる側のフォロワーモデルに名前がセット
-    //フォローした側はフォローモデルにフォローされた側の名前をセットする
-
     public Result follow(Integer id){
 
         User user_beFollowed = User.find.byId(id);
@@ -28,7 +25,21 @@ public class FollowsController extends Controller {
 
         Follow follow = new Follow();
 
-        String sql = "SELECT DISTINCT follow_id FROM follow WHERE be_followed_id= " + user_beFollowed.id ;
+        //SQL処理用の文字列
+        String sql = "SELECT DISTINCT follow_id FROM follow WHERE follow_id="
+                + user_doneFollow.id + " AND be_followed_id=" + user_beFollowed.id ;
+
+        System.out.println(Ebean.createSqlQuery(sql).findList().size() + "sql実行結果(デバッグ)");
+
+        //フォローされているかどうかを判別し、されていればフォローを外すメソッド
+        if (Ebean.createSqlQuery(sql).findList().size() == 1){
+            //フォローを外す処理
+            follow.setFollow_id(null);
+            follow.setBeFollowed_id(null);
+            follow.save();
+            System.out.println("削除テスト");
+            return redirect(routes.TweetsController.index());
+        }
 
         System.out.println(sql + "  sql出力");
 
@@ -51,25 +62,21 @@ public class FollowsController extends Controller {
 
         }
 
-
-
-//        System.out.println(follow + "リレーションシップのユーザー所有？");
-
-//        user_doneFollow.save();
-//        user_doneFollow.setFollow(follow);
-
-        //デバッグ用
-//        System.out.println(sqlRows + " sqpRowの出力");
-
-//        System.out.println(list + "  list表示");
-
         follow.save();
 
-//        return redirect(routes.TweetsController.index());
-        return (show.render());
+        return redirect(routes.TweetsController.index());
+//        return (follow.render());
     }
 
     public Result show(Integer id){
+
+//        Follow follow = new Follow();
+//
+//        //SQL処理用の文字列
+//        String sql = "SELECT DISTINCT follow_id FROM follow WHERE be_followed_id= " + user_beFollowed.id ;
+
+        //SQLの実行部分
+//        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
 
         return TODO;
     }
