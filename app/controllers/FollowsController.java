@@ -11,6 +11,7 @@ import play.mvc.Result;
 import views.html.users.show;
 
 import javax.inject.Singleton;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,38 +28,45 @@ public class FollowsController extends Controller {
 
         Follow follow = new Follow();
 
-//        String sql = "SELECT DISTINCT follow_id, be_followed_id FROM follow WHERE follow_id='2' AND be_followed_id='1'";
-        String sql = "SELECT DISTINCT be_followed_id FROM follow WHERE follow_id= "
-                + user_doneFollow.id + " AND be_followed_id=" +user_beFollowed.id ;
+        String sql = "SELECT DISTINCT follow_id FROM follow WHERE be_followed_id= " + user_beFollowed.id ;
 
-        System.out.println(sql + "sql出力");
+        System.out.println(sql + "  sql出力");
 
         //sqlをif分制御
-
-//        if(List<SqlRow>.Contain){
-//
-//        }
 
         follow.setFollow_id(user_doneFollow.id);
         follow.setBeFollowed_id(user_beFollowed.id);
 
-
-
         List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
 
-        List<String> tables = new ArrayList<String>();
+        int ary[] = new int[sqlRows.size()];
+
+        //sql分から、数値を抜き出す
+        //今回抜き出すのはフォローされた側のid番号
+        for(int i=0; i<sqlRows.size(); ++i){
+            System.out.println(sqlRows.get(i) + "  リスト" + i +"番目の要素のクラス");
+            ary[i] = Integer.parseInt((sqlRows.get(i)
+                    .toString().split("=",0)[1].toString().split("}",0)[0]));
+            System.out.println(ary[i] + " ary[i]の中身");
+
+        }
+
+
 
 //        System.out.println(follow + "リレーションシップのユーザー所有？");
 
 //        user_doneFollow.save();
 //        user_doneFollow.setFollow(follow);
-        follow.save();
 
-        System.out.println(sqlRows + " sqpRowの出力");
+        //デバッグ用
+//        System.out.println(sqlRows + " sqpRowの出力");
 
 //        System.out.println(list + "  list表示");
 
-        return redirect(routes.TweetsController.index());
+        follow.save();
+
+//        return redirect(routes.TweetsController.index());
+        return (show.render());
     }
 
     public Result show(Integer id){
