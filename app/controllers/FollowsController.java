@@ -3,6 +3,7 @@ package controllers;
 import com.avaje.ebean.Ebean;
 import com.avaje.ebean.SqlRow;
 import models.Follow;
+import models.Tweet;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -50,22 +51,28 @@ public class FollowsController extends Controller {
 
         List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
 
-        int ary[] = new int[sqlRows.size()];
+//        int ary[] = new int[sqlRows.size()];
+        List<Integer> sqlList = new ArrayList<>();
 
         //sql分から、数値を抜き出す
         //今回抜き出すのはフォローされた側のid番号
         for(int i=0; i<sqlRows.size(); ++i){
             System.out.println(sqlRows.get(i) + "  リスト" + i +"番目の要素のクラス");
-            ary[i] = Integer.parseInt((sqlRows.get(i)
-                    .toString().split("=",0)[1].toString().split("}",0)[0]));
-            System.out.println(ary[i] + " ary[i]の中身");
+            sqlList.set(i,  Integer.parseInt((sqlRows.get(i)
+                    .toString().split("=",0)[1].toString().split("}",0)[0])));
+            System.out.println(sqlList.get(i) + " sqlListのi番目の中身");
 
         }
 
         follow.save();
 
-        return redirect(routes.TweetsController.index());
-//        return (follow.render());
+
+        List<Tweet> tweetList = new ArrayList<Tweet>();
+        tweetList = user_beFollowed.getTweets();
+
+
+//        return redirect(routes.TweetsController.index());
+        return ok(follow.render(tweetList, sqlList));
     }
 
     public Result show(Integer id){
