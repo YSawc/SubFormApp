@@ -62,14 +62,19 @@
                         </li>
                         <li>
                             @if(!(session.get("userID").equals(tweet.getUser.userID))){
-                            <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
+                                @if(tweet.getUser.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id")))){
+                                <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
+                                }
+                                @if(!(tweet.getUser.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id"))))){
+                                <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローを外す</a>
+                                }
                             }
                         </li>
                         <li>
                             <a>ツイート<br> <strong class="text-primary"><font size="3">@tweet.getUser.getTweets.size()</font></strong></a>
                         </li>
                         <li>
-                            <a>フォロー<br> <strong class="test-primary"><font size="3"><a href="@routes.FollowsController.show(tweet.getUser.id)">未実装</a></font></strong></a>
+                            <a href="@routes.FollowsController.show(tweet.getUser.id)">フォロー<br> <strong class="text-primary"><font size="3">@tweet.getUser.get_this_Followed_list(tweet.getUser.id).size()</font></strong></a>
                         </li>
                     </ul>
                 </div><!--/.nav-collapse -->

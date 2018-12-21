@@ -11,8 +11,6 @@ import play.mvc.Result;
 
 import views.html.follows.follow;
 import views.html.follows.show;
-import views.html.users.show;
-//import views.html.users.show;
 
 import javax.inject.Singleton;
 import java.sql.ResultSet;
@@ -78,17 +76,19 @@ public class FollowsController extends Controller {
 
         new_follow.save();
 
-        return TODO;
-
+        return redirect(routes.TweetsController.index());
     }
 
     public Result show(Integer id){
 
+        System.out.println(id + "  idの出力");
 
         User user = User.find.byId(id);
 
+        System.out.println(user + "userの出力");
+
         String sql = "SELECT be_followed_id FROM follow WHERE follow_id="
-                + user.id;
+                + (user.id);
 
         SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
         List<SqlRow> result = sqlQuery.findList();
@@ -101,14 +101,26 @@ public class FollowsController extends Controller {
                 tables.add(Integer.parseInt(sqlRow.getString("be_followed_id")));
                     });
 
-
-//            allowed_id = result.get(0).getString("be_followed_id");
-//            allowed_id_int = Integer.parseInt(allowed_id);
             System.out.println(tables + "  tablesの出力");
+            for(Integer table : tables){
+                System.out.println(table + "  tableの出力");
+            }
         }
 //
 
-        return TODO;
-        return ok(show.render(user.getTweets(), tables));
+        List<Tweet> tweetList = new ArrayList<>();
+        tweetList = User.find.ref(id).getTweets();
+
+        for (int i: tables){
+            System.out.println(i + "  i の出力");
+        }
+
+        System.out.println(user.get_this_Followed_list(user.id) + "  モデル側設置のsql文のデバッグ確認");
+
+        if(user.get_whitch_follow_or(user.id)){
+            System.out.println("フォローしてない");
+        }
+
+        return ok(show.render(tweetList, tables));
     }
 }

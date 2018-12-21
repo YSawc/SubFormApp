@@ -1,6 +1,9 @@
 package models;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -53,12 +56,4 @@ public class Follow extends Model {
     public void setBeFollowed_id(Integer beFollowed_id) {
         this.beFollowed_id = beFollowed_id;
     }
-
-//    public List<Follow> getFollowerList(){
-//        return this.find.where()
-//                .eq("followed_id", this.getFollowed_id())
-//                .setDistinct(true).select("followed_id")
-//                .findList();
-//    }
-
 }

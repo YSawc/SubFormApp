@@ -3,8 +3,13 @@ package models;
 import javax.persistence.*;
 import java.util.*;
 
+import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Model;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
 import play.data.validation.Constraints;
+
+import static play.mvc.Controller.session;
 
 @Entity
 public class User extends Model{
@@ -58,5 +63,65 @@ public class User extends Model{
 
     public void setFollow(Follow follow) {
         this.Follow = follow;
+    }
+
+    public List<Integer> get_this_Followed_list(Integer id){
+
+        User user = User.find.byId(id);
+
+        String sql = "SELECT be_followed_id FROM follow WHERE follow_id="
+                + id;
+        SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
+        List<SqlRow> result = sqlQuery.findList();
+        List<Integer> tables = new ArrayList<Integer>();
+
+        System.out.println(result + "  resultの出力");
+
+        if(result.size() > 0){
+            result.forEach(sqlRow ->{
+                tables.add(Integer.parseInt(sqlRow.getString("be_followed_id")));
+            });
+
+            System.out.println(tables + "  tablesの出力");
+            for(Integer table : tables){
+                System.out.println(table + "  tableの出力");
+            }
+        }
+
+        return tables;
+    }
+
+    public boolean get_whitch_follow_or(Integer id){
+        User user_beFollowed = User.find.byId(id);
+        User user_doneFollow = User.find.byId(Integer.parseInt(session("id")));
+
+        //SQL処理用の文字列
+        String sql = "SELECT DISTINCT follow_id FROM follow WHERE follow_id="
+                + user_doneFollow.id + " AND be_followed_id=" + user_beFollowed.id ;
+
+        //フォローされているかどうかを判別し、されていればフォローを外すメソッド
+        //カラムが存在しているかどうか判別
+        if (Ebean.createSqlQuery(sql).findList().size() == 1){
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean get_whitch_follow_or(Integer id, Integer myID){
+        User user_beFollowed = User.find.byId(id);
+        User user_doneFollow = User.find.byId(myID);
+
+        //SQL処理用の文字列
+        String sql = "SELECT DISTINCT follow_id FROM follow WHERE follow_id="
+                + user_doneFollow.id + " AND be_followed_id=" + user_beFollowed.id ;
+
+        //フォローされているかどうかを判別し、されていればフォローを外すメソッド
+        //カラムが存在しているかどうか判別
+        if (Ebean.createSqlQuery(sql).findList().size() == 1){
+            return false;
+        }
+
+        return true;
     }
 }

@@ -1,4 +1,4 @@
-@(tweets : List[Tweet] ) (tables : List[Integer])
+@(tweets : List[Tweet], tables : List[Integer])
 
 
 <head>
@@ -7,7 +7,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-@layout("ユーザー詳細"){
+@layout("フォローユーザー一覧"){
 @for(tweet <- tweets){
 <!--navバー-->
 <nav class="navbar navbar-default navbar-fixed-top mt-5">
@@ -69,7 +69,7 @@
                         <a>ツイート<br> <strong class="text-primary"><font size="3">@tweet.getUser.getTweets.size()</font></strong></a>
                     </li>
                     <li>
-                        <a>フォロー<br> <strong class="test-primary"><font size="3"><a href="@routes.FollowsController.show(tweet.getUser.id)">未実装</a></font></strong></a>
+                        <a href="@routes.FollowsController.show(tweet.getUser.id)">フォロー<br> <strong class="text-primary"><font size="3">@tweet.getUser.get_this_Followed_list(tweet.getUser.id).size()</font></strong></a>
                     </li>
                 </ul>
             </div><!--/.nav-collapse -->
@@ -80,34 +80,19 @@
 
 </nav>
 <!--navバー終了-->
-
-<div class="panel panel-info">
-    <p>
-        <!--セッションの場合に分けてリンク先を変える-->
-        <a href="@routes.UsersController.show(tweet.id)">
-            <strong>@tweet.getUser.getName</strong>
-        </a>
-        <span class="">@@</span>@tweet.getUser.getUserName
-    </p>
-    <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
-
-
-
-    <!--if(){-->
-    <!--}-->
-
-    <br>
-    <br>
-    　　　　　<!--空白注意-->
-    <a href="" class="mx-auto"><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
-    <a href="" class="mx-auto"><span class="glyphicon glyphicon-heart">　　　　<!--空白注意--></span></a>
-    <!--セッション制御で、削除を表示-->
-    @if(session.get("userID").equals(tweet.getUser.userID)){
-    <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
-        <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
-    </a>
-    }
-
-</div>
+<br>
 }
+
+<h5>フォロー一覧</h5>
+
+<ul>
+    @for(i <- tables){
+    <ul>
+        <a href="@routes.UsersController.show(i)"><font size="3">@User.find.byId(i).getName</font></a>
+        <br>
+        <p>@@@User.find.byId(i).getUserName</p>
+    </ul>
+    }
+    <br>
+</ul>
 }
