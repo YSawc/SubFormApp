@@ -1,6 +1,7 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlQuery;
 import com.avaje.ebean.SqlRow;
 import models.Follow;
 import models.Tweet;
@@ -8,13 +9,16 @@ import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import views.html.follows.*;
+import views.html.follows.follow;
+import views.html.follows.show;
 import views.html.users.show;
+//import views.html.users.show;
 
 import javax.inject.Singleton;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Singleton
 public class FollowsController extends Controller {
@@ -24,67 +28,87 @@ public class FollowsController extends Controller {
         User user_beFollowed = User.find.byId(id);
         User user_doneFollow = User.find.byId(Integer.parseInt(session("id")));
 
-        Follow follow = new Follow();
-
         //SQL処理用の文字列
         String sql = "SELECT DISTINCT follow_id FROM follow WHERE follow_id="
                 + user_doneFollow.id + " AND be_followed_id=" + user_beFollowed.id ;
 
-        System.out.println(Ebean.createSqlQuery(sql).findList().size() + "sql実行結果(デバッグ)");
-
         //フォローされているかどうかを判別し、されていればフォローを外すメソッド
+        //カラムが存在しているかどうか判別
         if (Ebean.createSqlQuery(sql).findList().size() == 1){
-            //フォローを外す処理
-            follow.setFollow_id(null);
-            follow.setBeFollowed_id(null);
-            follow.save();
+
+            String sql_ver2 = "SELECT id FROM follow WHERE follow_id="
+                    + user_doneFollow.id + " AND be_followed_id=" + user_beFollowed.id ;
+
+            //カーリー
+            SqlQuery sqlQuery = Ebean.createSqlQuery(sql_ver2);
+            sqlQuery.setParameter("follow_id",user_doneFollow.id)
+                    .setParameter("be_followed_id", user_beFollowed)
+                    .findUnique();
+            List<SqlRow> result = sqlQuery.findList();
+
+            String allowed_id = "";
+
+            //見つからなければ
+            if (result.size() > 0) {
+                allowed_id = result.get(0).getString("id");
+            }
+            Integer allowed_id_int;
+
+            allowed_id_int = Integer.parseInt(allowed_id);
+
+
+            System.out.println(sqlQuery + "sqlQueryの出力");
+            System.out.println(result + "resultの出力");
+            System.out.println(allowed_id + "allowed_idの出力");
+            System.out.println(allowed_id_int + "alllowed_id_intの出力");
+            //--------------------------
+
+            Follow delete_follow = Follow.find.byId(allowed_id_int);
+            delete_follow.delete();
+
             System.out.println("削除テスト");
+
             return redirect(routes.TweetsController.index());
         }
 
-        System.out.println(sql + "  sql出力");
+        Follow new_follow = new Follow();
 
-        //sqlをif分制御
+        new_follow.follow_id = user_doneFollow.id;
+        new_follow.beFollowed_id = user_beFollowed.id;
 
-        follow.setFollow_id(user_doneFollow.id);
-        follow.setBeFollowed_id(user_beFollowed.id);
+        new_follow.save();
 
-        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
+        return TODO;
 
-//        int ary[] = new int[sqlRows.size()];
-        List<Integer> sqlList = new ArrayList<>();
-
-        //sql分から、数値を抜き出す
-        //今回抜き出すのはフォローされた側のid番号
-        for(int i=0; i<sqlRows.size(); ++i){
-            System.out.println(sqlRows.get(i) + "  リスト" + i +"番目の要素のクラス");
-            sqlList.set(i,  Integer.parseInt((sqlRows.get(i)
-                    .toString().split("=",0)[1].toString().split("}",0)[0])));
-            System.out.println(sqlList.get(i) + " sqlListのi番目の中身");
-
-        }
-
-        follow.save();
-
-
-        List<Tweet> tweetList = new ArrayList<Tweet>();
-        tweetList = user_beFollowed.getTweets();
-
-
-//        return redirect(routes.TweetsController.index());
-        return ok(follow.render(tweetList, sqlList));
     }
 
     public Result show(Integer id){
 
-//        Follow follow = new Follow();
-//
-//        //SQL処理用の文字列
-//        String sql = "SELECT DISTINCT follow_id FROM follow WHERE be_followed_id= " + user_beFollowed.id ;
 
-        //SQLの実行部分
-//        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
+        User user = User.find.byId(id);
+
+        String sql = "SELECT be_followed_id FROM follow WHERE follow_id="
+                + user.id;
+
+        SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
+        List<SqlRow> result = sqlQuery.findList();
+        List<Integer> tables = new ArrayList<Integer>();
+
+        System.out.println(result + "  resultの出力");
+
+        if(result.size() > 0){
+            result.forEach(sqlRow ->{
+                tables.add(Integer.parseInt(sqlRow.getString("be_followed_id")));
+                    });
+
+
+//            allowed_id = result.get(0).getString("be_followed_id");
+//            allowed_id_int = Integer.parseInt(allowed_id);
+            System.out.println(tables + "  tablesの出力");
+        }
+//
 
         return TODO;
+        return ok(show.render(user.getTweets(), tables));
     }
 }
