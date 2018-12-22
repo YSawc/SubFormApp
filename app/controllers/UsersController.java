@@ -1,5 +1,6 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
 import models.Tweet;
 import models.User;
 
@@ -34,11 +35,29 @@ public class UsersController extends Controller {
     }
 
     public Result save(){
+
         Form<User> userForm = formFactory.form(User.class).bindFromRequest();
 
-        System.out.println(userForm + "ユーザーフォームの出力");
+        System.out.println(formFactory.form().bindFromRequest().get("password_confirm").equals(
+                (formFactory.form().bindFromRequest().get("password"))) + "同値かチェック");
 
-        //エラーチェック
+        //確認用パスワードの不一致
+        if(! (formFactory.form().bindFromRequest().get("password_confirm").equals
+                (formFactory.form().bindFromRequest().get("password"))) ){
+            flash("danger", "確認用パスワードが一致しません");
+            return badRequest(create.render(userForm));
+        }
+
+        //ユーザーidが被りあればフラッシュを出力
+        String sql = "SELECT user_id FROM user WHERE user_id="
+                + userForm.get().userID;
+        if(Ebean.createSqlQuery(sql).findList().size() !=0){
+
+            flash("danger", "ユーザーIDはすでに利用されています");
+            return badRequest(create.render(userForm));
+        }
+
+        //フォームエラーチェック
         if(userForm.hasErrors()){
 //            System.out.println(userForm);
             flash("danger", "正しい値を入力し直してください");

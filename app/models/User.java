@@ -75,17 +75,18 @@ public class User extends Model{
         List<SqlRow> result = sqlQuery.findList();
         List<Integer> tables = new ArrayList<Integer>();
 
-        System.out.println(result + "  resultの出力");
+//        System.out.println(result + "  resultの出力");
 
         if(result.size() > 0){
             result.forEach(sqlRow ->{
                 tables.add(Integer.parseInt(sqlRow.getString("be_followed_id")));
             });
 
-            System.out.println(tables + "  tablesの出力");
-            for(Integer table : tables){
-                System.out.println(table + "  tableの出力");
-            }
+            //デバッグ用
+//            System.out.println(tables + "  tablesの出力");
+//            for(Integer table : tables){
+//                System.out.println(table + "  tableの出力");
+//            }
         }
 
         return tables;

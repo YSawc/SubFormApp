@@ -32,6 +32,8 @@ public class LoginController extends Controller {
         LoginRequest req = formFactory.form(LoginRequest.class).bindFromRequest().get();
         User user = auth.login(req);
 
+        System.out.println(user);
+
         if(user == null){
             flash("danger", "ログインに失敗しました");
             return redirect(routes.LoginController.login());
