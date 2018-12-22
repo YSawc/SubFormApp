@@ -102,6 +102,9 @@ public class UsersController extends Controller {
 //    }
 
     public Result show(Integer id) {
+
+//        User user = User.find.byId(id);
+
         Tweet tweet = Tweet.find.byId(id);
         User user = tweet.getUser();
 
