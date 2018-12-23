@@ -39,6 +39,14 @@
                 <ul class="nav navbar-nav">
                     @if(session.get("id") != null){
                     <li><a href="@routes.TweetsController.index()">ツイート一覧</a></li>
+                    <li>
+                            <a>
+                                <form action="">
+                                    <input type="text" class="form-control" name="search" id="search" placeholder="ユーザー検索">
+                                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                </form>
+                            </a>
+                    </li>
                     }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
