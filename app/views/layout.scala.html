@@ -40,12 +40,10 @@
                     @if(session.get("id") != null){
                     <li><a href="@routes.TweetsController.index()">ツイート一覧</a></li>
                     <li>
-                            <a>
-                                <form action="">
-                                    <input type="text" class="form-control" name="search" id="search" placeholder="ユーザー検索">
-                                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                                </form>
-                            </a>
+                        <form action="@routes.TweetsController.index()" class="my-auto">
+                            <input type="text" class="form-control input-sm h-25" name="search" placeholder="ユーザー検索" style="height: 25%;">
+                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </form>
                     </li>
                     }
                 </ul>
@@ -80,11 +78,10 @@
     </nav>
     <!--nav_end-->
 
-    <br><br><br>
+    <br><br><br><br><br>
 
     <br><br>
 
-    <br>
     <!--フラッシュがあれば出力-->
     @if(flash.get("message") != null){<p class="alert alert-success" data-dismiss="alert">@flash.get("success")</p>}
     @if(flash.get("danger") != null){<p class="alert alert-danger" data-dismiss="alert">@flash.get("danger")</p>}
