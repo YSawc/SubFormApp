@@ -37,13 +37,13 @@ public class User extends Model{
     @Constraints.Email
     public String email;
 
+    public static Model.Finder<Integer, User> find = new Model.Finder<>(User.class);
+
     @OneToMany(cascade = CascadeType.ALL)
     public List<Tweet> tweets = new ArrayList<>();
 
     @ManyToOne
     private Follow Follow;
-
-    public static Finder<Integer, User> find = new Finder<>(User.class);
 
     public String getName(){
         return this.name;
