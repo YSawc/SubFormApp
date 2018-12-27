@@ -13,7 +13,7 @@
     <div class="panel panel-info">
         <p>
             <!--セッションの場合に分けてリンク先を変える-->
-            <a href="@routes.UsersController.show(tweet.id)">
+            <a href="@routes.UsersController.show(tweet.getUser.id)">
                 <strong>@tweet.getUser.getName</strong>
             </a>
             <span class="">@@</span>@tweet.getUser.getUserName

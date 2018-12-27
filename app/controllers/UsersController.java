@@ -103,10 +103,11 @@ public class UsersController extends Controller {
 
     public Result show(Integer id) {
 
-//        User user = User.find.byId(id);
+        User user = User.find.byId(id);
+        String user_name = user.getUserName();
 
         Tweet tweet = Tweet.find.byId(id);
-        User user = tweet.getUser();
+//        User user = tweet.getUser();
 
 //        パターン1
         if (user == null) {
