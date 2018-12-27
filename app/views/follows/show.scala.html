@@ -19,18 +19,6 @@
             　<!--空白注意-->
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                @if(session.get("id") != null){
-                <li><a>　　　　　　</a></li>
-                <li>
-                    <a href="@routes.TweetsController.index()" class="my-auto">
-                        <label for="search" class="sr-only">Search</label>
-                        <input type="text" class="form-control" name="search" id="search" placeholder="ユーザー検索">
-                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                    </a>
-                </li>
-                }
-            </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <!--ログインセッション次第で、出力を変える-->
@@ -101,9 +89,9 @@
     @for(i <- tables){
     <ul>
         <a href="@routes.UsersController.show(i)"><font size="3">@User.find.byId(i).getName</font></a>
-        <br>
-        <p>@@@User.find.byId(i).getUserName</p>
+        <span>@@@User.find.byId(i).getUserName</span>
     </ul>
+    <br>
     }
     <br>
 </ul>
