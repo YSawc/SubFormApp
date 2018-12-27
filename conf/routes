@@ -21,6 +21,7 @@ GET     /users/:id                  controllers.UsersController.show(id: Integer
 #POST    /users/edit                 controllers.UsersController.update()
 POST    /users/create               controllers.UsersController.save()
 DELETE  /users/delete/:id           controllers.UsersController.destroy(id: Integer)
+GET     /users/search                controllers.UsersController.search()
 
 #ツイート用
 GET     /tweets/                    controllers.TweetsController.index()

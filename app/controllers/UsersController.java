@@ -136,4 +136,24 @@ public class UsersController extends Controller {
         user.delete();
         return redirect(routes.UsersController.index());
     }
+
+    //ユーザー検索アクション
+    public Result search(){
+
+        String str;
+
+        str = formFactory.form().bindFromRequest().get("name_serch");
+        //受け取った文字列から、sql分でユーザー検索（曖昧検索が要）
+
+        String sql = "SELECT name FROM user WHERE name LIKE '%" + str + "%'";
+
+        if(Ebean.createSqlQuery(sql).findList().size() !=0){
+            List<User> userList = new ArrayList<User>();
+            System.out.println("ユーザーが見つかりました");
+//            return ok(serch.render(serch_res));
+            return TODO;
+        }
+
+        return redirect(routes.UsersController.index());
+    }
 }
