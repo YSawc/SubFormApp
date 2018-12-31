@@ -4,18 +4,20 @@
 
 @layout("ユーザー検索"){
 
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">Fluid jumbotron</h1>
-        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Fluid jumbotron</h1>
+            <p class="lead">This is a modified jumbotron that occupies the entire
+                horizontal space of its parent.</p>
+            @helper.form(action = routes.UsersController.do_search()){
+                @helper.inputText(userForm("name_search"))
+                'rows-> 4, '_label-> "ユーザー検索", 'class->"form-control", 'size->"30")
+                <input type="submit" value="送信" class="btn btn-primary">
+            }
+        </div>
     </div>
-</div>
 
-@helper.form(action = routes.UsersController.search()){
-@helper.inputText(userForm("serch_name"))
-'rows-> 4, '_label-> "ユーザー検索", 'class->"form-control", 'size->"30")
-<input type="submit" value="送信" class="btn btn-primary">
-}
+
 
 }
 
