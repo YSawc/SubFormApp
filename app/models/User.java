@@ -92,6 +92,33 @@ public class User extends Model{
         return tables;
     }
 
+    public List<Integer> get_this_beFollowed_list(Integer id){
+
+        User user = User.find.byId(id);
+
+        String sql = "SELECT follow_id FROM follow WHERE be_followed_id="
+                + id;
+        SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
+        List<SqlRow> result = sqlQuery.findList();
+        List<Integer> tables = new ArrayList<Integer>();
+
+//        System.out.println(result + "  resultの出力");
+
+        if(result.size() > 0){
+            result.forEach(sqlRow ->{
+                tables.add(Integer.parseInt(sqlRow.getString("follow_id")));
+            });
+
+            //デバッグ用
+//            System.out.println(tables + "  tablesの出力");
+//            for(Integer table : tables){
+//                System.out.println(table + "  tableの出力");
+//            }
+        }
+
+        return tables;
+    }
+
     public boolean get_whitch_follow_or(Integer id){
         User user_beFollowed = User.find.byId(id);
         User user_doneFollow = User.find.byId(Integer.parseInt(session("id")));

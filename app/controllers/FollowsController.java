@@ -11,6 +11,7 @@ import play.mvc.Result;
 
 import views.html.follows.follow;
 import views.html.follows.show;
+import views.html.follows.show2;
 
 import javax.inject.Singleton;
 import java.sql.ResultSet;
@@ -66,7 +67,7 @@ public class FollowsController extends Controller {
 
             System.out.println("削除テスト");
 
-            return redirect(routes.TweetsController.index());
+            return redirect(routes.UsersController.show(id));
         }
 
         Follow new_follow = new Follow();
@@ -76,7 +77,8 @@ public class FollowsController extends Controller {
 
         new_follow.save();
 
-        return redirect(routes.TweetsController.index());
+//        return redirect(routes.TweetsController.index());
+        return redirect(routes.UsersController.show(id));
     }
 
     public Result show(Integer id){
@@ -122,5 +124,50 @@ public class FollowsController extends Controller {
         }
 
         return ok(show.render(tweetList, tables));
+    }
+
+    public Result show_ver2(Integer id){
+
+        System.out.println(id + "  idの出力");
+
+        User user = User.find.byId(id);
+
+        System.out.println(user + "userの出力");
+
+        String sql = "SELECT follow_id FROM follow WHERE be_followed_id="
+                + (user.id);
+
+        SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
+        List<SqlRow> result = sqlQuery.findList();
+        List<Integer> tables = new ArrayList<Integer>();
+
+        System.out.println(result + "  resultの出力");
+
+        if(result.size() > 0){
+            result.forEach(sqlRow ->{
+                tables.add(Integer.parseInt(sqlRow.getString("follow_id")));
+            });
+
+            System.out.println(tables + "  tablesの出力");
+            for(Integer table : tables){
+                System.out.println(table + "  tableの出力");
+            }
+        }
+//
+
+        List<Tweet> tweetList = new ArrayList<>();
+        tweetList = User.find.ref(id).getTweets();
+
+        for (int i: tables){
+            System.out.println(i + "  i の出力");
+        }
+
+        System.out.println(user.get_this_Followed_list(user.id) + "  モデル側設置のsql文のデバッグ確認");
+
+        if(user.get_whitch_follow_or(user.id)){
+            System.out.println("フォローしてない");
+        }
+
+        return ok(show2.render(tweetList, tables));
     }
 }

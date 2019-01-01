@@ -77,7 +77,7 @@
                             <a href="@routes.FollowsController.show(tweet.getUser.id)">フォロー<br> <strong class="text-primary"><font size="3">@tweet.getUser.get_this_Followed_list(tweet.getUser.id).size()</font></strong></a>
                         </li>
                         <li>
-                            <a href="@routes.FollowsController.show(tweet.getUser.id)">フォローワー<br> <strong class="text-primary"><font size="3">作成中</font></strong></a>
+                            <a>フォロワー<br> <strong class="text-primary"><font size="3">@tweet.getUser.get_this_beFollowed_list(tweet.getUser.id).size()</font></strong></a>
                         </li>
                     </ul>
                 </div><!--/.nav-collapse -->

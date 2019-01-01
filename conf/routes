@@ -42,3 +42,4 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 #フォロー機能用
 GET     /follows/:id                controllers.FollowsController.follow(id: Integer)
 GET     /follows/user/:id           controllers.FollowsController.show(id: Integer)
+GET     /follows/user2/:id           controllers.FollowsController.show_ver2(id: Integer)
