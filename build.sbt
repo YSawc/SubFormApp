@@ -1,4 +1,4 @@
-name := """SubFormApp"""
+name := """sub-form-app"""
 
 version := "1.0-SNAPSHOT"
 
