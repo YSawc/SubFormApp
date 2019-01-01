@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/sub-form-app -Dhttp.port=$heroku config:add APPLICATION_SECRET={PORT} -Dplay.crypto.secret=${APPLICATION_SECRET}
+web: target/universal/stage/bin/sub-form-app -Dhttp.port=$heroku config:add APPLICATION_SECRET={PORT} -Dplay.crypto.secret=${APPLICATION_SECRET} -Dplay.evolutions.db.default.autoApply=true -Ddb.default.driver=org.postgresql.Driver -Ddb.default.url=${DATABASE_URL}
