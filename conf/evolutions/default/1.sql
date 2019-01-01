@@ -27,7 +27,7 @@ create table tweet (
 );
 create sequence tweet_seq;
 
-create table user (
+create table "user" (
   id                            integer not null,
   name                          varchar(255),
   user_id                       varchar(255),
