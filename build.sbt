@@ -18,8 +18,4 @@ libraryDependencies ++= Seq(
 
 //libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.36"
 
-//libraryDependencies += "com.h2database" % "h2" % "1.4.192"
-
-//追加分
-libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
-
+libraryDependencies += "com.h2database" % "h2" % "1.4.192"
