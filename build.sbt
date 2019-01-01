@@ -20,5 +20,6 @@ libraryDependencies ++= Seq(
 
 //libraryDependencies += "com.h2database" % "h2" % "1.4.192"
 
+//追加分
 libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
 
