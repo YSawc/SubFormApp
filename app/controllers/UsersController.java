@@ -17,8 +17,6 @@ import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
-import play.api.http.HttpErrorHandler;
-
 @Singleton
 public class UsersController extends Controller {
     @Inject
@@ -40,6 +38,13 @@ public class UsersController extends Controller {
 
         Form<User> userForm = formFactory.form(User.class).bindFromRequest();
 
+        //フォームエラーチェック
+        if(userForm.hasErrors()){
+//            System.out.println(userForm);
+            flash("danger", "正しい値を入力し直してください");
+            return badRequest(create.render(userForm));
+        }
+
         System.out.println(formFactory.form().bindFromRequest().get("password_confirm").equals(
                 (formFactory.form().bindFromRequest().get("password"))) + "同値かチェック");
 
@@ -56,13 +61,6 @@ public class UsersController extends Controller {
         if(Ebean.createSqlQuery(sql).findList().size() !=0){
 
             flash("danger", "ユーザーIDはすでに利用されています");
-            return badRequest(create.render(userForm));
-        }
-
-        //フォームエラーチェック
-        if(userForm.hasErrors()){
-//            System.out.println(userForm);
-            flash("danger", "正しい値を入力し直してください");
             return badRequest(create.render(userForm));
         }
 
