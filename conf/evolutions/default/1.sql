@@ -39,13 +39,13 @@ create table "user" (
 );
 create sequence user_seq;
 
-alter table good add constraint fk_good_users_id foreign key (users_id) references user (id) on delete restrict on update restrict;
+alter table good add constraint fk_good_users_id foreign key (users_id) references "user" (id) on delete restrict on update restrict;
 
-alter table tweet add constraint fk_tweet_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table tweet add constraint fk_tweet_user_id foreign key (user_id) references "user" (id) on delete restrict on update restrict;
 create index ix_tweet_user_id on tweet (user_id);
 
-alter table user add constraint fk_user_follow_id foreign key (follow_id) references follow (id) on delete restrict on update restrict;
-create index ix_user_follow_id on user (follow_id);
+alter table "user" add constraint fk_user_follow_id foreign key (follow_id) references follow (id) on delete restrict on update restrict;
+create index ix_user_follow_id on "user" (follow_id);
 
 
 # --- !Downs
@@ -55,7 +55,7 @@ alter table good drop constraint if exists fk_good_users_id;
 alter table tweet drop constraint if exists fk_tweet_user_id;
 drop index if exists ix_tweet_user_id;
 
-alter table user drop constraint if exists fk_user_follow_id;
+alter table "user" drop constraint if exists fk_user_follow_id;
 drop index if exists ix_user_follow_id;
 
 drop table if exists follow;
@@ -67,6 +67,6 @@ drop sequence if exists good_seq;
 drop table if exists tweet;
 drop sequence if exists tweet_seq;
 
-drop table if exists user;
+drop table if exists "user";
 drop sequence if exists user_seq;
 
