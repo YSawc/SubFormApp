@@ -24,4 +24,4 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-play-enhancer" % "1.1.0")
 //addSbtPlugin("com.github.play2war" % "play2-war-plugin" % "1.4-beta1")
 
 //heroku用プラグイン
-//addSbtPlugin("com.heroku" % "sbt-heroku" % "2.0.0")
+addSbtPlugin("com.heroku" % "sbt-heroku" % "2.0.0")
