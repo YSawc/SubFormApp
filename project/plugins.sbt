@@ -21,4 +21,4 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-play-enhancer" % "1.1.0")
  addSbtPlugin("com.typesafe.sbt" % "sbt-play-ebean" % "3.0.2")
 
 //play2-war-pluginプラグインの追加
-addSbtPlugin("com.github.play2war" % "play2-war-plugin" % "1.4-beta1")
+//addSbtPlugin("com.github.play2war" % "play2-war-plugin" % "1.4-beta1")
