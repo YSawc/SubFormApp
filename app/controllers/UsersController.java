@@ -17,6 +17,8 @@ import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
+import play.api.http.HttpErrorHandler;
+
 @Singleton
 public class UsersController extends Controller {
     @Inject

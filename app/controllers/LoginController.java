@@ -14,6 +14,8 @@ import views.html.logins.*;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import play.api.http.HttpErrorHandler;
+
 @Singleton
 public class LoginController extends Controller {
 

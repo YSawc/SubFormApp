@@ -14,6 +14,8 @@ import java.util.List;
 
 import views.html.tweets.*;
 
+import play.api.http.HttpErrorHandler;
+
 @Singleton
 public class TweetsController extends Controller {
     @Inject
