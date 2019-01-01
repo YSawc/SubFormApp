@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/SubFormApp -Dhttp.port=$heroku config:add APPLICATION_SECRET={PORT} -Dplay.crypto.secret=${APPLICATION_SECRET}
+web: target/universal/stage/bin/sub-form-app -Dhttp.port=$heroku config:add APPLICATION_SECRET={PORT} -Dplay.crypto.secret=${APPLICATION_SECRET}
