@@ -18,4 +18,7 @@ libraryDependencies ++= Seq(
 
 //libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.36"
 
-libraryDependencies += "com.h2database" % "h2" % "1.4.192"
+//libraryDependencies += "com.h2database" % "h2" % "1.4.192"
+
+//追加分 heroku postgreSQL用
+libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
