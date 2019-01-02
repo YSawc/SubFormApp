@@ -16,9 +16,10 @@ libraryDependencies ++= Seq(
   javaWs
 )
 
-libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.36"
+//libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.36"
 
-libraryDependencies += "com.h2database" % "h2" % "1.4.192"
+//libraryDependencies += "com.h2database" % "h2" % "1.4.192"
 
 //herokupostgresql用
-//libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
+libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
+
