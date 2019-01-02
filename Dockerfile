@@ -1,6 +1,6 @@
 FROM openjdk:8u181-jre-stretch
 
-ENV PROJECT_NAME subformapp
+ENV PROJECT_NAME sub-form-app
 
 ENV VERSION 1.0-SNAPSHOT
 
