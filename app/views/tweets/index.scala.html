@@ -8,9 +8,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
+
 @layout("つぶやき一覧"){
-@if(! (tweets.isEmpty()) ){
+
     @for(tweet <- tweets){
+    @if(! (tweets.isEmpty()) ){
     <div class="panel panel-info">
         <p>
             <!--セッションの場合に分けてリンク先を変える-->
@@ -45,5 +47,5 @@
         }
     </div>
     }
-}
+    }
 }

@@ -31,11 +31,12 @@ public class TweetsController extends Controller {
         List<User> userList = User.find.query().findList();
         tweetList = Tweet.find.all();
         System.out.println(tweetList + " ツイートリスト");
-        System.out.println(tweetList.isEmpty() + "isEmpty?");
 
+        //ぬるぽエラー対策
         if(tweetList.isEmpty()){
-            return redirect(routes.TweetsController.empty());
-        }else {
+//            return redirect(routes.TweetsController.empty());
+            return ok(index.render(tweetList));
+        }else{
             return ok(index.render(tweetList));
         }
     }
@@ -111,11 +112,6 @@ public class TweetsController extends Controller {
 
         tweet.delete();
         return redirect(routes.TweetsController.index());
-    }
-
-    public Result empty(){
-        System.out.println("EMPPPPPPPPPPP");
-        return ok(empty.render());
     }
 
     //いいね機能
