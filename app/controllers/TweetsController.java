@@ -69,6 +69,8 @@ public class TweetsController extends Controller {
 
         Tweet tweet = tweetForm.get();
 
+
+        //正規表現チェック----------------------
         if(tweet.mutter.length() > 140){
             flash("danger", "140文字以内で入力してください");
             return redirect(routes.TweetsController.create());
@@ -79,9 +81,7 @@ public class TweetsController extends Controller {
             flash("danger", "不正なツイートです");
             return redirect(routes.TweetsController.create());
         }
-        //正規表現チェックの終わり--------
-
-//        tweet.id = pubInt;
+        //正規表現チェックの終わり---------------
 
         //セッションのidからユーザーのidを照らし合わせ、マッチさせる
         User user = User.find.byId(Integer.parseInt(session("id")));

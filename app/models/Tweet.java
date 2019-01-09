@@ -24,7 +24,6 @@ public class Tweet extends Model {
     public String mutter;
 
     @CreatedTimestamp
-    @Formats.DateTime(pattern = "yyyy-MM-dd'T'HH:mm")
     public Date createdDate;
 
     @ManyToOne

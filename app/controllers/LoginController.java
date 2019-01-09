@@ -39,8 +39,6 @@ public class LoginController extends Controller {
             flash("danger", "ログインに失敗しました");
             return redirect(routes.LoginController.login());
         }
-        List<Tweet> tweetList = new ArrayList<>();
-        System.out.println(tweetList.isEmpty() + "isEmpty?");
         setSession(user);
         flash("info", "ログインに成功しました");
         return redirect(routes.TweetsController.index());
