@@ -72,6 +72,9 @@ public class TweetsController extends Controller {
         //セッションのidからユーザーのidを照らし合わせ、マッチさせる
         User user = User.find.byId(Integer.parseInt(session("id")));
         tweet.setUser(user);
+
+
+
 //        pubInt += 1;
         tweet.save();
         return  redirect(routes.TweetsController.index());
