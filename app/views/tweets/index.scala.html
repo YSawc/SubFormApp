@@ -9,6 +9,7 @@
 </head>
 
 @layout("つぶやき一覧"){
+@if(! (tweets.isEmpty()) ){
     @for(tweet <- tweets){
     <div class="panel panel-info">
         <p>
@@ -20,9 +21,11 @@
         </p>
         <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
 
+        <!-- urlに変換したい -->
+        <a>@tweet.mutter</a>
+
         <!--if(){-->
         <!--}-->
-
 
         <br>
         　　　　　<!--空白注意-->
@@ -42,4 +45,5 @@
         }
     </div>
     }
+}
 }

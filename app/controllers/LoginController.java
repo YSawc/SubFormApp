@@ -1,6 +1,7 @@
 package controllers;
 
 import dto.LoginRequest;
+import models.Tweet;
 import models.User;
 import play.api.mvc.Session;
 import play.data.Form;
@@ -13,6 +14,8 @@ import views.html.logins.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
 
 @Singleton
 public class LoginController extends Controller {
@@ -32,13 +35,12 @@ public class LoginController extends Controller {
         LoginRequest req = formFactory.form(LoginRequest.class).bindFromRequest().get();
         User user = auth.login(req);
 
-        System.out.println(user);
-
         if(user == null){
             flash("danger", "ログインに失敗しました");
             return redirect(routes.LoginController.login());
         }
-
+        List<Tweet> tweetList = new ArrayList<>();
+        System.out.println(tweetList.isEmpty() + "isEmpty?");
         setSession(user);
         flash("info", "ログインに成功しました");
         return redirect(routes.TweetsController.index());
@@ -51,7 +53,6 @@ public class LoginController extends Controller {
     }
 
     private void setSession(User user){
-
         //ログインと同時にセッションをセット
         session("userID", user.userID);
         session("password", user.password);

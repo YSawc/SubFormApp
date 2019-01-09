@@ -49,20 +49,19 @@ public class UsersController extends Controller {
                 (formFactory.form().bindFromRequest().get("password"))) + "同値かチェック");
 
         //確認用パスワードの不一致
-        if(! (formFactory.form().bindFromRequest().get("password_confirm").equals
-                (formFactory.form().bindFromRequest().get("password"))) ){
+        if(!(formFactory.form().bindFromRequest().get("password_confirm").equals
+                (formFactory.form().bindFromRequest().get("password")))){
             flash("danger", "確認用パスワードが一致しません");
             return badRequest(create.render(userForm));
         }
 
-        //ユーザーidが被りあればフラッシュを出力
-//        String sql = "SELECT user_id FROM user WHERE user_id="
-//                + userForm.get().userID;
-//        if(Ebean.createSqlQuery(sql).findList().size() !=0){
-//
-//            flash("danger", "ユーザーIDはすでに利用されています");
-//            return badRequest(create.render(userForm));
-//        }
+        String sql = "SELECT user_id FROM user WHERE user_id="
+                + userForm.get().userID;
+        if(Ebean.createSqlQuery(sql).findList().size() !=0){
+
+            flash("danger", "ユーザーIDはすでに利用されています");
+            return badRequest(create.render(userForm));
+        }
 
         User user = userForm.get();
 //        user.id = pubInt;

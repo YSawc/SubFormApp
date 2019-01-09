@@ -31,6 +31,7 @@ GET     /tweets/create              controllers.TweetsController.create()
 GET     /tweets/:id                 controllers.TweetsController.show(id: Integer)
 POST    /tweets/create              controllers.TweetsController.save()
 GET     /tweets/delete/:id          controllers.TweetsController.destroy(id: Integer)
+GET     /tweets/empty               controllers.TweetsController.empty()
 
 #ログイン用
 GET     /login                      controllers.LoginController.login()

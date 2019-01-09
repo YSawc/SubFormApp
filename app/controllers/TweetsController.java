@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import views.html.tweets.*;
 
@@ -28,8 +30,14 @@ public class TweetsController extends Controller {
         List<Tweet> tweetList = new ArrayList<Tweet>();
         List<User> userList = User.find.query().findList();
         tweetList = Tweet.find.all();
+        System.out.println(tweetList + " ツイートリスト");
+        System.out.println(tweetList.isEmpty() + "isEmpty?");
 
-        return ok(index.render(tweetList));
+        if(tweetList.isEmpty()){
+            return redirect(routes.TweetsController.empty());
+        }else {
+            return ok(index.render(tweetList));
+        }
     }
 
     public Result create(){
@@ -60,6 +68,11 @@ public class TweetsController extends Controller {
 
         Tweet tweet = tweetForm.get();
 
+        if(tweet.mutter.length() > 140){
+            flash("danger", "140文字以内で入力してください");
+            return redirect(routes.TweetsController.create());
+        }
+
         //ツイート内容が文頭スペース、改行のみの連鎖の場合不正エラーを出力
         if(tweet.mutter.matches("^[\\s]*?$")){
             flash("danger", "不正なツイートです");
@@ -73,6 +86,14 @@ public class TweetsController extends Controller {
         User user = User.find.byId(Integer.parseInt(session("id")));
         tweet.setUser(user);
 
+        //------------------------------- 作成中 ---------------------------
+//        String urlStr = tweet.convURLLink(tweet.mutter);
+//        System.out.println(urlStr + " uslStr");
+//
+//        System.out.println(tweet.convURLLink(tweet.mutter) + "url返還後");
+//
+//        tweet.mutter = tweet.convURLLink(tweet.mutter);
+        //-----------------------------------------------------------------
 
 
 //        pubInt += 1;
@@ -90,6 +111,11 @@ public class TweetsController extends Controller {
 
         tweet.delete();
         return redirect(routes.TweetsController.index());
+    }
+
+    public Result empty(){
+        System.out.println("EMPPPPPPPPPPP");
+        return ok(empty.render());
     }
 
     //いいね機能
@@ -111,4 +137,5 @@ public class TweetsController extends Controller {
 //        }
 //
 //    }
+
 }
