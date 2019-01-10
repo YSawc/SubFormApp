@@ -108,10 +108,11 @@ public class FollowsController extends Controller {
                 System.out.println(table + "  tableの出力");
             }
         }
-//
 
         List<Tweet> tweetList = new ArrayList<>();
         tweetList = User.find.ref(id).getTweets();
+
+        System.out.println(tweetList.size() + "ツイートリストのサイズの出力");
 
         for (int i: tables){
             System.out.println(i + "  i の出力");
@@ -157,6 +158,8 @@ public class FollowsController extends Controller {
 
         List<Tweet> tweetList = new ArrayList<>();
         tweetList = User.find.ref(id).getTweets();
+
+        System.out.println(tweetList.size() + "ツイートリストのサイズの出力");
 
         for (int i: tables){
             System.out.println(i + "  i の出力");

@@ -6,12 +6,11 @@
 
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">Fluid jumbotron</h1>
-            <p class="lead">This is a modified jumbotron that occupies the entire
-                horizontal space of its parent.</p>
+            <h1 class="display-4">ユーザー検索</h1>
+            <p class="lead">ユーザー名の一部でも検索が可能です</p>
             @helper.form(action = routes.UsersController.do_search()){
-                @helper.inputText(userForm("name_search"))
-                'rows-> 4, '_label-> "ユーザー検索", 'class->"form-control", 'size->"30")
+                @helper.inputText(userForm("name_search")
+                , 'rows-> 4, '_label-> "", 'class->"form-control", 'size->"40")
                 <input type="submit" value="送信" class="btn btn-primary">
             }
         </div>

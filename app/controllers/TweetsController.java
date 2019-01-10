@@ -30,7 +30,7 @@ public class TweetsController extends Controller {
         List<Tweet> tweetList = new ArrayList<Tweet>();
         List<User> userList = User.find.query().findList();
         tweetList = Tweet.find.all();
-        System.out.println(tweetList + " ツイートリスト");
+//        System.out.println(tweetList + " ツイートリスト");
 
         //ぬるぽエラー対策
         if(tweetList.isEmpty()){

@@ -55,8 +55,10 @@ public class UsersController extends Controller {
             return badRequest(create.render(userForm));
         }
 
-        String sql = "SELECT user_id FROM user WHERE user_id="
-                + userForm.get().userID;
+        String sql = "SELECT user_id FROM user WHERE user_id= \""
+                + userForm.get().userID + "\"";
+
+
         if(Ebean.createSqlQuery(sql).findList().size() !=0){
 
             flash("danger", "ユーザーIDはすでに利用されています");
@@ -64,8 +66,7 @@ public class UsersController extends Controller {
         }
 
         User user = userForm.get();
-//        user.id = pubInt;
-//        pubInt += 1;
+
         user.save();
         flash("info", "ユーザーを作成しました");
         return redirect(routes.UsersController.index());
@@ -159,7 +160,9 @@ public class UsersController extends Controller {
         user_name = formFactory.form().bindFromRequest().get("name_search");
         //受け取った文字列から、sql分でユーザー検索（曖昧検索が要）
 
-        String sql = "SELECT name FROM user WHERE name LIKE  '% "+ user_name + " %'";
+        System.out.println(user_name + " user_name の出力（検索欄　あいまい検索）");
+
+        String sql = "SELECT name FROM user WHERE name LIKE  '%"+ user_name + "%'";
 
         if(Ebean.createSqlQuery(sql).findList().size() !=0){
             List<User> userList = new ArrayList<User>();
@@ -174,10 +177,12 @@ public class UsersController extends Controller {
         User user = User.find.byId(Integer.parseInt(session("id")));
         System.out.println(user.private_or);
         if(user.private_or){
-            System.out.println("false");
+//            System.out.println("false");
             user.private_or = false;
+            session("private_or","1");
         }else{
-            System.out.println("true");
+//            System.out.println("true");
+            session("private_or","0");
             user.private_or = true;
         }
         user.save();
