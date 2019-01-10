@@ -9,8 +9,7 @@ import play.mvc.Result;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,6 +30,20 @@ public class TweetsController extends Controller {
         List<User> userList = User.find.query().findList();
         tweetList = Tweet.find.all();
 //        System.out.println(tweetList + " ツイートリスト");
+
+//        tweetList.sort(Comparator.comparing(Tweet));
+//
+//        Collections.sort(tweetList, ((o1, o2) ->{
+//            o1.createdDate.after(o2.createdDate)
+//        }
+//        ));
+
+        System.out.println("nulp前出力");
+
+        List<Tweet> rev_tweetList = new ArrayList<>();
+
+        //リストの逆順化
+        Collections.reverse(tweetList);
 
         //ぬるぽエラー対策
         if(tweetList.isEmpty()){
@@ -76,8 +89,8 @@ public class TweetsController extends Controller {
             return redirect(routes.TweetsController.create());
         }
 
-        //ツイート内容が文頭スペース、改行のみの連鎖の場合不正エラーを出力
-        if(tweet.mutter.matches("^[\\s]*?$")){
+        //ツイート内容が文頭スペース、改行、ハイフンのみの連鎖の場合不正エラーを出力
+        if(tweet.mutter.matches("^[\\s_]*?$")){
             flash("danger", "不正なツイートです");
             return redirect(routes.TweetsController.create());
         }

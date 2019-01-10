@@ -1,4 +1,4 @@
-@(tweets : List[Tweet] )
+@(tweets : List[Tweet], user : User )
 
 
 <head>
@@ -23,22 +23,22 @@
                     <li>
                         <!--ログインセッション次第で、出力を変える-->
                         @if(session.get("userID") != null){
-                        <a href="@routes.LoginController.logout()">ログアウト</a>
+                            <a href="@routes.LoginController.logout()">ログアウト</a>
                         }
                         @if(session.get("userID") == null){
-                        <a href="@routes.LoginController.login()">ログイン</a>
+                            <a href="@routes.LoginController.login()">ログイン</a>
                         }
                     <li class="active">
                         @if(session.get("name") != null){
-                        <a href="@routes.UsersController.edit(Integer.parseInt(session.get("id")))">@session.get("name")</a>
+                            <a href="@routes.UsersController.edit(Integer.parseInt(session.get("id")))">@session.get("name")</a>
                         }
                     </li>
                         @if(session.get("userID") == null){
-                        <a href="@routes.UsersController.create()">ユーザー作成</a>
+                            <a href="@routes.UsersController.create()">ユーザー作成</a>
                         }
                         <!--ツイート画面の表示-->
                         @if(session.get("userID") != null){
-                        <a href="@routes.TweetsController.create()">ツイートする</a>
+                            <a href="@routes.TweetsController.create()">ツイートする</a>
                         }
                     </li>
                 </ul>
@@ -56,26 +56,26 @@
                             <a>　　　</a>
                         </li>
                         <li class="bg-success">
-                            <a href="">@tweet.getUser.getName</a>
+                            <a href="">@user.getName</a>
                         </li>
                         <li>
-                            @if(!(session.get("userID").equals(tweet.getUser.userID))){
-                                @if(tweet.getUser.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id")))){
-                                <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
+                            @if(!(session.get("userID").equals(user.userID))){
+                                @if(user.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id")))){
+                                    <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
                                 }
-                                @if(!(tweet.getUser.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id"))))){
-                                <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローを外す</a>
+                                @if(!(user.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id"))))){
+                                    <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローを外す</a>
                                 }
                             }
                         </li>
                         <li>
-                            <a>ツイート<br> <strong class="text-primary"><font size="3">@tweet.getUser.getTweets.size()</font></strong></a>
+                            <a>ツイート<br> <strong class="text-primary"><font size="3">@user.getTweets.size()</font></strong></a>
                         </li>
                         <li>
-                            <a href="@routes.FollowsController.show(tweet.getUser.id)">フォロー<br> <strong class="text-primary"><font size="3">@tweet.getUser.get_this_Followed_list(tweet.getUser.id).size()</font></strong></a>
+                            <a href="@routes.FollowsController.show(tweet.getUser.id)">フォロー<br> <strong class="text-primary"><font size="3">@user.get_this_Followed_list(user.id).size()</font></strong></a>
                         </li>
                         <li>
-                            <a href="@routes.FollowsController.show_ver2(tweet.getUser.id)">フォロワー<br> <strong class="text-primary"><font size="3">@tweet.getUser.get_this_beFollowed_list(tweet.getUser.id).size()</font></strong></a>
+                            <a href="@routes.FollowsController.show_ver2(tweet.getUser.id)">フォロワー<br> <strong class="text-primary"><font size="3">@user.get_this_beFollowed_list(user.id).size()</font></strong></a>
                         </li>
                     </ul>
                 </div><!--/.nav-collapse -->
@@ -87,22 +87,18 @@
     </nav>
     <!--navバー終了-->
 
-    @if(! (tweet.getUser.private_or) ){
+    @if(! (user.private_or) ){
 
     <div class="panel panel-info">
         <p>
             <!--セッションの場合に分けてリンク先を変える-->
-            <a href="@routes.UsersController.show(tweet.id)">
+            <a href="@routes.UsersController.show(tweet.getUser.id)">
                 <strong>@tweet.getUser.getName</strong>
             </a>
             <span class="">@@</span>@tweet.getUser.getUserName
+            • @tweet.createdDate
         </p>
         <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
-
-
-
-        <!--if(){-->
-        <!--}-->
 
         <br>
         <br>
@@ -111,12 +107,17 @@
         <a href="" class="mx-auto"><span class="glyphicon glyphicon-heart">　　　　<!--空白注意--></span></a>
         <!--セッション制御で、削除を表示-->
         @if(session.get("userID").equals(tweet.getUser.userID)){
-        <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
-            <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
-        </a>
+            <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
+                <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
+            </a>
         }
 
     </div>
     }
+
+    }
+    @if(user.private_or){
+        <br>
+        <h5>このユーザーは非公開設定です</h5>
     }
 }

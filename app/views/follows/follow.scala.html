@@ -8,113 +8,104 @@
 </head>
 
 @layout("ユーザー詳細"){
-@for(tweet <- tweets){
-<!--navバー-->
-<nav class="navbar navbar-default navbar-fixed-top mt-5">
-    <div class="container">
-        <div class="navbar-header">
-            <a href="@routes.TweetsController.index()" class="">
-                <i class="fa fa-twitter" style="font-size:48px;color:LightSkyBlue"></i>
-            </a>
-            　<!--空白注意-->
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <!--ログインセッション次第で、出力を変える-->
-                    @if(session.get("userID") != null){
-                    <a href="@routes.LoginController.logout()">ログアウト</a>
-                    }
-                    @if(session.get("userID") == null){
-                    <a href="@routes.LoginController.login()">ログイン</a>
-                    }
-                </li>
-                <li class="active">
-                    @if(session.get("name") != null){
-                    <a href="@routes.UsersController.edit(Integer.parseInt(session.get("id")))">@session.get("name")</a>
-                    }
-                </li>
-                <li>
-                    @if(session.get("userID") == null){
-                    <a href="@routes.UsersController.create()">ユーザー作成</a>
-                    }
-                    <!--ツイート画面の表示-->
-                    @if(session.get("userID") != null){
-                    <a href="@routes.TweetsController.create()">ツイートする</a>
-                    }
-                </li>
-            </ul>
-
-        </div><!--/.nav-collapse -->
-    </div>
-
-    <!--2段目のnavbar-->
-    <div class="col-md-12">
-        <div class="navbar-header">
+    @for(tweet <- tweets){
+        <!--navバー-->
+        <nav class="navbar navbar-default navbar-fixed-top mt-5">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="@routes.TweetsController.index()" class="">
+                    <i class="fa fa-twitter" style="font-size:48px;color:LightSkyBlue"></i>
+                </a>
+                　<!--空白注意-->
+            </div>
             <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-right">
                     <li>
                         <!--ログインセッション次第で、出力を変える-->
-                        <a>　　　</a>
+                        @if(session.get("userID") != null){
+                            <a href="@routes.LoginController.logout()">ログアウト</a>
+                        }
+                        @if(session.get("userID") == null){
+                            <a href="@routes.LoginController.login()">ログイン</a>
+                        }
                     </li>
-                    <li class="bg-success">
-                        <a href="">@tweet.getUser.getName</a>
-                    </li>
-                    <li>
-                        @if(!(session.get("userID").equals(tweet.getUser.userID))){
-                        <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
+                    <li class="active">
+                        @if(session.get("name") != null){
+                            <a href="@routes.UsersController.edit(Integer.parseInt(session.get("id")))">@session.get("name")</a>
                         }
                     </li>
                     <li>
-                        <a>ツイート<br> <strong class="text-primary"><font size="3">@tweet.getUser.getTweets.size()</font></strong></a>
-                    </li>
-                    <li>
-                        <a>フォロー<br> <strong class="test-primary"><font size="3">@tweet.getUser</font></strong></a>
+                        @if(session.get("userID") == null){
+                            <a href="@routes.UsersController.create()">ユーザー作成</a>
+                        }
+                        <!--ツイート画面の表示-->
+                        @if(session.get("userID") != null){
+                            <a href="@routes.TweetsController.create()">ツイートする</a>
+                        }
                     </li>
                 </ul>
+
             </div><!--/.nav-collapse -->
-            　<!--空白注意-->
         </div>
+
+        <!--2段目のnavbar-->
+        <div class="col-md-12">
+            <div class="navbar-header">
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <!--ログインセッション次第で、出力を変える-->
+                            <a>　　　</a>
+                        </li>
+                        <li class="bg-success">
+                            <a href="">@tweet.getUser.getName</a>
+                        </li>
+                        <li>
+                            @if(!(session.get("userID").equals(tweet.getUser.userID))){
+                                <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
+                            }
+                        </li>
+                        <li>
+                            <a>ツイート<br> <strong class="text-primary"><font size="3">@tweet.getUser.getTweets.size()</font></strong></a>
+                        </li>
+                        <li>
+                            <a>フォロー<br> <strong class="test-primary"><font size="3">@tweet.getUser</font></strong></a>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+                　<!--空白注意-->
+            </div>
+        </div>
+        <!--2段目navbar終了-->
+
+    </nav>
+        <!--navバー終了-->
+
+    <div class="panel panel-info">
+        <p>
+            <!--セッションの場合に分けてリンク先を変える-->
+            <a href="@routes.UsersController.show(tweet.id)">
+                <strong>@tweet.getUser.getName</strong>
+            </a>
+            <span class="">@@</span>@tweet.getUser.getUserName
+        </p>
+        <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
+
+        <br>
+        <br>
+        　　　　　<!--空白注意-->
+        <a href="" class="mx-auto"><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
+        <a href="" class="mx-auto"><span class="glyphicon glyphicon-heart">　　　　<!--空白注意--></span></a>
+        <!--セッション制御で、削除を表示-->
+        @if(session.get("userID").equals(tweet.getUser.userID)){
+            <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
+                <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
+            </a>
+        }
+
     </div>
-    <!--2段目navbar終了-->
-
-</nav>
-<!--navバー終了-->
-
-<div class="panel panel-info">
-    <p>
-        <!--セッションの場合に分けてリンク先を変える-->
-        <a href="@routes.UsersController.show(tweet.id)">
-            <strong>@tweet.getUser.getName</strong>
-        </a>
-        <span class="">@@</span>@tweet.getUser.getUserName
-    </p>
-    <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
-
-
-
-    <!--if(){-->
-    <!--}-->
-
-    <br>
-    <br>
-    　　　　　<!--空白注意-->
-    <a href="" class="mx-auto"><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
-    <a href="" class="mx-auto"><span class="glyphicon glyphicon-heart">　　　　<!--空白注意--></span></a>
-    <!--セッション制御で、削除を表示-->
-    @if(session.get("userID").equals(tweet.getUser.userID)){
-    <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
-        <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
-    </a>
     }
-
-</div>
-}
-
-@for(data <- datas){
-    @data
-}
-
-
-
+    @for(data <- datas){
+        @data
+    }
 }

@@ -17,6 +17,7 @@ import views.html.errors.*;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Singleton
@@ -129,12 +130,13 @@ public class UsersController extends Controller {
         ///このユーザーのツイートの検索
         List<Tweet> tweetList = new ArrayList<Tweet>();
         tweetList = User.find.ref(user.id).getTweets();
+        Collections.reverse(tweetList);
 
         //このユーザーの
 //        System.out.println(relationshipList + "　このユーザーをフォローするユーザーの総計");
 
 
-        return ok(show.render(tweetList));
+        return ok(show.render(tweetList, user));
 
     }
 
@@ -164,6 +166,12 @@ public class UsersController extends Controller {
 
         System.out.println(user_name + " user_name の出力（検索欄　あいまい検索）");
 
+        if(user_name.matches("^[\\s_]*?$")){
+            System.out.println("nullのテスト");
+            flash("danger", "ユーザーは見つかりませんでした");
+            return redirect(routes.UsersController.search());
+        }
+
         String sql = "SELECT id FROM user WHERE name LIKE  '%"+ user_name + "%'";
 
         System.out.println(Ebean.createSqlQuery(sql).findList() + "検索結果");
@@ -186,6 +194,7 @@ public class UsersController extends Controller {
 
             return ok(done_serch.render(tables));
         }
+        flash("danger", "ユーザーは見つかりませんでした");
         return redirect(routes.UsersController.search());
     }
 
@@ -197,13 +206,16 @@ public class UsersController extends Controller {
 //            System.out.println("false");
             user.private_or = false;
             session("private_or","1");
+            flash("info", "ツイートを「公開する」にしました。");
         }else{
 //            System.out.println("true");
             session("private_or","0");
             user.private_or = true;
+            flash("info", "ツイートを「非公開」にしました。");
         }
 
         user.save();
+
         return redirect(routes.TweetsController.index());
     }
 

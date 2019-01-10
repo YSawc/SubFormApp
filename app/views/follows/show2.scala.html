@@ -9,98 +9,98 @@
 
 @layout("フォロワーユーザー一覧"){
 @for(tweet <- tweets){
-<!--navバー-->
-<nav class="navbar navbar-default navbar-fixed-top mt-5">
-    <div class="container">
-        <div class="navbar-header">
-            <a href="@routes.TweetsController.index()" class="">
-                <i class="fa fa-twitter" style="font-size:48px;color:LightSkyBlue"></i>
-            </a>
-            　<!--空白注意-->
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <!--ログインセッション次第で、出力を変える-->
-                    @if(session.get("userID") != null){
-                    <a href="@routes.LoginController.logout()">ログアウト</a>
-                    }
-                    @if(session.get("userID") == null){
-                    <a href="@routes.LoginController.login()">ログイン</a>
-                    }
-                </li>
-                <li class="active">
-                    @if(session.get("name") != null){
-                    <a href="@routes.UsersController.edit(Integer.parseInt(session.get("id")))">@session.get("name")</a>
-                    }
-                </li>
-                <li>
-                    @if(session.get("userID") == null){
-                    <a href="@routes.UsersController.create()">ユーザー作成</a>
-                    }
-                    <!--ツイート画面の表示-->
-                    @if(session.get("userID") != null){
-                    <a href="@routes.TweetsController.create()">ツイートする</a>
-                    }
-                </li>
-            </ul>
-
-        </div><!--/.nav-collapse -->
-    </div>
-
-    <!--2段目のnavbar-->
-    <div class="col-md-12">
-        <div class="navbar-header">
+    <!--navバー-->
+    <nav class="navbar navbar-default navbar-fixed-top mt-5">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="@routes.TweetsController.index()" class="">
+                    <i class="fa fa-twitter" style="font-size:48px;color:LightSkyBlue"></i>
+                </a>
+                　<!--空白注意-->
+            </div>
             <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-right">
                     <li>
                         <!--ログインセッション次第で、出力を変える-->
-                        <a>　　　</a>
-                    </li>
-                    <li class="bg-success">
-                        <a href="">@tweet.getUser.getName</a>
-                    </li>
-                    <li>
-                        @if(!(session.get("userID").equals(tweet.getUser.userID))){
-                        @if(tweet.getUser.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id")))){
-                        <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
+                        @if(session.get("userID") != null){
+                            <a href="@routes.LoginController.logout()">ログアウト</a>
                         }
-                        @if(!(tweet.getUser.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id"))))){
-                        <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローを外す</a>
+                        @if(session.get("userID") == null){
+                            <a href="@routes.LoginController.login()">ログイン</a>
                         }
+                    </li>
+                    <li class="active">
+                        @if(session.get("name") != null){
+                            <a href="@routes.UsersController.edit(Integer.parseInt(session.get("id")))">@session.get("name")</a>
                         }
                     </li>
                     <li>
-                        <a>ツイート<br> <strong class="text-primary"><font size="3">@tweet.getUser.getTweets.size()</font></strong></a>
-                    </li>
-                    <li>
-                        <a href="@routes.FollowsController.show(tweet.getUser.id)">フォロー<br> <strong class="text-primary"><font size="3">@tweet.getUser.get_this_Followed_list(tweet.getUser.id).size()</font></strong></a>
-                    </li>
-                    <li>
-                        <a href="@routes.FollowsController.show_ver2(tweet.getUser.id)">フォロワー<br> <strong class="text-primary"><font size="3">@tweet.getUser.get_this_beFollowed_list(tweet.getUser.id).size()</font></strong></a>
+                        @if(session.get("userID") == null){
+                            <a href="@routes.UsersController.create()">ユーザー作成</a>
+                        }
+                        <!--ツイート画面の表示-->
+                        @if(session.get("userID") != null){
+                            <a href="@routes.TweetsController.create()">ツイートする</a>
+                        }
                     </li>
                 </ul>
+
             </div><!--/.nav-collapse -->
-            　<!--空白注意-->
         </div>
-    </div>
-    <!--2段目navbar終了-->
 
-</nav>
-<!--navバー終了-->
-<br>
-}
+        <!--2段目のnavbar-->
+        <div class="col-md-12">
+            <div class="navbar-header">
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <!--ログインセッション次第で、出力を変える-->
+                            <a>　　　</a>
+                        </li>
+                        <li class="bg-success">
+                            <a href="">@tweet.getUser.getName</a>
+                        </li>
+                        <li>
+                            @if(!(session.get("userID").equals(tweet.getUser.userID))){
+                                @if(tweet.getUser.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id")))){
+                                    <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
+                                }
+                                @if(!(tweet.getUser.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id"))))){
+                                    <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローを外す</a>
+                                }
+                            }
+                        </li>
+                        <li>
+                            <a>ツイート<br> <strong class="text-primary"><font size="3">@tweet.getUser.getTweets.size()</font></strong></a>
+                        </li>
+                        <li>
+                            <a href="@routes.FollowsController.show(tweet.getUser.id)">フォロー<br> <strong class="text-primary"><font size="3">@tweet.getUser.get_this_Followed_list(tweet.getUser.id).size()</font></strong></a>
+                        </li>
+                        <li>
+                            <a href="@routes.FollowsController.show_ver2(tweet.getUser.id)">フォロワー<br> <strong class="text-primary"><font size="3">@tweet.getUser.get_this_beFollowed_list(tweet.getUser.id).size()</font></strong></a>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+                　<!--空白注意-->
+            </div>
+        </div>
+        <!--2段目navbar終了-->
 
-<h5>フォロワーー覧</h5>
-
-<ul>
-    @for(i <- tables){
-    <ul>
-        <a href="@routes.UsersController.show(i)"><font size="3">@User.find.byId(i).getName</font></a>
-        <span>@@@User.find.byId(i).getUserName</span>
-    </ul>
+    </nav>
+    <!--navバー終了-->
     <br>
     }
-    <br>
-</ul>
+
+    <h5>フォロワーー覧</h5>
+
+    <ul>
+        @for(i <- tables){
+        <ul>
+            <a href="@routes.UsersController.show(i)"><font size="3">@User.find.byId(i).getName</font></a>
+            <span>@@@User.find.byId(i).getUserName</span>
+        </ul>
+        <br>
+        }
+        <br>
+    </ul>
 }
