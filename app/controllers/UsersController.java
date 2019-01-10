@@ -1,6 +1,8 @@
 package controllers;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
 import models.Tweet;
 import models.User;
 
@@ -162,14 +164,29 @@ public class UsersController extends Controller {
 
         System.out.println(user_name + " user_name の出力（検索欄　あいまい検索）");
 
-        String sql = "SELECT name FROM user WHERE name LIKE  '%"+ user_name + "%'";
+        String sql = "SELECT id FROM user WHERE name LIKE  '%"+ user_name + "%'";
+
+        System.out.println(Ebean.createSqlQuery(sql).findList() + "検索結果");
 
         if(Ebean.createSqlQuery(sql).findList().size() !=0){
-            List<User> userList = new ArrayList<User>();
             System.out.println("ユーザーが見つかりました");
-            return TODO;
+            SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
+            List<SqlRow> result = sqlQuery.findList();
+            List<Integer> tables = new ArrayList<Integer>();
+            result.forEach(sqlRow ->{
+                tables.add(Integer.parseInt(sqlRow.getString("id")));
+//                userList.add(sqlRow.getString("name"));
+            } );
+
+            for (Integer i : tables) {
+                System.out.println(i + " iの出力");
+            }
+
+
+
+            return ok(done_serch.render(tables));
         }
-        return TODO;
+        return redirect(routes.UsersController.search());
     }
 
     public Result switch_pub_or(){
@@ -185,6 +202,7 @@ public class UsersController extends Controller {
             session("private_or","0");
             user.private_or = true;
         }
+
         user.save();
         return redirect(routes.TweetsController.index());
     }
