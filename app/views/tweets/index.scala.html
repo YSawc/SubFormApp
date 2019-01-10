@@ -13,6 +13,7 @@
 
     @for(tweet <- tweets){
     @if(! (tweets.isEmpty()) ){
+    @if(! (tweet.getUser.private_or) ){
     <div class="panel panel-info">
         <p>
             <!--セッションの場合に分けてリンク先を変える-->
@@ -49,6 +50,7 @@
         </a>
         }
     </div>
+    }
     }
     }
 }

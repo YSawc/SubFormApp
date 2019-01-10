@@ -14,11 +14,13 @@ GET     /message                    controllers.AsyncController.message
 
 
 # ユーザー用
+
 GET     /users                      controllers.UsersController.index()
 GET     /users/create               controllers.UsersController.create()
+GET     /users/switch               controllers.UsersController.switch_pub_or()
 GET     /users/:id                  controllers.UsersController.show(id: Integer)
-#GET     /users/edit/:id             controllers.UsersController.edit(id: Integer)
-#POST    /users/edit                 controllers.UsersController.update()
+GET     /users/edit/:id             controllers.UsersController.edit(id: Integer)
+POST    /users/edit/                controllers.UsersController.update()
 POST    /users/create               controllers.UsersController.save()
 DELETE  /users/delete/:id           controllers.UsersController.destroy(id: Integer)
 GET     /users/search               controllers.UsersController.search()

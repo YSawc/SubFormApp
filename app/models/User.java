@@ -36,6 +36,8 @@ public class User extends Model{
     @Constraints.MaxLength(100)
     @Constraints.Email
     public String email;
+    @Constraints.Required
+    public boolean private_or;
 
     public static Model.Finder<Integer, User> find = new Model.Finder<>(User.class);
 

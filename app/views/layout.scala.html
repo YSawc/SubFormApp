@@ -44,6 +44,9 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
+                        <a href="@routes.UsersController.switch_pub_or()">公開設定</a>
+                    </li>
+                    <li>
                         <!--ログインセッション次第で、出力を変える-->
                         @if(session.get("userID") != null){
                         <a href="@routes.LoginController.logout()">ログアウト</a>
@@ -54,7 +57,7 @@
                     </li>
                     <li class="active">
                         @if(session.get("name") != null){
-                        <a>@session.get("name")</a>
+                        <a href="@routes.UsersController.edit(Integer.parseInt(session.get("id")))">@session.get("name")</a>
                         }
                     </li>
                     <li>

@@ -31,7 +31,7 @@
                 </li>
                 <li class="active">
                     @if(session.get("name") != null){
-                    <a>@session.get("name")</a>
+                    <a href="@routes.UsersController.edit(Integer.parseInt(session.get("id")))">@session.get("name")</a>
                     }
                 </li>
                 <li>
@@ -100,6 +100,9 @@
         <span>@@@User.find.byId(i).getUserName</span>
     </ul>
     <br>
+    <!-- フォローユーザーの呟き一覧 -->
+
+    <!-- フォローユーザーの呟き一覧終了 -->
     }
     <br>
 </ul>

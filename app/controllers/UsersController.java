@@ -72,33 +72,43 @@ public class UsersController extends Controller {
     }
 
     //editは実装しない
-//    public Result edit(Integer id){
-//        User user = User.find.byId(id);
-//        if(user == null){
-//            return notFound(_404.render());
-//        }
-//        Form<User> userForm = formFactory.form(User.class).fill(user);
-//        return ok(edit.render(userForm));
-//    }
+    public Result edit(Integer id){
+        User user = User.find.byId(id);
+        if(user == null){
+            return notFound(_404.render());
+        }
+        Form<User> userForm = formFactory.form(User.class).fill(user);
+        return ok(edit.render(userForm));
+    }
 
-//    public Result update(){
-//        User user = formFactory.form(User.class).bindFromRequest().get();
-//        User oldUser = User.find.byId(user.id);
-//        if(oldUser==null){
-//            flash("danger", "ユーザーが見つかりません");
-//            return badRequest();
-//        }
-//
-//        oldUser.id = user.id;
-//        oldUser.name = user.name;
-//        oldUser.userID = user.userID;
-//        oldUser.password = user.password;
-//        oldUser.email = user.email;
-//        oldUser.update();
-//
-//        flash("ユーザー情報を更新しました");
-//        return redirect(routes.UsersController.index());
-//    }
+    public Result update(){
+        Form<User> userForm = formFactory.form(User.class).bindFromRequest();
+
+        User user = formFactory.form(User.class).bindFromRequest().get();
+        System.out.println("通過テスト");
+        User oldUser = User.find.byId(Integer.parseInt(session("id")));
+        if(oldUser==null){
+            flash("danger", "ユーザーが見つかりません");
+            return badRequest();
+        }
+
+        System.out.println(oldUser.name);
+
+        if(formFactory.form().bindFromRequest().get("old_password") != oldUser.password){
+            flash("danger", "元のパスワードと一致しません");
+            return badRequest(edit.render(userForm));
+        }
+        user.id = oldUser.id;
+        oldUser.id = user.id;
+        oldUser.name = user.name;
+        oldUser.userID = user.userID;
+        oldUser.password = user.password;
+        oldUser.email = user.email;
+        oldUser.update();
+
+        flash("ユーザー情報を更新しました");
+        return redirect(routes.UsersController.index());
+    }
 
     public Result show(Integer id) {
 
@@ -159,6 +169,19 @@ public class UsersController extends Controller {
         return TODO;
     }
 
-
+    public Result switch_pub_or(){
+//        return redirect(routes.UsersController.index());
+        User user = User.find.byId(Integer.parseInt(session("id")));
+        System.out.println(user.private_or);
+        if(user.private_or){
+            System.out.println("false");
+            user.private_or = false;
+        }else{
+            System.out.println("true");
+            user.private_or = true;
+        }
+        user.save();
+        return redirect(routes.TweetsController.index());
+    }
 
 }

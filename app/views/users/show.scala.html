@@ -28,13 +28,11 @@
                         @if(session.get("userID") == null){
                         <a href="@routes.LoginController.login()">ログイン</a>
                         }
-                    </li>
                     <li class="active">
                         @if(session.get("name") != null){
-                        <a>@session.get("name")</a>
+                        <a href="@routes.UsersController.edit(Integer.parseInt(session.get("id")))">@session.get("name")</a>
                         }
                     </li>
-                    <li>
                         @if(session.get("userID") == null){
                         <a href="@routes.UsersController.create()">ユーザー作成</a>
                         }
@@ -89,6 +87,8 @@
     </nav>
     <!--navバー終了-->
 
+    @if(! (tweet.getUser.private_or) ){
+
     <div class="panel panel-info">
         <p>
             <!--セッションの場合に分けてリンク先を変える-->
@@ -117,5 +117,6 @@
         }
 
     </div>
+    }
     }
 }

@@ -10,6 +10,7 @@
         @helper.inputText(userForm("password"), '_label->"パスワード", 'size->"30", 'type->"password")
         @helper.inputText(userForm("password_confirm"), '_label->"パスワード(確認用)", 'size->"30", 'type->"password")
         @helper.inputText(userForm("email"), '_label->"Eメール", 'size->"30")
+        @helper.checkbox(userForm("private_or"), '_label->"非公開" )
         <input type="submit" value="作成" class="btn btn-primary">
     }
 }
