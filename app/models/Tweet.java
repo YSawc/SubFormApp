@@ -57,6 +57,7 @@ public class Tweet extends Model {
      */
     public static String convURLLink(String str) {
         Matcher matcher = convURLLinkPtn.matcher(str);
+        System.out.println("マッチしました");
         return matcher.replaceAll("<a href=\"$0\">$0</a>");
     }
 

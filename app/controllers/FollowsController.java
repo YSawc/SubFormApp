@@ -112,7 +112,7 @@ public class FollowsController extends Controller {
         List<Tweet> tweetList = new ArrayList<>();
         tweetList = User.find.ref(id).getTweets();
 
-        System.out.println(tweetList.size() + "ツイートリストのサイズの出力");
+//        System.out.println(tweetList.size() + "ツイートリストのサイズの出力");
 
         for (int i: tables){
             System.out.println(i + "  i の出力");
@@ -120,11 +120,14 @@ public class FollowsController extends Controller {
 
         System.out.println(user.get_this_Followed_list(user.id) + "  モデル側設置のsql文のデバッグ確認");
 
+        String sql_2 = "SELECT id FROM follow WHERE follow_id="
+                + (user.id);
+
         if(user.get_whitch_follow_or(user.id)){
             System.out.println("フォローしてない");
         }
 
-        return ok(show.render(tweetList, tables));
+        return ok(show.render(user, tables));
     }
 
     public Result show_ver2(Integer id){
@@ -171,6 +174,6 @@ public class FollowsController extends Controller {
             System.out.println("フォローしてない");
         }
 
-        return ok(show2.render(tweetList, tables));
+        return ok(show2.render(user, tables));
     }
 }

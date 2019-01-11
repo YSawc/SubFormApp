@@ -24,22 +24,22 @@
                         <!--ログインセッション次第で、出力を変える-->
                         @if(session.get("userID") != null){
                             <a href="@routes.LoginController.logout()">ログアウト</a>
-                        }
-                        @if(session.get("userID") == null){
+                        }else{@if(session.get("userID") == null){
                             <a href="@routes.LoginController.login()">ログイン</a>
-                        }
+                        }}
+                    </li>
                     <li class="active">
                         @if(session.get("name") != null){
                             <a href="@routes.UsersController.edit(Integer.parseInt(session.get("id")))">@session.get("name")</a>
                         }
                     </li>
+                    <li>
                         @if(session.get("userID") == null){
                             <a href="@routes.UsersController.create()">ユーザー作成</a>
-                        }
+                        }else{@if(session.get("userID") != null){
                         <!--ツイート画面の表示-->
-                        @if(session.get("userID") != null){
                             <a href="@routes.TweetsController.create()">ツイートする</a>
-                        }
+                        }}
                     </li>
                 </ul>
 
@@ -62,10 +62,9 @@
                             @if(!(session.get("userID").equals(user.userID))){
                                 @if(user.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id")))){
                                     <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
-                                }
-                                @if(!(user.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id"))))){
+                                } else{@if(!(user.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id"))))){
                                     <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローを外す</a>
-                                }
+                                }}
                             }
                         </li>
                         <li>

@@ -13,7 +13,39 @@
     @for(tweet <- tweets){
         @if(! (tweets.isEmpty()) ){
             @if(! (tweet.getUser.private_or) ){
-                <div class="panel panel-info">
+                @if(tweet == tweets.head){
+                    <!-- 先頭要素だけ、色分け -->
+                    <div class="panel panel-danger">
+    <p>
+        <!--セッションの場合に分けてリンク先を変える-->
+        <a href="@routes.UsersController.show(tweet.getUser.id)">
+            <strong>@tweet.getUser.getName</strong>
+        </a>
+        <span class="">@@</span>@tweet.getUser.getUserName
+        • @tweet.createdDate
+
+    </p>
+    <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
+
+    <br>
+    　　　　　<!--空白注意-->
+    <a href="" class=""><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
+    <!--いいね機能実装-->
+    <a href="" class="">
+                        <span class="glyphicon glyphicon-heart">
+                            <!--いいね機能未実装-->
+                            　　　　<!--空白注意-->
+                        </span>
+    </a>
+    <!--セッション制御で、削除を表示-->
+    @if(session.get("userID").equals(tweet.getUser.userID)){
+    <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
+        <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
+    </a>
+    }
+</div>
+                }else{
+                    <div class="panel panel-info">
                     <p>
                         <!--セッションの場合に分けてリンク先を変える-->
                         <a href="@routes.UsersController.show(tweet.getUser.id)">
@@ -26,11 +58,9 @@
                     </p>
                     <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
 
-                    <!-- urlに変換したい -->
-                    <a>@tweet.mutter</a>
-
-                    <!--if(){-->
-                    <!--}-->
+                        <p class="test">
+                            初めてのJavaScript勉強中だよ！
+                        </p>
 
                     <br>
                     　　　　　<!--空白注意-->
@@ -49,7 +79,17 @@
                         </a>
                     }
                 </div>
+                }
             }
         }
     }
+
+    <!-- urlだった場合、変換する -->
+    <script>
+        var elems = document.getElementsByClassName('test');
+        i = elems.length
+        while(i--){
+            elems[i].innerHTML = "<a href=\"https://www.google.ca\">https://www.google.ca</a>";
+        }
+    </script>
 }

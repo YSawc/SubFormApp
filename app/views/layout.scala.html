@@ -59,10 +59,9 @@
                         <!--ログインセッション次第で、出力を変える-->
                         @if(session.get("userID") != null){
                             <a href="@routes.LoginController.logout()">ログアウト</a>
-                        }
-                        @if(session.get("userID") == null){
+                        }else{@if(session.get("userID") == null){
                             <a href="@routes.LoginController.login()">ログイン</a>
-                        }
+                        }}
                     </li>
                     <li class="active">
                         @if(session.get("name") != null){
@@ -72,11 +71,10 @@
                     <li>
                         @if(session.get("userID") == null){
                             <a href="@routes.UsersController.create()">ユーザー作成</a>
-                        }
-                        <!--ツイート画面の表示-->
-                        @if(session.get("userID") != null){
+                        }else{@if(session.get("userID") != null){
+                            <!--ツイート画面の表示-->
                             <a href="@routes.TweetsController.create()">ツイートする</a>
-                        }
+                        }}
                     </li>
                 </ul>
 
@@ -98,9 +96,9 @@
         <!--フラッシュ制御 javascript埋め込み-->
         <script type="text/javascript">
                 window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                $(this).remove();
-                });
+                    $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                        $(this).remove();
+                    });
                 }, 1500);
                 </script>
         <!-- ------------------------------- -->
