@@ -190,8 +190,6 @@ public class UsersController extends Controller {
                 System.out.println(i + " iの出力");
             }
 
-
-
             return ok(done_serch.render(tables));
         }
         flash("danger", "ユーザーは見つかりませんでした");

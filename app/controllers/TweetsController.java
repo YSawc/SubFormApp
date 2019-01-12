@@ -100,11 +100,11 @@ public class TweetsController extends Controller {
         User user = User.find.byId(Integer.parseInt(session("id")));
         tweet.setUser(user);
 
-        //------------------------------- 作成中 ---------------------------
-//        String urlStr = tweet.convURLLink(tweet.mutter);
-//        System.out.println(urlStr + " uslStr");
-//
-//        System.out.println(tweet.convURLLink(tweet.mutter) + "url返還後");
+        //------------------------------- URL変換機能 ---------------------------
+        String urlStr = tweet.convURLLink(tweet.mutter);
+        System.out.println(urlStr + " uslStr");
+
+        System.out.println(tweet.convURLLink(tweet.mutter) + "url変換後");
 //
 //        tweet.mutter = tweet.convURLLink(tweet.mutter);
         //-----------------------------------------------------------------
@@ -125,6 +125,31 @@ public class TweetsController extends Controller {
 
         tweet.delete();
         return redirect(routes.TweetsController.index());
+    }
+
+    public Result page(Integer p) throws Exception{
+
+        //1画面に表示するツイートの数
+        final Integer pre_num = 10;
+
+        List<Tweet> tweetList = Tweet.find.all();
+        Collections.reverse(tweetList);
+
+        List<Tweet> new_tweetList = new ArrayList<>();
+
+
+        //要素数が足りる場合と、足りない場合がある。
+        try {
+            new_tweetList = tweetList.subList(pre_num * p , pre_num * p + 10);
+
+            //要素数が10未満の場合次のエラーになるのでキャッチ
+        }catch (IndexOutOfBoundsException e) {
+            System.out.println("例外のキャッチ");
+            new_tweetList = tweetList.subList(pre_num * p, tweetList.size());
+        }
+
+        System.out.println(new_tweetList.size() + " ニューリストのサイズを出力");
+        return ok(page.render(p, new_tweetList));
     }
 
     //いいね機能

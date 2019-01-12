@@ -16,6 +16,7 @@ import views.html.follows.show2;
 import javax.inject.Singleton;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -120,14 +121,53 @@ public class FollowsController extends Controller {
 
         System.out.println(user.get_this_Followed_list(user.id) + "  モデル側設置のsql文のデバッグ確認");
 
-        String sql_2 = "SELECT id FROM follow WHERE follow_id="
-                + (user.id);
+//        フォロー中のユーザーの呟きを一覧表示させるためのリスト取得を行う---------------
+
+//        SELECT id FROM tweet WHERE user_id IN + (1111, 2222) +  ORDER BY created_date
+//        SELECT id FROM tweet WHERE user_id IN  [1]  ORDER BY created_date
+//        SELECT id FROM tweet WHERE user_id IN (1) ORDER BY created_date
+
+//        int [] int_ary = new int[tables.size()];
+//        for(int i = 0 ; i < tables.size(); i++){
+//            int_ary[i] = tables.indexOf(i);
+//            System.out.println(tables.indexOf(i) + "index_if(i)の出力");
+//            System.out.println(int_ary[i] + " int_ary[i]の出力");
+//        }
+
+
+//        String sql_2 = "SELECT id FROM tweet WHERE user_id IN "
+//                + tables.toArray() +
+//                " ORDER BY created_date";
+
+        //複数sql文によるsql分の作成
+            String sql_2 = "SELECT id FROM tweet WHERE user_id IN( "
+                    + "SELECT be_followed_id FROM follow WHERE follow_id="
+                    + (user.id)
+                    + ") ORDER BY created_date";
+
+        SqlQuery sqlQuery_2 = Ebean.createSqlQuery(sql_2);
+        List<SqlRow> result_2 = sqlQuery_2.findList();
+        List<Integer> tables_2 = new ArrayList<Integer>();
+        System.out.println(result_2 + "  result_2の出力");
+        if(result_2.size() > 0){
+            result_2.forEach(sqlRow ->{
+                System.out.println(sqlRow + "sqlRowの出力");
+                tables_2.add(Integer.parseInt((sqlRow.getString("id"))));
+            });
+            for(Integer i : tables_2){
+                System.out.println(i + " table_2の出力");
+            }
+        }
+        //----------------------------------------------------------------------
 
         if(user.get_whitch_follow_or(user.id)){
             System.out.println("フォローしてない");
         }
 
-        return ok(show.render(user, tables));
+        //ツイート内容は逆順にし、新しいもの順にする
+        Collections.reverse(tables_2);
+
+        return ok(show.render(user, tables, tables_2));
     }
 
     public Result show_ver2(Integer id){

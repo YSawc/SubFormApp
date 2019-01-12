@@ -97,7 +97,20 @@
             <span class="">@@</span>@tweet.getUser.getUserName
             • @tweet.createdDate
         </p>
-        <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
+        <p href="@routes.UsersController.show(tweet.id)" class="col">
+            @tweet.mutter
+            regexp_url
+            regexp_makeLink
+        </p>
+
+        function AutoLink(@tweet.mutter) {
+            var regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@@:/~?%&;=+#',()*!]+))/g; // ']))/;
+            var regexp_makeLink = function(all, url, h, href) {
+                return '<a href="h' + href + '">' + url + '</a>';
+        }
+
+        return str.replace(regexp_url, regexp_makeLink);
+        }
 
         <br>
         <br>
