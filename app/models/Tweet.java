@@ -32,7 +32,7 @@ public class Tweet extends Model {
 //    //いいね機能
 //    public Integer good;
 
-    public static Finder<Integer, Tweet> find = new Finder<>(Tweet.class);
+    public static Model.Finder<Integer, Tweet> find = new Model.Finder<>(Tweet.class);
 
     public User getUser() {
         return user;
