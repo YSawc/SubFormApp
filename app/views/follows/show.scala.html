@@ -115,7 +115,12 @@
             • @Tweet.find.byId(i).createdDate
 
         </p>
-        <p href="@routes.UsersController.show(Tweet.find.byId(i).id)" class="col">@Tweet.find.byId(i).mutter</p>
+        <p href="@routes.UsersController.show(Tweet.find.byId(i).id)" class="col">
+            <!-- @Tweet.find.byId(i).mutter -->
+        </p>
+        @Html(
+            tweet.mutter
+        )
 
         <br>
         　　　　　<!--空白注意-->

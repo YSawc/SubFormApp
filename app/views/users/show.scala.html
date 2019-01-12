@@ -60,9 +60,9 @@
                         </li>
                         <li>
                             @if(!(session.get("userID").equals(user.userID))){
-                                @if(user.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id")))){
+                                @if(user.get_whitch_follow_or(user.id, Integer.parseInt(session.get("id")))){
                                     <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
-                                } else{@if(!(user.get_whitch_follow_or(tweet.getUser.id, Integer.parseInt(session.get("id"))))){
+                                } else{@if(!(user.get_whitch_follow_or(user.id, Integer.parseInt(session.get("id"))))){
                                     <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローを外す</a>
                                 }}
                             }
@@ -71,7 +71,13 @@
                             <a>ツイート<br> <strong class="text-primary"><font size="3">@user.getTweets.size()</font></strong></a>
                         </li>
                         <li>
-                            <a href="@routes.FollowsController.show(tweet.getUser.id)">フォロー<br> <strong class="text-primary"><font size="3">@user.get_this_Followed_list(user.id).size()</font></strong></a>
+                            <a href="@routes.FollowsController.show(tweet.getUser.id)">フォロー<br>
+                                <strong class="text-primary">
+                                    <font size="3">
+                                        @user.get_this_Followed_list(user.id).size()
+                                    </font>
+                                </strong>
+                            </a>
                         </li>
                         <li>
                             <a href="@routes.FollowsController.show_ver2(tweet.getUser.id)">フォロワー<br> <strong class="text-primary"><font size="3">@user.get_this_beFollowed_list(user.id).size()</font></strong></a>
@@ -98,21 +104,11 @@
             • @tweet.createdDate
         </p>
         <p href="@routes.UsersController.show(tweet.id)" class="col">
-            @tweet.mutter
-            regexp_url
-            regexp_makeLink
+            <!-- @tweet.mutter -->
         </p>
-
-        function AutoLink(@tweet.mutter) {
-            var regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@@:/~?%&;=+#',()*!]+))/g; // ']))/;
-            var regexp_makeLink = function(all, url, h, href) {
-                return '<a href="h' + href + '">' + url + '</a>';
-        }
-
-        return str.replace(regexp_url, regexp_makeLink);
-        }
-
-        <br>
+        @Html(
+            tweet.mutter
+        )
         <br>
         　　　　　<!--空白注意-->
         <a href="" class="mx-auto"><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>

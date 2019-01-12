@@ -132,12 +132,9 @@ public class UsersController extends Controller {
         tweetList = User.find.ref(user.id).getTweets();
         Collections.reverse(tweetList);
 
-        //このユーザーの
 //        System.out.println(relationshipList + "　このユーザーをフォローするユーザーの総計");
 
-
         return ok(show.render(tweetList, user));
-
     }
 
     public Result destroy(Integer id){
@@ -192,6 +189,7 @@ public class UsersController extends Controller {
 
             return ok(done_serch.render(tables));
         }
+
         flash("danger", "ユーザーは見つかりませんでした");
         return redirect(routes.UsersController.search());
     }
@@ -200,6 +198,7 @@ public class UsersController extends Controller {
 //        return redirect(routes.UsersController.index());
         User user = User.find.byId(Integer.parseInt(session("id")));
         System.out.println(user.private_or);
+
         if(user.private_or){
 //            System.out.println("false");
             user.private_or = false;

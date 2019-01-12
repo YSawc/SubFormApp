@@ -48,6 +48,7 @@ public class TweetsController extends Controller {
         //ぬるぽエラー対策
         if(tweetList.isEmpty()){
 //            return redirect(routes.TweetsController.empty());
+
             return ok(index.render(tweetList));
         }else{
             return ok(index.render(tweetList));
@@ -106,9 +107,8 @@ public class TweetsController extends Controller {
 
         System.out.println(tweet.convURLLink(tweet.mutter) + "url変換後");
 //
-//        tweet.mutter = tweet.convURLLink(tweet.mutter);
+        tweet.mutter = tweet.convURLLink(tweet.mutter);
         //-----------------------------------------------------------------
-
 
 //        pubInt += 1;
         tweet.save();
@@ -140,7 +140,7 @@ public class TweetsController extends Controller {
 
         //要素数が足りる場合と、足りない場合がある。
         try {
-            new_tweetList = tweetList.subList(pre_num * p , pre_num * p + 10);
+            new_tweetList = tweetList.subList(pre_num * p, pre_num * p + 10);
 
             //要素数が10未満の場合次のエラーになるのでキャッチ
         }catch (IndexOutOfBoundsException e) {

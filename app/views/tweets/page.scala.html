@@ -1,11 +1,5 @@
 @(p : Int, tweets : List[Tweet])
 
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-
 @layout("ページ"){
     <p>@(p + 1) ページ目</p>
 
@@ -21,12 +15,12 @@
                         <span class="">@@</span>@tweet.getUser.getUserName
                         • @tweet.createdDate
                     </p>
-                    <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
-
-                    <p class="test">
-                        初めてのJavaScript勉強中だよ！
+                    <p href="@routes.UsersController.show(tweet.id)" class="col">
+                        <!-- @tweet.mutter -->
                     </p>
-
+                    @Html(
+                        tweet.mutter
+                    )
                     <br>
                     　　　　　<!--空白注意-->
                     <a href="" class=""><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
@@ -57,9 +51,13 @@
         <!-- ツイート数が10未満の時、10以上の時、ページ末端で例えば6個分のツイートだと表示させる数字を切り替える -->
         <li>
             @if(tweets.size() < 10){
-                <a href="#">[ @(p * 10) ~ @((p * 10) + tweets.size()) ] of @(Tweet.find.all().size())</a>
+                @if(tweets.size() != 0){
+                    <a href="#">[ @(p * 10 + 1) ~ @((p * 10) + tweets.size()) ] of @(Tweet.find.all().size())</a>
+                }else{
+                    <a href="#">0</a>
+                }
             }else{@if(Tweet.find.all().size() > 10){
-                <a href="#">[ @(p * 10) ~ @((p + 1)*10) ] of @(Tweet.find.all().size())</a>
+                <a href="#">[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(Tweet.find.all().size())</a>
             }}
         </li>
         @if(((p + 1) * 10) >= (Tweet.find.all().size())){

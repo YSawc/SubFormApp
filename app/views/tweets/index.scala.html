@@ -2,13 +2,6 @@
 
 @import models.Tweet
 
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-
-
 @layout("つぶやき一覧"){
     @for(tweet <- tweets){
         @if(! (tweets.isEmpty()) ){
@@ -25,8 +18,12 @@
                             • @tweet.createdDate
 
                         </p>
-                        <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
-
+                        <p href="@routes.UsersController.show(tweet.id)" class="col">
+                            <!-- @tweet.mutter -->
+                        </p>
+                        @Html(
+                            tweet.mutter
+                        )
                         <br>
                         　　　　　<!--空白注意-->
                         <a href="" class=""><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
@@ -55,12 +52,12 @@
                             • @tweet.createdDate
 
                         </p>
-                        <p href="@routes.UsersController.show(tweet.id)" class="col">@tweet.mutter</p>
-
-                            <p class="test">
-                                初めてのJavaScript勉強中だよ！
-                            </p>
-
+                        <p href="@routes.UsersController.show(tweet.id)" class="col">
+                            <!-- @tweet.mutter -->
+                        </p>
+                        @Html(
+                            tweet.mutter
+                        )
                         <br>
                         　　　　　<!--空白注意-->
                         <a href="" class=""><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
@@ -81,30 +78,5 @@
                 }
             }
         }
-
     }
-
-    <br>
-    <ul class="pagination pull-right">
-        <li class="disabled"><a href="@routes.TweetsController.page(1)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-    </ul>
-
-    <!-- urlだった場合、変換する -->
-    <script>
-        var elems = document.getElementsByClassName('test');
-            i = elems.length
-            while(i--){
-                elems[i].innerHTML = "<a href=\"https://www.google.ca\">https://www.google.ca</a>";
-        }
-        $("#autlink").each(function(){
-            $(this).html( $(this).html().replace(/((http|https|ftp):\/\/[\w?=&.\/-;#~%-]+(?![\w\s?&.\/;#~%"=-]*>))/g, '<a href="$1">$1</a> ') );
-        });
-    </script>
-    <!-- -------------------- -->
 }
