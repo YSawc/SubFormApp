@@ -58,8 +58,8 @@ public class UsersController extends Controller {
             return badRequest(create.render(userForm));
         }
 
-        String sql = "SELECT user_id FROM user WHERE user_id= \""
-                + userForm.get().userID + "\"";
+        String sql = "SELECT user_id FROM user WHERE user_id= \'"
+                + userForm.get().userID + "\'";
 
 
         if(Ebean.createSqlQuery(sql).findList().size() !=0){
