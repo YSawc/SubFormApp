@@ -169,7 +169,7 @@ public class UsersController extends Controller {
             return redirect(routes.UsersController.search());
         }
 
-        String sql = "SELECT id FROM user WHERE name LIKE  '%'+ user_name + '%'";
+        String sql = "SELECT id FROM user WHERE name LIKE  '%"+ user_name + "%'";
 
         System.out.println(Ebean.createSqlQuery(sql).findList() + "検索結果");
 
