@@ -73,10 +73,7 @@
                     <li>
                         @if(session.get("userID") == null){
                             <a href="@routes.UsersController.create()">ユーザー作成</a>
-                        }else{@if(session.get("userID") != null){
-                            <!--ツイート画面の表示-->
-                            <a href="@routes.TweetsController.create()">ツイートする</a>
-                        }}
+                        }
                     </li>
                 </ul>
 
