@@ -152,8 +152,8 @@ public class TweetsController extends Controller {
 //                + ") AND "
 //                + user.id
                 + ") OR user_id = "
-                + user.id;
-//                + " ORDER BY created_date";
+                + user.id
+                + " ORDER BY created_date";
 
         SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
         List<SqlRow> result = sqlQuery.findList();
