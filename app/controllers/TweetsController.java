@@ -75,7 +75,7 @@ public class TweetsController extends Controller {
         if(tweet == null){
             return redirect(routes.TweetsController.page(0));
         }
-        return TODO;
+        return redirect(routes.TweetsController.page(0));
     }
 
     public Result save(){
@@ -162,7 +162,11 @@ public class TweetsController extends Controller {
         if(result.size() > 0){
             result.forEach(sqlRow ->{
                 System.out.println(sqlRow + "sqlRowの出力");
-                tables.add(Integer.parseInt((sqlRow.getString("id"))));
+
+                //ユーザーのツイートが非公開であればリストに入れない
+                if(! (Tweet.find.byId(Integer.parseInt((sqlRow.getString("id")))).getUser().private_or) ){
+                    tables.add(Integer.parseInt((sqlRow.getString("id"))));
+                }
             });
             for(Integer i : tables){
                 System.out.println(i + " table_2の出力");
