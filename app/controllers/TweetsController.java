@@ -60,11 +60,11 @@ public class TweetsController extends Controller {
 //    }
 //    -----------------------------------------------------------------
 
-    public Result create(){
-        Form<Tweet> tweetForm = formFactory.form(Tweet.class);
-        return ok(create.render(tweetForm));
-//        return redirect(routes.UsersController.index());
-    }
+//    public Result create(){
+//        Form<Tweet> tweetForm = formFactory.form(Tweet.class);
+//        return ok(create.render(tweetForm));
+////        return redirect(routes.UsersController.index());
+//    }
 
     public Result show(Integer id){
         Tweet tweet = Tweet.find.byId(id);
@@ -83,7 +83,7 @@ public class TweetsController extends Controller {
 
         if(tweetForm.hasErrors()){
             flash("danger", "ツイート内容に誤りがあります");
-            return redirect(routes.TweetsController.create());
+            return redirect(routes.TweetsController.page(0));
         }
 
         Tweet tweet = tweetForm.get();
@@ -92,13 +92,13 @@ public class TweetsController extends Controller {
         //正規表現チェック----------------------
         if(tweet.mutter.length() > 140){
             flash("danger", "140文字以内で入力してください");
-            return redirect(routes.TweetsController.create());
+            return redirect(routes.TweetsController.page(0));
         }
 
         //ツイート内容が文頭スペース、改行、ハイフンのみの連鎖の場合不正エラーを出力
         if(tweet.mutter.matches("^[\\s_]*?$")){
             flash("danger", "不正なツイートです");
-            return redirect(routes.TweetsController.create());
+            return redirect(routes.TweetsController.page(0));
         }
         //正規表現チェックの終わり---------------
 
@@ -149,9 +149,11 @@ public class TweetsController extends Controller {
         String sql = "SELECT id FROM tweet WHERE user_id IN( "
                 + "SELECT be_followed_id FROM follow WHERE follow_id="
                 + (user.id)
-                + ") OR"
-                + user.id
-                + "ORDER BY created_date";
+//                + ") AND "
+//                + user.id
+                + ") OR user_id = "
+                + user.id;
+//                + " ORDER BY created_date";
 
         SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
         List<SqlRow> result = sqlQuery.findList();
@@ -166,6 +168,8 @@ public class TweetsController extends Controller {
                 System.out.println(i + " table_2の出力");
             }
         }
+
+        Collections.reverse(tables);
 //       --------------------------------------------------------
 
 //        List<Tweet> tweetList = Tweet.find.all();

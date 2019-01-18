@@ -32,7 +32,7 @@ DELETE  /users/delete/:id           controllers.UsersController.destroy(id: Inte
 #GET     /tweets/                    controllers.TweetsController.index()
 GET     /tweets/               controllers.TweetsController.page(p: Integer ?= 0)
 GET     /tweets/:p             controllers.TweetsController.page(p: Integer)
-GET     /tweets/create              controllers.TweetsController.create()
+#GET     /tweets/create              controllers.TweetsController.create()
 GET     /tweets/:id                 controllers.TweetsController.show(id: Integer)
 POST    /tweets/create              controllers.TweetsController.save()
 GET     /tweets/delete/:id          controllers.TweetsController.destroy(id: Integer)

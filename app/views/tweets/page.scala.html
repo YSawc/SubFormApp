@@ -1,30 +1,29 @@
-@(tweetForm : Form[Tweet] ,p : Int, tweets : List[Tweet])
+@(tweetForm : Form[Tweet] ,p : Int, tables : List[Integer])
 
 @layout("ページ"){
     @helper.form(action = routes.TweetsController.save()){
-        @helper.textarea(tweetForm("mutter") , 'maxlength->"140",
+        @helper.textarea(tweetForm("mutter") , 'maxlength->"140", 'placeholder ->"今何してる？",
                             'rows-> 4, '_label-> "", 'class->"form-control", 'size->"30")
         <input type="submit" value="ツイートする" class="btn btn-primary">
     }
     <p>@(p + 1) ページ目</p>
 
-    @for(tweet <- tweets){
-        @if(! (tweets.isEmpty()) ){
-            @if(! (tweet.getUser.private_or) ){
+    @for(i <- tables){
+        @if(! (tables.isEmpty()) ){
+            @if(! (Tweet.find.byId(i).getUser.private_or) ){
                 <div class="panel panel-info">
                     <p>
                         <!--セッションの場合に分けてリンク先を変える-->
-                        <a href="@routes.UsersController.show(tweet.getUser.id)">
-                            <strong>@tweet.getUser.getName</strong>
+                        <a href="@routes.UsersController.show(Tweet.find.byId(i).getUser.id)">
+                            <strong>@Tweet.find.byId(i).getUser.getName</strong>
                         </a>
-                        <span class="">@@</span>@tweet.getUser.getUserName
-                        • @tweet.createdDate
+                        <span class="">@@</span>@Tweet.find.byId(i).getUser.getUserName
+                        • @Tweet.find.byId(i).createdDate
                     </p>
-                    <p href="@routes.UsersController.show(tweet.id)" class="col">
-                        <!-- @tweet.mutter -->
+                    <p href="@routes.UsersController.show(Tweet.find.byId(i).id)" class="col">
                     </p>
                     @Html(
-                        tweet.mutter
+                        Tweet.find.byId(i).mutter
                     )
                     <br><br>
                     　　　　　<!--空白注意-->
@@ -37,8 +36,8 @@
                         </span>
                     </a>
                     <!--セッション制御で、削除を表示-->
-                    @if(session.get("userID").equals(tweet.getUser.userID)){
-                        <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
+                    @if(session.get("userID").equals(Tweet.find.byId(i).getUser.userID)){
+                        <a href="@routes.TweetsController.destroy(i)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
                             <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
                         </a>
                     }
@@ -55,17 +54,17 @@
         <!-- ページには3パターン考えられる -->
         <!-- ツイート数が10未満の時、10以上の時、ページ末端で例えば6個分のツイートだと表示させる数字を切り替える -->
         <li>
-            @if(tweets.size() < 10){
-                @if(tweets.size() != 0){
-                    <a href="#">[ @(p * 10 + 1) ~ @((p * 10) + tweets.size()) ] of @(Tweet.find.all().size())</a>
+            @if(tables.size() < 10){
+                @if(tables.size() != 0){
+                    <a href="#">[ @(p * 10 + 1) ~ @((p * 10) + tables.size()) ] of @(tables.size())</a>
                 }else{
                     <a href="#">0</a>
                 }
-            }else{@if(Tweet.find.all().size() > 10){
-                <a href="#">[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(Tweet.find.all().size())</a>
+            }else{@if(tables.size() > 10){
+                <a href="#">[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(tables.size())</a>
             }}
         </li>
-        @if(((p + 1) * 10) >= (Tweet.find.all().size())){
+        @if(((p + 1) * 10) >= (tables.size())){
             <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
         }else{
             <li><a href="@routes.TweetsController.page(p + 1)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
