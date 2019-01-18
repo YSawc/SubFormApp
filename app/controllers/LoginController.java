@@ -56,6 +56,13 @@ public class LoginController extends Controller {
         session("password", user.password);
         session("id", user.id.toString());
         session("name", user.name);
+        if(user.private_or){
+            session("private_or", "1");
+        }else{
+            session("private_or", "0");
+        }
+
+
     }
 
     private void clearSession(){
