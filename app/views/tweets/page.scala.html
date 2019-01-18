@@ -1,6 +1,11 @@
-@(p : Int, tweets : List[Tweet])
+@(tweetForm : Form[Tweet] ,p : Int, tweets : List[Tweet])
 
 @layout("ページ"){
+    @helper.form(action = routes.TweetsController.save()){
+        @helper.textarea(tweetForm("mutter") , 'maxlength->"140",
+                            'rows-> 4, '_label-> "", 'class->"form-control", 'size->"30")
+        <input type="submit" value="ツイートする" class="btn btn-primary">
+    }
     <p>@(p + 1) ページ目</p>
 
     @for(tweet <- tweets){

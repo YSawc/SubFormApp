@@ -28,7 +28,7 @@
         <div class="container">
             <div class="navbar-header">
                 @if(session.get("id") != null){
-                    <a href="@routes.TweetsController.index()" class="">
+                    <a href="@routes.TweetsController.page(0)">
                         <i class="fa fa-twitter" style="font-size:48px;color:LightSkyBlue"></i>
                     </a>
                     　<!--空白注意-->
@@ -41,7 +41,6 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     @if(session.get("id") != null){
-                        <li><a href="@routes.TweetsController.page(0)">ページ機能</a></li>
                         <li><a href="@routes.UsersController.search()">ユーザー検索</a></li>
                     }
                 </ul>

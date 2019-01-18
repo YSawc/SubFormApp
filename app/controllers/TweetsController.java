@@ -1,5 +1,8 @@
 package controllers;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
 import models.Tweet;
 import models.User;
 import play.data.Form;
@@ -23,37 +26,39 @@ public class TweetsController extends Controller {
     //idは0から始める。publicにし昇順に自動付与していく
 //    private Integer pubInt = 0;
 
-    public Result index(){
-
-        //userListは定義済み
-        List<Tweet> tweetList = new ArrayList<Tweet>();
-        List<User> userList = User.find.query().findList();
-        tweetList = Tweet.find.all();
-//        System.out.println(tweetList + " ツイートリスト");
-
-//        tweetList.sort(Comparator.comparing(Tweet));
+//    使用しない ---------------------------------------------------
+//    public Result index(){
 //
-//        Collections.sort(tweetList, ((o1, o2) ->{
-//            o1.createdDate.after(o2.createdDate)
+//        //userListは定義済み
+//        List<Tweet> tweetList = new ArrayList<Tweet>();
+//        List<User> userList = User.find.query().findList();
+//        tweetList = Tweet.find.all();
+////        System.out.println(tweetList + " ツイートリスト");
+//
+////        tweetList.sort(Comparator.comparing(Tweet));
+////
+////        Collections.sort(tweetList, ((o1, o2) ->{
+////            o1.createdDate.after(o2.createdDate)
+////        }
+////        ));
+//
+//        System.out.println("nulp前出力");
+//
+//        List<Tweet> rev_tweetList = new ArrayList<>();
+//
+//        //リストの逆順化
+//        Collections.reverse(tweetList);
+//
+//        //ぬるぽエラー対策
+//        if(tweetList.isEmpty()){
+////            return redirect(routes.TweetsController.empty());
+//
+//            return ok(index.render(tweetList));
+//        }else{
+//            return ok(index.render(tweetList));
 //        }
-//        ));
-
-        System.out.println("nulp前出力");
-
-        List<Tweet> rev_tweetList = new ArrayList<>();
-
-        //リストの逆順化
-        Collections.reverse(tweetList);
-
-        //ぬるぽエラー対策
-        if(tweetList.isEmpty()){
-//            return redirect(routes.TweetsController.empty());
-
-            return ok(index.render(tweetList));
-        }else{
-            return ok(index.render(tweetList));
-        }
-    }
+//    }
+//    -----------------------------------------------------------------
 
     public Result create(){
         Form<Tweet> tweetForm = formFactory.form(Tweet.class);
@@ -68,7 +73,7 @@ public class TweetsController extends Controller {
         System.out.println(user.userID + "ユーザーID");
 
         if(tweet == null){
-            return redirect(routes.TweetsController.index());
+            return redirect(routes.TweetsController.page(0));
         }
         return TODO;
     }
@@ -101,6 +106,8 @@ public class TweetsController extends Controller {
         User user = User.find.byId(Integer.parseInt(session("id")));
         tweet.setUser(user);
 
+        System.out.println(tweet.mutter + " ツイート内容");
+
         //------------------------------- URL変換機能 ---------------------------
         String urlStr = tweet.convURLLink(tweet.mutter);
         System.out.println(urlStr + " uslStr");
@@ -112,7 +119,7 @@ public class TweetsController extends Controller {
 
 //        pubInt += 1;
         tweet.save();
-        return  redirect(routes.TweetsController.index());
+        return  redirect(routes.TweetsController.page(0));
     }
 
     public Result destroy(Integer id){
@@ -120,36 +127,66 @@ public class TweetsController extends Controller {
         Tweet tweet = Tweet.find.byId(id);
         if(tweet == null){
             flash("dandger", "ツイートが見つかりません");
-            return redirect(routes.TweetsController.index());
+            return redirect(routes.TweetsController.page(0));
         }
 
         tweet.delete();
-        return redirect(routes.TweetsController.index());
+        return redirect(routes.TweetsController.page(0));
     }
 
     public Result page(Integer p) throws Exception{
 
+        Form<Tweet> tweetForm = formFactory.form(Tweet.class);
+
         //1画面に表示するツイートの数
         final Integer pre_num = 10;
 
-        List<Tweet> tweetList = Tweet.find.all();
-        Collections.reverse(tweetList);
+        User user = User.find.byId(Integer.parseInt(session("id")));
 
-        List<Tweet> new_tweetList = new ArrayList<>();
+        System.out.println();
 
+        // ツイート中のユーザーと自分のツイートのみ表示させたい---------
+        String sql = "SELECT id FROM tweet WHERE user_id IN( "
+                + "SELECT be_followed_id FROM follow WHERE follow_id="
+                + (user.id)
+                + ") OR"
+                + user.id
+                + "ORDER BY created_date";
 
-        //要素数が足りる場合と、足りない場合がある。
-        try {
-            new_tweetList = tweetList.subList(pre_num * p, pre_num * p + 10);
-
-            //要素数が10未満の場合次のエラーになるのでキャッチ
-        }catch (IndexOutOfBoundsException e) {
-            System.out.println("例外のキャッチ");
-            new_tweetList = tweetList.subList(pre_num * p, tweetList.size());
+        SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
+        List<SqlRow> result = sqlQuery.findList();
+        List<Integer> tables = new ArrayList<Integer>();
+        System.out.println(result + "  result_2の出力");
+        if(result.size() > 0){
+            result.forEach(sqlRow ->{
+                System.out.println(sqlRow + "sqlRowの出力");
+                tables.add(Integer.parseInt((sqlRow.getString("id"))));
+            });
+            for(Integer i : tables){
+                System.out.println(i + " table_2の出力");
+            }
         }
+//       --------------------------------------------------------
 
-        System.out.println(new_tweetList.size() + " ニューリストのサイズを出力");
-        return ok(page.render(p, new_tweetList));
+//        List<Tweet> tweetList = Tweet.find.all();
+//        Collections.reverse(tweetList);
+//        List<Tweet> new_tweetList = new ArrayList<>();
+//
+//        //要素数が足りる場合と、足りない場合がある。
+//        try {
+//            new_tweetList = tweetList.subList(pre_num * p, pre_num * p + 10);
+//
+//            //要素数が10未満の場合次のエラーになるのでキャッチ
+//        }catch (IndexOutOfBoundsException e) {
+//            System.out.println("例外のキャッチ");
+//            new_tweetList = tweetList.subList(pre_num * p, tweetList.size());
+//        }
+//
+//        System.out.println(new_tweetList.size() + " ニューリストのサイズを出力");
+
+//        return ok(page.render(tweetForm, p, new_tweetList));
+
+        return ok(page.render(tweetForm, p, tables));
     }
 
     //いいね機能

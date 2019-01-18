@@ -25,7 +25,7 @@ public class UsersController extends Controller {
     @Inject
     private FormFactory formFactory;
 
-//    private Integer pubInt = 0;
+    private Integer pubInt = 0;
 
     public Result index(){
         List<User> users = User.find.all();
@@ -163,7 +163,10 @@ public class UsersController extends Controller {
 
         System.out.println(user_name + " user_name の出力（検索欄　あいまい検索）");
 
-        if(user_name.matches("^[\\s_]*?$")){
+        if(user_name.length() <= 1){
+            flash("danger", "2文字以上で検索して下さい");
+            return redirect(routes.UsersController.search());
+        }else if(user_name.matches("^[\\s_]*?$")){
             System.out.println("nullのテスト");
             flash("danger", "ユーザーは見つかりませんでした");
             return redirect(routes.UsersController.search());
@@ -213,7 +216,7 @@ public class UsersController extends Controller {
 
         user.save();
 
-        return redirect(routes.TweetsController.index());
+        return redirect(routes.TweetsController.page(0));
     }
 
 }

@@ -29,9 +29,9 @@ DELETE  /users/delete/:id           controllers.UsersController.destroy(id: Inte
 
 
 #ツイート用
-GET     /tweets/                    controllers.TweetsController.index()
-GET     /tweets/page/               controllers.TweetsController.page(p: Integer ?= 0)
-GET     /tweets/page/:p             controllers.TweetsController.page(p: Integer)
+#GET     /tweets/                    controllers.TweetsController.index()
+GET     /tweets/               controllers.TweetsController.page(p: Integer ?= 0)
+GET     /tweets/:p             controllers.TweetsController.page(p: Integer)
 GET     /tweets/create              controllers.TweetsController.create()
 GET     /tweets/:id                 controllers.TweetsController.show(id: Integer)
 POST    /tweets/create              controllers.TweetsController.save()

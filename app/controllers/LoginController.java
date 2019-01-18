@@ -41,7 +41,7 @@ public class LoginController extends Controller {
         }
         setSession(user);
         flash("info", "ログインに成功しました");
-        return redirect(routes.TweetsController.index());
+        return redirect(routes.TweetsController.page(0));
     }
 
     public  Result logout(){
