@@ -58,6 +58,9 @@
                         }
                     </li>
                     <li>
+                        <a href="@routes.TweetsController.page(0)">ホーム</a>
+                    </li>
+                    <li>
                         <!--ログインセッション次第で、出力を変える-->
                         @if(session.get("userID") != null){
                             <a href="@routes.LoginController.logout()">ログアウト</a>

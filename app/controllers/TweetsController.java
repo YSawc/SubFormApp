@@ -149,8 +149,6 @@ public class TweetsController extends Controller {
         String sql = "SELECT id FROM tweet WHERE user_id IN( "
                 + "SELECT be_followed_id FROM follow WHERE follow_id="
                 + (user.id)
-//                + ") AND "
-//                + user.id
                 + ") OR user_id = "
                 + user.id
                 + " ORDER BY created_date";

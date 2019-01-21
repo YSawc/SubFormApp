@@ -2,8 +2,8 @@
 
 @import helper._
 
-@layout("ユーザー作成"){
-    <h1>新規ユーザー登録</h1>
+@layout("ユーザー編集"){
+    <h1>新規ユーザー編集</h1>
     @helper.form(action = routes.UsersController.update()){
         @helper.inputText(userForm("name"), '_label->"名前", 'size->"30")
         @helper.inputText(userForm("userID"), '_label->"ユーザー名", 'size->"30")
