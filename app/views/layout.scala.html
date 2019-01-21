@@ -41,7 +41,7 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     @if(session.get("id") != null){
-                        <li><a href="@routes.UsersController.search()">ユーザー検索</a></li>
+                        <li></li>
                     }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -60,14 +60,23 @@
                     <li>
                         <a href="@routes.TweetsController.page(0)">ホーム</a>
                     </li>
-                    <li>
-                        <!--ログインセッション次第で、出力を変える-->
-                        @if(session.get("userID") != null){
+                    <!--ログインセッション次第で、出力を変える-->
+                    @if(session.get("userID") != null){
+                        <li>
+                            <a href="@routes.UsersController.search()">ユーザー検索</a>
+                        </li>
+                        <li>
                             <a href="@routes.LoginController.logout()">ログアウト</a>
-                        }else{@if(session.get("userID") == null){
+                        </li>
+                    }else{@if(session.get("userID") == null){
+                        <li>
+                            <a href="@routes.UsersController.create()">ユーザー登録</a>
+                        </li>
+                        <li>
                             <a href="@routes.LoginController.login()">ログイン</a>
-                        }}
-                    </li>
+                        </li>
+                    }}
+                    <li>
                     <li class="active">
                         @if(session.get("name") != null){
                             <a href="">@session.get("name")</a>
@@ -75,7 +84,7 @@
                     </li>
                     <li>
                         @if(session.get("userID") == null){
-                            <a href="@routes.UsersController.create()">ユーザー登録</a>
+
                         }
                     </li>
                 </ul>

@@ -1,7 +1,7 @@
 @(users: List[User])
 
 @layout("ログイン待機"){
-<h3>ログインしてください</h3>
+<h3>ツイッターに参加してください</h3>
     <div class="row">
         <div class="col-sm4">
             @for(user <- users){
@@ -10,4 +10,6 @@
             }
         </div>
     </div>
+<br>
+<a class= "btn btn-primary" href="@routes.LoginController.login()">ログイン</a>
 }

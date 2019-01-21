@@ -18,32 +18,47 @@
             　<!--空白注意-->
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                @if(session.get("id") != null){
-                    <li><a href="@routes.UsersController.search()">ユーザー検索</a></li>
-                }
-            </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @if(session.get("userID") != null){
+                    <a href="@routes.UsersController.switch_pub_or()">
+                        @if(session.get("private_or") == "1"){
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        }
+                        @if(session.get("private_or") == "0"){
+                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        }
+                    </a>
+                    }
+                </li>
                 <li>
                     <a href="@routes.TweetsController.page(0)">ホーム</a>
                 </li>
+                <!--ログインセッション次第で、出力を変える-->
+                @if(session.get("userID") != null){
                 <li>
-                    <!--ログインセッション次第で、出力を変える-->
-                    @if(session.get("userID") != null){
-                      <a href="@routes.LoginController.logout()">ログアウト</a>
-                    }
-                    @if(session.get("userID") == null){
-                        <a href="@routes.LoginController.login()">ログイン</a>
-                    }
+                    <a href="@routes.UsersController.search()">ユーザー検索</a>
                 </li>
+                <li>
+                    <a href="@routes.LoginController.logout()">ログアウト</a>
+                </li>
+                }else{@if(session.get("userID") == null){
+                <li>
+                    <a href="@routes.UsersController.create()">ユーザー登録</a>
+                </li>
+                <li>
+                    <a href="@routes.LoginController.login()">ログイン</a>
+                </li>
+                }}
+                <li>
                 <li class="active">
                     @if(session.get("name") != null){
-                       <a href="">@session.get("name")</a>
+                    <a href="">@session.get("name")</a>
                     }
                 </li>
                 <li>
                     @if(session.get("userID") == null){
-                        <a href="@routes.UsersController.create()">ユーザー登録</a>
+
                     }
                 </li>
             </ul>
