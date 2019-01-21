@@ -156,7 +156,11 @@ public class TweetsController extends Controller {
         SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
         List<SqlRow> result = sqlQuery.findList();
         List<Integer> tables = new ArrayList<Integer>();
+
+        List<Integer> new_tweetList = new ArrayList<>();
+
         System.out.println(result + "  result_2の出力");
+
         if(result.size() > 0){
             result.forEach(sqlRow ->{
                 System.out.println(sqlRow + "sqlRowの出力");
@@ -172,6 +176,19 @@ public class TweetsController extends Controller {
         }
 
         Collections.reverse(tables);
+
+//        要素数が足りる場合と、足りない場合がある。
+        try {
+            new_tweetList = tables.subList(pre_num * p, pre_num * p + 10);
+
+            //要素数が10未満の場合次のエラーになるのでキャッチ
+        }catch (IndexOutOfBoundsException e) {
+            System.out.println("例外のキャッチ");
+            new_tweetList = tables.subList(pre_num * p, tables.size());
+        }
+
+        System.out.println(new_tweetList.size() + " >> new_tweetList.sizeの出力");
+
 //       --------------------------------------------------------
 
 //        List<Tweet> tweetList = Tweet.find.all();
@@ -192,7 +209,7 @@ public class TweetsController extends Controller {
 
 //        return ok(page.render(tweetForm, p, new_tweetList));
 
-        return ok(page.render(tweetForm, p, tables));
+        return ok(page.render(tweetForm, p, new_tweetList, tables.size()));
     }
 
     //いいね機能

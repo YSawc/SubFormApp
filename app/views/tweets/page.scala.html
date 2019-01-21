@@ -1,4 +1,4 @@
-@(tweetForm : Form[Tweet] ,p : Int, tables : List[Integer])
+@(tweetForm : Form[Tweet] ,p : Int, tables : List[Integer], tables_size : Int)
 
 @layout("ページ"){
     @helper.form(action = routes.TweetsController.save()){
@@ -89,15 +89,15 @@
         <li>
             @if(tables.size() < 10){
                 @if(tables.size() != 0){
-                    <a href="#">[ @(p * 10 + 1) ~ @((p * 10) + tables.size()) ] of @(tables.size())</a>
+                    <a href="#">[ @(p * 10 + 1) ~ @((p * 10) + tables.size()) ] of @(tables_size)</a>
                 }else{
                     <a href="#">0</a>
                 }
-            }else{@if(tables.size() > 10){
-                <a href="#">[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(tables.size())</a>
+            }else{@if(tables.size() == 10){
+                <a href="#">[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(tables_size)</a>
             }}
         </li>
-        @if(((p + 1) * 10) >= (tables.size())){
+        @if(((p + 1) * 10) >= (tables_size)){
             <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
         }else{
             <li><a href="@routes.TweetsController.page(p + 1)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
