@@ -44,8 +44,8 @@
                 }}
                 <li>
                 <li class="active">
-                    @if(session.get("name") != null){
-                    <a href="@routes.UsersController.show(user.id)">@session.get("name")</a>
+                    @if(session.get("userID") != null){
+                    <a href="@routes.UsersController.show(user.id)">@session.get("userID")</a>
                     }
                 </li>
                 <li>
@@ -68,7 +68,7 @@
                         <a>　　　</a>
                     </li>
                     <li class="bg-success">
-                        <a href="@routes.UsersController.show(user.id)">@user.getName</a>
+                        <a href="@routes.UsersController.show(user.id)">@user.getUserName</a>
                     </li>
                     <li>
                         <a>ツイート<br> <strong class="text-primary"><font size="3">@user.getTweets.size()</font></strong></a>

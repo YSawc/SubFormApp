@@ -51,8 +51,8 @@
                     }}
                     <li>
                     <li class="active">
-                        @if(session.get("name") != null){
-                        <a href="">@session.get("name")</a>
+                        @if(session.get("userID") != null){
+                        <a href="">@session.get("userID")</a>
                         }
                     </li>
                     <li>
@@ -74,7 +74,7 @@
                             <a>　　　</a>
                         </li>
                         <li class="bg-success">
-                            <a href="">@user.getName</a>
+                            <a href="">@user.getUserName</a>
                         </li>
                         <li>
                             @if(!(session.get("userID").equals(user.userID))){
