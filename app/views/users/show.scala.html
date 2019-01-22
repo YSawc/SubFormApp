@@ -16,7 +16,6 @@
                 <a href="@routes.TweetsController.page(0)">
                     <i class="fa fa-twitter" style="font-size:48px;color:LightSkyBlue"></i>
                 </a>
-                　<!--空白注意-->
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -118,10 +117,8 @@
         <p>
             <!--セッションの場合に分けてリンク先を変える-->
             <a href="@routes.UsersController.show(tweet.getUser.id)">
-                <strong>@tweet.getUser.getName</strong>
+                <strong>@tweet.getUser.getUserName</strong>
             </a>
-            <span class="">@@</span>@tweet.getUser.getUserName
-            • @tweet.createdDate
         </p>
         <p href="@routes.UsersController.show(tweet.id)" class="col">
             <!-- @tweet.mutter -->
@@ -130,9 +127,8 @@
             tweet.mutter
         )
         <br><br>
+        <a class="text-muted">@tweet.formatDate(tweet.createdDate)</a>
         　　　　　<!--空白注意-->
-        <a href="" class="mx-auto"><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
-        <a href="" class="mx-auto"><span class="glyphicon glyphicon-heart">　　　　<!--空白注意--></span></a>
         <!--セッション制御で、削除を表示-->
         @if(session.get("userID").equals(tweet.getUser.userID)){
             <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
