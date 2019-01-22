@@ -126,9 +126,6 @@ public class UsersController extends Controller {
         User user = User.find.byId(id);
         String user_name = user.getUserName();
 
-        Tweet tweet = Tweet.find.byId(id);
-//        User user = tweet.getUser();
-
 //        パターン1
         if (user == null) {
             return notFound("ユーザーが見つかりません");
@@ -138,7 +135,6 @@ public class UsersController extends Controller {
         List<Tweet> tweetList = new ArrayList<Tweet>();
         tweetList = User.find.ref(user.id).getTweets();
         Collections.reverse(tweetList);
-
 //        System.out.println(relationshipList + "　このユーザーをフォローするユーザーの総計");
 
         return ok(show.render(tweetList, user));
@@ -163,12 +159,9 @@ public class UsersController extends Controller {
     //ユーザー検索アクション
     public Result do_search(){
         Form<User> userForm = formFactory.form(User.class);
-
         String user_name;
-
         user_name = formFactory.form().bindFromRequest().get("name_search");
         //受け取った文字列から、sql分でユーザー検索（曖昧検索が要）
-
         System.out.println(user_name + " user_name の出力（検索欄　あいまい検索）");
 
         if(user_name.length() == 0){
@@ -182,8 +175,11 @@ public class UsersController extends Controller {
             return ok(done_serch.render(userForm, user_name, null));
         }
 
-        String sql = "SELECT id FROM user WHERE name LIKE  '%"+ user_name + "%'";
-
+        String sql = "SELECT id FROM user WHERE name LIKE  '%"
+                + user_name
+                + "%' OR user_id LIKE '%"
+                + user_name
+                + "%'";
         System.out.println(Ebean.createSqlQuery(sql).findList() + "検索結果");
 
         if(Ebean.createSqlQuery(sql).findList().size() !=0){

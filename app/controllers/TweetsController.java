@@ -69,7 +69,6 @@ public class TweetsController extends Controller {
     public Result show(Integer id){
         Tweet tweet = Tweet.find.byId(id);
         User user = tweet.getUser();
-
         System.out.println(user.userID + "ユーザーID");
 
         if(tweet == null){
@@ -88,7 +87,6 @@ public class TweetsController extends Controller {
 
         Tweet tweet = tweetForm.get();
 //        System.out.println(tweet.formatDate(tweet.createdDate) + "createdDateフォーマット後の表示");
-
         //正規表現チェック----------------------
         if(tweet.mutter.length() > 140){
             flash("danger", "140文字以内で入力してください");
@@ -101,22 +99,16 @@ public class TweetsController extends Controller {
             return redirect(routes.TweetsController.page(0));
         }
         //正規表現チェックの終わり---------------
-
         //セッションのidからユーザーのidを照らし合わせ、マッチさせる
         User user = User.find.byId(Integer.parseInt(session("id")));
         tweet.setUser(user);
-
         System.out.println(tweet.mutter + " ツイート内容");
-
         //------------------------------- URL変換機能 ---------------------------
         String urlStr = tweet.convURLLink(tweet.mutter);
         System.out.println(urlStr + " uslStr");
-
         System.out.println(tweet.convURLLink(tweet.mutter) + "url変換後");
-//
         tweet.mutter = tweet.convURLLink(tweet.mutter);
         //-----------------------------------------------------------------
-
 //        pubInt += 1;
         tweet.save();
         return  redirect(routes.TweetsController.page(0));
@@ -137,7 +129,6 @@ public class TweetsController extends Controller {
     public Result page(Integer p) throws Exception{
 
         Form<Tweet> tweetForm = formFactory.form(Tweet.class);
-
         List<Tweet> tweetList = new ArrayList<Tweet>();
         tweetList = Tweet.find.all();
 
@@ -149,9 +140,7 @@ public class TweetsController extends Controller {
 
         //1画面に表示するツイートの数
         final Integer pre_num = 10;
-
         User user = User.find.byId(Integer.parseInt(session("id")));
-
         // ツイート中のユーザーと自分のツイートのみ表示させたい---------
         String sql = "SELECT id FROM tweet WHERE user_id IN( "
                 + "SELECT be_followed_id FROM follow WHERE follow_id="
@@ -159,7 +148,6 @@ public class TweetsController extends Controller {
                 + ") OR user_id = "
                 + user.id
                 + " ORDER BY created_date";
-
 //        try(){
 //
 //        }catch (NullPointerException e){
@@ -197,12 +185,8 @@ public class TweetsController extends Controller {
             new_tweetList = tables.subList(pre_num * p, tables.size());
         }
 
-
-
         System.out.println(new_tweetList.size() + " >> new_tweetList.sizeの出力");
-
 //       --------------------------------------------------------
-
 //        List<Tweet> tweetList = Tweet.find.all();
 //        Collections.reverse(tweetList);
 //        List<Tweet> new_tweetList = new ArrayList<>();
@@ -218,7 +202,6 @@ public class TweetsController extends Controller {
 //        }
 //
 //        System.out.println(new_tweetList.size() + " ニューリストのサイズを出力");
-
 //        return ok(page.render(tweetForm, p, new_tweetList));
 
         return ok(page.render(tweetForm, user, p, new_tweetList, tables.size()));
