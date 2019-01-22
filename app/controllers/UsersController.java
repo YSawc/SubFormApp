@@ -170,13 +170,15 @@ public class UsersController extends Controller {
 
         System.out.println(user_name + " user_name の出力（検索欄　あいまい検索）");
 
-        if(user_name.length() <= 1){
-            flash("danger", "2文字以上で検索して下さい");
-            return redirect(routes.UsersController.search());
+        if(user_name.length() == 0){
+            flash("danger", "ユーザーは見つかりませんでした");
+//            return redirect(routes.UsersController.search());
+            return ok(done_serch.render(null));
         }else if(user_name.matches("^[\\s_]*?$")){
             System.out.println("nullのテスト");
             flash("danger", "ユーザーは見つかりませんでした");
-            return redirect(routes.UsersController.search());
+//            return redirect(routes.UsersController.search());
+            return ok(done_serch.render(null));
         }
 
         String sql = "SELECT id FROM user WHERE name LIKE  '%"+ user_name + "%'";

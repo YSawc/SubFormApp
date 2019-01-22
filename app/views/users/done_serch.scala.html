@@ -8,16 +8,16 @@
 </head>
 
 @layout("ユーザー検索結果"){
-
-    @for(i <- tables){
-    <ul>
-        <a href="@routes.UsersController.show(i)"><font size="3">@User.find.byId(i).getName</font></a>
-        <span>@@@User.find.byId(i).getUserName</span>
-    </ul>
-    <br>
-    <!-- フォローユーザーの呟き一覧 -->
-    <!-- フォローユーザーの呟き一覧終了 -->
+    @if(tables != null){
+        @for(i <- tables){
+        <ul>
+            <a href="@routes.UsersController.show(i)"><font size="3">@User.find.byId(i).getName</font></a>
+            <span>@@@User.find.byId(i).getUserName</span>
+        </ul>
+        <br>
+        <!-- フォローユーザーの呟き一覧 -->
+        <!-- フォローユーザーの呟き一覧終了 -->
+        }
+        <br>
     }
-    <br>
-
 }

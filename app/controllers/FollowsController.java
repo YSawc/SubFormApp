@@ -167,6 +167,8 @@ public class FollowsController extends Controller {
         //ツイート内容は逆順にし、新しいもの順にする
         Collections.reverse(tables_2);
 
+
+        System.out.println(user.getName() + "ユーザー詳細画面　ユーザー名");
         return ok(show.render(user, tables, tables_2));
     }
 

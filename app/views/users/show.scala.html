@@ -8,7 +8,6 @@
 </head>
 
 @layout("ユーザー詳細"){
-    @for(tweet <- tweets){
     <!--navバー-->
     <nav class="navbar navbar-default navbar-fixed-top mt-5">
         <div class="container">
@@ -80,9 +79,9 @@
                         <li>
                             @if(!(session.get("userID").equals(user.userID))){
                                 @if(user.get_whitch_follow_or(user.id, Integer.parseInt(session.get("id")))){
-                                    <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローする</a>
+                                    <a href="@routes.FollowsController.follow(user.id)">フォローする</a>
                                 } else{@if(!(user.get_whitch_follow_or(user.id, Integer.parseInt(session.get("id"))))){
-                                    <a href="@routes.FollowsController.follow(tweet.getUser.id)">フォローを外す</a>
+                                    <a href="@routes.FollowsController.follow(user.id)">フォローを外す</a>
                                 }}
                             }
                         </li>
@@ -90,7 +89,7 @@
                             <a>ツイート<br> <strong class="text-primary"><font size="3">@user.getTweets.size()</font></strong></a>
                         </li>
                         <li>
-                            <a href="@routes.FollowsController.show(tweet.getUser.id)">フォロー<br>
+                            <a href="@routes.FollowsController.show(user.id)">フォロー<br>
                                 <strong class="text-primary">
                                     <font size="3">
                                         @user.get_this_Followed_list(user.id).size()
@@ -99,7 +98,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="@routes.FollowsController.show_ver2(tweet.getUser.id)">フォロワー<br> <strong class="text-primary"><font size="3">@user.get_this_beFollowed_list(user.id).size()</font></strong></a>
+                            <a href="@routes.FollowsController.show_ver2(user.id)">フォロワー<br> <strong class="text-primary"><font size="3">@user.get_this_beFollowed_list(user.id).size()</font></strong></a>
                         </li>
                     </ul>
                 </div><!--/.nav-collapse -->
@@ -111,35 +110,34 @@
     </nav>
     <!--navバー終了-->
 
-    @if(! (user.private_or) ){
-
-    <div class="panel panel-info">
-        <p>
-            <!--セッションの場合に分けてリンク先を変える-->
-            <a href="@routes.UsersController.show(tweet.getUser.id)">
-                <strong>@tweet.getUser.getUserName</strong>
-            </a>
-        </p>
-        <p href="@routes.UsersController.show(tweet.id)" class="col">
-            <!-- @tweet.mutter -->
-        </p>
-        @Html(
-            tweet.mutter
-        )
-        <br><br>
-        <a class="text-muted">@tweet.formatDate(tweet.createdDate)</a>
-        　　　　　<!--空白注意-->
-        <!--セッション制御で、削除を表示-->
-        @if(session.get("userID").equals(tweet.getUser.userID)){
-            <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
-                <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
-            </a>
+    @for(tweet <- tweets){
+        @if(! (user.private_or) ){
+            <div class="panel panel-info">
+                <p>
+                    <!--セッションの場合に分けてリンク先を変える-->
+                    <a href="@routes.UsersController.show(tweet.getUser.id)">
+                        <strong>@tweet.getUser.getUserName</strong>
+                    </a>
+                </p>
+                <p href="@routes.UsersController.show(tweet.id)" class="col">
+                    <!-- @tweet.mutter -->
+                </p>
+                @Html(
+                    tweet.mutter
+                )
+                <br><br>
+                <a class="text-muted">@tweet.formatDate(tweet.createdDate)</a>
+                　　　　　<!--空白注意-->
+                <!--セッション制御で、削除を表示-->
+                @if(session.get("userID").equals(tweet.getUser.userID)){
+                    <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
+                        <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
+                    </a>
+                }
+            </div>
         }
-
-    </div>
     }
 
-    }
     @if(user.private_or){
         <br>
         <h5>このユーザーは非公開設定です</h5>
