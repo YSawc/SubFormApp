@@ -138,9 +138,12 @@
                             </p>
                             <p href="@routes.UsersController.show(Tweet.find.byId(i).id)" class="col">
                             </p>
-                            @Html(
-                                Tweet.find.byId(i).mutter
-                            )
+                            <p>
+                                @Html(
+                                    Tweet.find.byId(i).mutter
+                                )
+                            </p>
+
                             <br><br>
                             <a class="text-muted">@Tweet.find.byId(i).formatDate(Tweet.find.byId(i).createdDate)</a>
                             　　　　　<!--空白注意-->
