@@ -23,11 +23,11 @@
                     </a>
                     }
                 </li>
+                <!--ログインセッション次第で、出力を変える-->
+                @if(session.get("userID") != null){
                 <li>
                     <a href="@routes.TweetsController.page(0)">ホーム</a>
                 </li>
-                <!--ログインセッション次第で、出力を変える-->
-                @if(session.get("userID") != null){
                 <li>
                     <a href="@routes.UsersController.search()">ユーザー検索</a>
                 </li>
@@ -35,6 +35,9 @@
                     <a href="@routes.LoginController.logout()">ログアウト</a>
                 </li>
                 }else{@if(session.get("userID") == null){
+                <li>
+                    <a>ホーム</a>
+                </li>
                 <li>
                     <a href="@routes.UsersController.create()">ユーザー登録</a>
                 </li>
