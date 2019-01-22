@@ -1,4 +1,4 @@
-@(tables : List[Integer])
+@(userForm : Form[User],user_name : String, tables : List[Integer])
 
 
 <head>
@@ -8,6 +8,15 @@
 </head>
 
 @layout("ユーザー検索結果"){
+    <div class="container">
+        <p class="lead">@user_name の検索結果</p>
+        <p class="lead">ユーザー名や名前で検索</p>
+        @helper.form(action = routes.UsersController.do_search()){
+        @helper.inputText(userForm("name_search")
+        , 'rows-> 4, '_label-> "", 'class->"form-control", 'size->"40")
+        <input type="submit" value="送信" class="btn btn-primary">
+        }
+    </div>
     @if(tables != null){
         @for(i <- tables){
         <ul>

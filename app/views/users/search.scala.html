@@ -4,10 +4,10 @@
 
 @layout("ユーザー検索"){
 
-    <div class="jumbotron jumbotron-fluid">
+    <div class="">
         <div class="container">
-            <h1 class="display-4">ユーザー検索</h1>
-            <p class="lead">ユーザー名の一部でも検索が可能です</p>
+            <h3 class="display-4">友達を見つけてフォローしましょう</h3>
+            <p class="lead">ユーザー名や名前で検索</p>
             @helper.form(action = routes.UsersController.do_search()){
                 @helper.inputText(userForm("name_search")
                 , 'rows-> 4, '_label-> "", 'class->"form-control", 'size->"40")

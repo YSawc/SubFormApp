@@ -162,6 +162,7 @@ public class UsersController extends Controller {
 
     //ユーザー検索アクション
     public Result do_search(){
+        Form<User> userForm = formFactory.form(User.class);
 
         String user_name;
 
@@ -171,14 +172,14 @@ public class UsersController extends Controller {
         System.out.println(user_name + " user_name の出力（検索欄　あいまい検索）");
 
         if(user_name.length() == 0){
-            flash("danger", "ユーザーは見つかりませんでした");
+            flash("danger", "対象のユーザーは見つかりません");
 //            return redirect(routes.UsersController.search());
-            return ok(done_serch.render(null));
+            return ok(done_serch.render(userForm, user_name, null));
         }else if(user_name.matches("^[\\s_]*?$")){
             System.out.println("nullのテスト");
-            flash("danger", "ユーザーは見つかりませんでした");
+            flash("danger", "対象のユーザーは見つかりません");
 //            return redirect(routes.UsersController.search());
-            return ok(done_serch.render(null));
+            return ok(done_serch.render(userForm, user_name, null));
         }
 
         String sql = "SELECT id FROM user WHERE name LIKE  '%"+ user_name + "%'";
@@ -199,11 +200,12 @@ public class UsersController extends Controller {
                 System.out.println(i + " iの出力");
             }
 
-            return ok(done_serch.render(tables));
+            return ok(done_serch.render(userForm, user_name, tables));
         }
 
-        flash("danger", "ユーザーは見つかりませんでした");
-        return redirect(routes.UsersController.search());
+        flash("danger", "対象のユーザーは見つかりません");
+//        return redirect(routes.UsersController.search());
+        return ok(done_serch.render(userForm, user_name, null));
     }
 
     public Result switch_pub_or(){
