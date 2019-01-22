@@ -1,11 +1,102 @@
-@(tweetForm : Form[Tweet] ,p : Int, tables : List[Integer], tables_size : Int)
+@(tweetForm : Form[Tweet], user : User, p : Int, tables : List[Integer], tables_size : Int)
 
-@layout("ページ"){
+@layout("つぶやき一覧"){
+<!--navバー-->
+<nav class="navbar navbar-default navbar-fixed-top mt-5">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="@routes.TweetsController.page(0)">
+                <i class="fa fa-twitter" style="font-size:48px;color:LightSkyBlue"></i>
+            </a>
+            　<!--空白注意-->
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @if(session.get("userID") != null){
+                    <a href="@routes.UsersController.switch_pub_or()">
+                        @if(session.get("private_or") == "1"){
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        }
+                        @if(session.get("private_or") == "0"){
+                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        }
+                    </a>
+                    }
+                </li>
+                <li>
+                    <a href="@routes.TweetsController.page(0)">ホーム</a>
+                </li>
+                <!--ログインセッション次第で、出力を変える-->
+                @if(session.get("userID") != null){
+                <li>
+                    <a href="@routes.UsersController.search()">ユーザー検索</a>
+                </li>
+                <li>
+                    <a href="@routes.LoginController.logout()">ログアウト</a>
+                </li>
+                }else{@if(session.get("userID") == null){
+                <li>
+                    <a href="@routes.UsersController.create()">ユーザー登録</a>
+                </li>
+                <li>
+                    <a href="@routes.LoginController.login()">ログイン</a>
+                </li>
+                }}
+                <li>
+                <li class="active">
+                    @if(session.get("name") != null){
+                    <a href="@routes.UsersController.show(user.id)">@session.get("name")</a>
+                    }
+                </li>
+                <li>
+                    @if(session.get("userID") == null){
+
+                    }
+                </li>
+            </ul>
+
+        </div><!--/.nav-collapse -->
+    </div>
+
+    <!--2段目のnavbar-->
+    <div class="col-md-12">
+        <div class="navbar-header">
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <!--ログインセッション次第で、出力を変える-->
+                        <a>　　　</a>
+                    </li>
+                    <li class="bg-success">
+                        <a href="@routes.UsersController.show(user.id)">@user.getName</a>
+                    </li>
+                    <li>
+                        <a>ツイート<br> <strong class="text-primary"><font size="3">@user.getTweets.size()</font></strong></a>
+                    </li>
+                    <li>
+                        <a href="@routes.FollowsController.show(user.id)">フォロー<br> <strong class="text-primary"><font size="3">@user.get_this_Followed_list(user.id).size()</font></strong></a>
+                    </li>
+                    <li>
+                        <a href="@routes.FollowsController.show_ver2(user.id)">フォロワー<br> <strong class="text-primary"><font size="3">@user.get_this_beFollowed_list(user.id).size()</font></strong></a>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+            　<!--空白注意-->
+        </div>
+    </div>
+    <!--2段目navbar終了-->
+
+</nav>
+<!--navバー終了-->
+<br>
+
     @helper.form(action = routes.TweetsController.save()){
         @helper.textarea(tweetForm("mutter") , 'maxlength->"140", 'placeholder ->"今何してる？",
                             'rows-> 4, '_label-> "", 'class->"form-control", 'size->"30")
         <input type="submit" value="ツイートする" class="btn btn-primary">
     }
+
     <p>@(p + 1) ページ目</p>
 
     @for(i <- tables){

@@ -144,7 +144,7 @@ public class TweetsController extends Controller {
         if(tweetList.size() == 0){
             System.out.println("ぬるぽでリンクを飛ばす");
             List<Integer> new_tweetList = new ArrayList<>();
-            return ok(page.render(tweetForm, p, new_tweetList, 0));
+            return ok(page.render(tweetForm,null, p, new_tweetList, 0));
         }
 
         //1画面に表示するツイートの数
@@ -221,7 +221,7 @@ public class TweetsController extends Controller {
 
 //        return ok(page.render(tweetForm, p, new_tweetList));
 
-        return ok(page.render(tweetForm, p, new_tweetList, tables.size()));
+        return ok(page.render(tweetForm, user, p, new_tweetList, tables.size()));
     }
 
     //いいね機能
