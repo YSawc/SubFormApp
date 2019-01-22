@@ -1,0 +1,17 @@
+@(userForm : Form[User])
+
+@import helper._
+
+@layout("ユーザー編集"){
+    <h1>新規ユーザー編集</h1>
+    <!--@helper.form(action = routes.UsersController.update()){-->
+        <!--@helper.inputText(userForm("name"), '_label->"名前", 'size->"30")-->
+        <!--@helper.inputText(userForm("userID"), '_label->"ユーザー名", 'size->"30")-->
+        <!--@helper.inputText(userForm("password"), '_label->"過去のパスワード", 'size->"30", 'type->"password")-->
+        <!--@helper.inputText(userForm("new_password"), '_label->"新しいパスワード", 'size->"30")-->
+        <!--@helper.inputText(userForm("new_password_confirm"), '_label->"確認用パスワード", 'size->"30")-->
+        <!--@helper.inputText(userForm("email"), '_label->"Eメール", 'size->"30")-->
+        <!--@helper.checkbox(userForm("private_or"), '_label->"非公開" )-->
+        <!--<input type="submit" value="作成" class="btn btn-primary">-->
+    }
+}

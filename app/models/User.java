@@ -16,23 +16,23 @@ public class User extends Model{
 
     @Id
     public Integer id;
-    @Constraints.Required
+    @Constraints.Required(message = "名前を入力してください")
     @Constraints.Pattern(value = "^[a-zA-Z0-9]*$", message = "ローマ字と半角英数字を利用できます")
     @Constraints.MinLength(4)
     @Constraints.MaxLength(20)
     public String name;
-    @Constraints.Required
+    @Constraints.Required(message = "ユーザー名を入力してください")
     @Constraints.Pattern(value = "^[a-zA-Z0-9_-]*$", message = "ローマ字を利用してください。記号は(_,-)だけ利用できます")
     @Constraints.MinLength(4)
     @Constraints.MaxLength(20)
     @Column(unique = true)
     public String userID;
-    @Constraints.Required
+    @Constraints.Required(message = "パスワードを入力してください")
     @Constraints.Pattern(value = "^[a-zA-Z0-9]*$", message = "ローマ字と半角英数字を利用できます\"")
     @Constraints.MinLength(4)
     @Constraints.MaxLength(8)
     public String password;
-    @Constraints.Required
+    @Constraints.Required(message = "Eメールを入力してください")
     @Constraints.MaxLength(100)
     @Constraints.Email
     public String email;

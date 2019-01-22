@@ -1,15 +1,9 @@
-@(users: List[User])
+@(user: User)
 
 @layout("ログイン待機"){
-<h3>ツイッターに参加してください</h3>
-    <div class="row">
-        <div class="col-sm4">
-            @for(user <- users){
-                <!--クリック先のユーザーidのずれが1あるので修正する-->
-                <!--<a href="@routes.UsersController.show(user.id - 1)" class="col bg-info">@user.name @user.id</a>-->
-            }
-        </div>
-    </div>
+<h3>ツイッターに参加しました</h3>
+<p>@user.name さんはツイッターに参加されました。</p>
+<p>ログインをクリックしてログインしてください。</p>
 <br>
 <a class= "btn btn-primary" href="@routes.LoginController.login()">ログイン</a>
 }

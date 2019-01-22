@@ -14,8 +14,8 @@ public class AdminAuthenticator extends Security.Authenticator {
         return("admin".equals(userName)) ? userName: null;
     }
 
-    @Override
-    public Result onUnauthorized(Http.Context ctx){
-        return redirect(routes.UsersController.index());
-    }
+//    @Override
+//    public Result onUnauthorized(Http.Context ctx){
+//        return redirect(routes.UsersController.index());
+//    }
 }

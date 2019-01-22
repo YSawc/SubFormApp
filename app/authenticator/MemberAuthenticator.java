@@ -14,8 +14,8 @@ public class MemberAuthenticator extends Security.Authenticator {
         return ctx.session().get("userName");
     }
 
-    @Override
-    public Result onUnauthorized(Http.Context ctx){
-        return redirect(routes.UsersController.index());
-    }
+//    @Override
+//    public Result onUnauthorized(Http.Context ctx){
+//        return redirect(routes.UsersController.index());
+//    }
 }

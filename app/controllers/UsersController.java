@@ -11,6 +11,7 @@ import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import views.html.NotUse.users.edit;
 import views.html.users.*;
 import views.html.errors.*;
 
@@ -27,9 +28,9 @@ public class UsersController extends Controller {
 
     private Integer pubInt = 0;
 
-    public Result index(){
-        List<User> users = User.find.all();
-        return ok(index.render(users));
+    public Result index(Integer i){
+        User user = User.find.byId(i);
+        return ok(index.render(user));
     }
 
     public Result create(){
@@ -43,20 +44,25 @@ public class UsersController extends Controller {
 
         //フォームエラーチェック
         if(userForm.hasErrors()){
-//            System.out.println(userForm);
-            flash("danger", "正しい値を入力し直してください");
+            System.out.println(userForm + "ユーザーフォーム失敗時の出力");
+
+
+            //確認用パスワードの不一致
+            if(!(formFactory.form().bindFromRequest().get("password_confirm").equals
+                    (formFactory.form().bindFromRequest().get("password")))){
+                flash("danger", "確認用パスワードが一致しません");
+                return badRequest(create.render(userForm));
+            }else{
+                flash("danger", "正しい値を入力し直してください");
+
+            }
             return badRequest(create.render(userForm));
         }
 
         System.out.println(formFactory.form().bindFromRequest().get("password_confirm").equals(
                 (formFactory.form().bindFromRequest().get("password"))) + "同値かチェック");
 
-        //確認用パスワードの不一致
-        if(!(formFactory.form().bindFromRequest().get("password_confirm").equals
-                (formFactory.form().bindFromRequest().get("password")))){
-            flash("danger", "確認用パスワードが一致しません");
-            return badRequest(create.render(userForm));
-        }
+
 
         String sql = "SELECT user_id FROM user WHERE user_id= \'"
                 + userForm.get().userID + "\'";
@@ -72,7 +78,7 @@ public class UsersController extends Controller {
 
         user.save();
         flash("info", "ユーザーを作成しました");
-        return redirect(routes.UsersController.index());
+        return redirect(routes.UsersController.index(user.id));
     }
 
     //editは実装しない
@@ -111,7 +117,8 @@ public class UsersController extends Controller {
         oldUser.update();
 
         flash("ユーザー情報を更新しました");
-        return redirect(routes.UsersController.index());
+//        return redirect(routes.UsersController.index());
+        return TODO;
     }
 
     public Result show(Integer id) {
@@ -137,16 +144,16 @@ public class UsersController extends Controller {
         return ok(show.render(tweetList, user));
     }
 
-    public Result destroy(Integer id){
-
-        User user = User.find.byId(id);
-        if(user == null){
-            return notFound("ユーザーが見つかりません");
-        }
-
-        user.delete();
-        return redirect(routes.UsersController.index());
-    }
+//    public Result destroy(Integer id){
+//
+//        User user = User.find.byId(id);
+//        if(user == null){
+//            return notFound("ユーザーが見つかりません");
+//        }
+//
+//        user.delete();
+//        return redirect(routes.UsersController.index());
+//    }
 
     public Result search(){
         Form<User> userForm = formFactory.form(User.class);

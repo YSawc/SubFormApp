@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Constraint;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -25,6 +26,8 @@ public class Tweet extends Model {
 
     @CreatedTimestamp
     public Date createdDate;
+//    @Formats.DateTime(pattern = "yyyy年MM月dd日'T'HH時mm分")
+//    public Date createdDate;
 
     @ManyToOne
     public User user;
@@ -59,6 +62,11 @@ public class Tweet extends Model {
         Matcher matcher = convURLLinkPtn.matcher(str);
         System.out.println("マッチしました");
         return matcher.replaceAll("<a href=\"$0\">$0</a>");
+    }
+
+    public String formatDate(Date createdDate){
+        SimpleDateFormat format_date = new SimpleDateFormat("yyyy年MM月dd日 H時mm分");
+        return format_date.format(createdDate);
     }
 
 }
