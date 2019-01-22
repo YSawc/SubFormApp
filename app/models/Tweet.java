@@ -65,7 +65,7 @@ public class Tweet extends Model {
     }
 
     public String formatDate(Date createdDate){
-        SimpleDateFormat format_date = new SimpleDateFormat("yyyy年MM月dd日 H時mm分");
+        SimpleDateFormat format_date = new SimpleDateFormat("yyyy年MM月dd日 H時mm分ss秒");
         return format_date.format(createdDate);
     }
 

@@ -87,9 +87,7 @@ public class TweetsController extends Controller {
         }
 
         Tweet tweet = tweetForm.get();
-
-        System.out.println(tweet.formatDate(tweet.createdDate) + "createdDateフォーマット後の表示");
-
+//        System.out.println(tweet.formatDate(tweet.createdDate) + "createdDateフォーマット後の表示");
 
         //正規表現チェック----------------------
         if(tweet.mutter.length() > 140){
@@ -140,14 +138,20 @@ public class TweetsController extends Controller {
 
         Form<Tweet> tweetForm = formFactory.form(Tweet.class);
 
-        System.out.println("ぬるぽキャッチ");
+        List<Tweet> tweetList = new ArrayList<Tweet>();
+        tweetList = Tweet.find.all();
+
+        if(tweetList.size() == 0){
+            System.out.println("ぬるぽでリンクを飛ばす");
+            List<Integer> new_tweetList = new ArrayList<>();
+            return ok(page.render(tweetForm, p, new_tweetList, 0));
+        }
 
         //1画面に表示するツイートの数
         final Integer pre_num = 10;
 
         User user = User.find.byId(Integer.parseInt(session("id")));
 
-        System.out.println("ぬるぽキャッチ");
         // ツイート中のユーザーと自分のツイートのみ表示させたい---------
         String sql = "SELECT id FROM tweet WHERE user_id IN( "
                 + "SELECT be_followed_id FROM follow WHERE follow_id="
@@ -161,15 +165,10 @@ public class TweetsController extends Controller {
 //        }catch (NullPointerException e){
 //            System.out.println("ぬるぽキャッチ");
 //        }
-        System.out.println("ぬるぽキャッチ");
         SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
-        System.out.println("ぬるぽキャッチ");
         List<SqlRow> result = sqlQuery.findList();
-        System.out.println("ぬるぽキャッチ");
         List<Integer> tables = new ArrayList<Integer>();
-
         List<Integer> new_tweetList = new ArrayList<>();
-
         System.out.println(result + "  result_2の出力");
 
         if(result.size() > 0){

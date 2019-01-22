@@ -13,37 +13,37 @@
                 @if(! (Tweet.find.byId(i).getUser.private_or) ){
                     @if( (p == 0 ) && ( i == tables.head ) ) {
                         <div class="panel panel-danger">
-                        <p>
-                            <!--セッションの場合に分けてリンク先を変える-->
-                            <a href="@routes.UsersController.show(Tweet.find.byId(i).getUser.id)">
-                                <strong>@Tweet.find.byId(i).getUser.getName</strong>
+                            <p>
+                                <!--セッションの場合に分けてリンク先を変える-->
+                                <a href="@routes.UsersController.show(Tweet.find.byId(i).getUser.id)">
+                                    <strong>@Tweet.find.byId(i).getUser.getName</strong>
+                                </a>
+                                <span class="">@@</span>@Tweet.find.byId(i).getUser.getUserName
+                                • @Tweet.find.byId(i).formatDate(Tweet.find.byId(i).createdDate)
+                            </p>
+                            <p href="@routes.UsersController.show(Tweet.find.byId(i).id)" class="col">
+                            </p>
+                            @Html(
+                            Tweet.find.byId(i).mutter
+                            )
+                            <br><br>
+                            　　　　　<!--空白注意-->
+                            <a href="" class=""><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
+                            <!--いいね機能実装-->
+                            <a href="" class="">
+                                                <span class="glyphicon glyphicon-heart">
+                                                    <!--いいね機能未実装-->
+                                                    　　　　<!--空白注意-->
+                                                </span>
                             </a>
-                            <span class="">@@</span>@Tweet.find.byId(i).getUser.getUserName
-                            • @Tweet.find.byId(i).createdDate
-                        </p>
-                        <p href="@routes.UsersController.show(Tweet.find.byId(i).id)" class="col">
-                        </p>
-                        @Html(
-                        Tweet.find.byId(i).mutter
-                        )
-                        <br><br>
-                        　　　　　<!--空白注意-->
-                        <a href="" class=""><span class="glyphicon glyphicon-retweet">　　　　<!--空白注意--></span></a>
-                        <!--いいね機能実装-->
-                        <a href="" class="">
-                                            <span class="glyphicon glyphicon-heart">
-                                                <!--いいね機能未実装-->
-                                                　　　　<!--空白注意-->
-                                            </span>
-                        </a>
-                        <!--セッション制御で、削除を表示-->
-                        @if(session.get("userID").equals(Tweet.find.byId(i).getUser.userID)){
-                        <a href="@routes.TweetsController.destroy(i)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
-                            <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
-                        </a>
-                        }
-                    </div>
-                    }
+                            <!--セッション制御で、削除を表示-->
+                            @if(session.get("userID").equals(Tweet.find.byId(i).getUser.userID)){
+                            <a href="@routes.TweetsController.destroy(i)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
+                                <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
+                            </a>
+                            }
+                        </div>
+                    }else{
                 <div class="panel panel-info">
                     <p>
                         <!--セッションの場合に分けてリンク先を変える-->
@@ -51,7 +51,7 @@
                             <strong>@Tweet.find.byId(i).getUser.getName</strong>
                         </a>
                         <span class="">@@</span>@Tweet.find.byId(i).getUser.getUserName
-                        • @Tweet.find.byId(i).createdDate
+                        • @Tweet.find.byId(i).formatDate(Tweet.find.byId(i).createdDate)
                     </p>
                     <p href="@routes.UsersController.show(Tweet.find.byId(i).id)" class="col">
                     </p>
@@ -75,33 +75,35 @@
                         </a>
                     }
                 </div>
+                    }
             }
         }
     }
     <ul class="pagination pull-right">
-        @if(p == 0){
-            <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-        }else{
-            <li><a href="@routes.TweetsController.page(p - 1)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+        @if(! (tables.isEmpty()) ){
+            @if(p == 0){
+                <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+            }else{
+                <li><a href="@routes.TweetsController.page(p - 1)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+            }
+            <!-- ページには3パターン考えられる -->
+            <!-- ツイート数が10未満の時、10以上の時、ページ末端で例えば6個分のツイートだと表示させる数字を切り替える -->
+            <li>
+                @if(tables.size() < 10){
+                    @if(tables.size() != 0){
+                        <a href="#">[ @(p * 10 + 1) ~ @((p * 10) + tables.size()) ] of @(tables_size)</a>
+                    }else{
+                        <a href="#">0</a>
+                    }
+                }else{@if(tables.size() == 10){
+                    <a href="#">[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(tables_size)</a>
+                }}
+            </li>
+            @if(((p + 1) * 10) >= (tables_size)){
+                <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+            }else{
+                <li><a href="@routes.TweetsController.page(p + 1)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+            }
         }
-        <!-- ページには3パターン考えられる -->
-        <!-- ツイート数が10未満の時、10以上の時、ページ末端で例えば6個分のツイートだと表示させる数字を切り替える -->
-        <li>
-            @if(tables.size() < 10){
-                @if(tables.size() != 0){
-                    <a href="#">[ @(p * 10 + 1) ~ @((p * 10) + tables.size()) ] of @(tables_size)</a>
-                }else{
-                    <a href="#">0</a>
-                }
-            }else{@if(tables.size() == 10){
-                <a href="#">[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(tables_size)</a>
-            }}
-        </li>
-        @if(((p + 1) * 10) >= (tables_size)){
-            <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-        }else{
-            <li><a href="@routes.TweetsController.page(p + 1)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-        }
-
     </ul>
 }
