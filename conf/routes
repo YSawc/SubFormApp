@@ -14,7 +14,7 @@ GET     /message                    controllers.AsyncController.message
 
 
 # ユーザー用
-
+GET     /users                      controllers.UsersController.redirect()
 GET     /users                      controllers.UsersController.index(i: Integer)
 GET     /users/create               controllers.UsersController.create()
 GET     /users/switch               controllers.UsersController.switch_pub_or()

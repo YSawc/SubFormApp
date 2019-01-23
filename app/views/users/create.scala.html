@@ -3,6 +3,7 @@
 @import helper._
 
 @layout("ユーザー登録"){
+
     <h1>新規ユーザー登録</h1>
     @helper.form(action = routes.UsersController.save()){
         @helper.inputText(userForm("name"), '_label->"名前", 'size->"30")

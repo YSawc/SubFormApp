@@ -257,4 +257,11 @@ public class UsersController extends Controller {
         return redirect(routes.TweetsController.page(0));
     }
 
+    public Result redirect(){
+        if(session("id") == null){
+            return redirect(routes.LoginController.login());
+        }
+        return redirect(routes.TweetsController.page(0));
+    }
+
 }
