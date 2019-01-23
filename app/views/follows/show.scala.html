@@ -97,7 +97,7 @@
                         <a href="@routes.FollowsController.show(user.id, 0)">フォロー<br> <strong class="text-primary"><font size="3">@user.get_this_Followed_list(user.id).size()</font></strong></a>
                     </li>
                     <li>
-                        <a href="@routes.FollowsController.show_ver2(user.id)">フォロワー<br> <strong class="text-primary"><font size="3">@user.get_this_beFollowed_list(user.id).size()</font></strong></a>
+                        <a href="@routes.FollowsController.show_ver2(user.id, 0)">フォロワー<br> <strong class="text-primary"><font size="3">@user.get_this_beFollowed_list(user.id).size()</font></strong></a>
                     </li>
                 </ul>
             </div><!--/.nav-collapse -->
@@ -114,13 +114,13 @@
 
 <ul>
     @for(i <- tables){
-    <div class="panel panel-info">
+    <div class="panel panel-danger">
         <p>
             <!--セッションの場合に分けてリンク先を変える-->
             <a href="@routes.UsersController.show(User.find.byId(i).id)">
                 <strong>@User.find.byId(i).getUserName</strong>
             </a>
-            <span class="">　</span>@User.find.byId(i).getName
+        <span class="">　</span>@User.find.byId(i).getName
             <span>　</span>
             <a>
                 @if(!(session.get("userID").equals(User.find.byId(i).userID))){
@@ -155,34 +155,34 @@
 
     <ul class="pagination pull-right">
         @if(tables != null){
-        @if(p == 0){
-        <li class="disabled"><a><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-        }else{
-        <li><a href="@routes.FollowsController.show(user.id, p - 1)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-        }
-        <!-- ページには3パターン考えられる -->
-        <!-- ツイート数が10未満の時、10以上の時、ページ末端で例えば6個分のツイートだと表示させる数字を切り替える -->
-        <li>
-            @if(tables.size() < 10){
-            @if(tables.size() != 0){
-            <a>[ @(p * 10 + 1) ~ @((p * 10) + tables.size()) ] of @(tables_size)</a>
+            @if(p == 0){
+                <li class="disabled"><a><span class="glyphicon glyphicon-chevron-left"></span></a></li>
             }else{
-            <a>0</a>
+                <li><a href="@routes.FollowsController.show(user.id, p - 1)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
             }
-            }else{@if(tables.size() == 10){
-            <a>[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(tables_size)</a>
-            }}
-        </li>
-        @if(((p + 1) * 10) >= (tables_size)){
-        <li class="disabled"><a><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-        }else{
-        <li>
-            <a href="@routes.FollowsController.show(user.id, p + 1)">
+            <!-- ページには3パターン考えられる -->
+            <!-- ツイート数が10未満の時、10以上の時、ページ末端で例えば6個分のツイートだと表示させる数字を切り替える -->
+            <li>
+                @if(tables.size() < 10){
+                    @if(tables.size() != 0){
+                        <a>[ @(p * 10 + 1) ~ @((p * 10) + tables.size()) ] of @(tables_size)</a>
+                    }else{
+                        <a>0</a>
+                    }
+                }else{@if(tables.size() == 10){
+                    <a>[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(tables_size)</a>
+                }}
+            </li>
+            @if(((p + 1) * 10) >= (tables_size)){
+                <li class="disabled"><a><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+            }else{
+                <li>
+                    <a href="@routes.FollowsController.show(user.id, p + 1)">
                         <span class="glyphicon glyphicon-chevron-right">
                         </span>
-            </a>
-        </li>
-        }
+                    </a>
+                </li>
+            }
         }
     </ul>
 }

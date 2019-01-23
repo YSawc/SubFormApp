@@ -101,7 +101,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="@routes.FollowsController.show_ver2(user.id)">フォロワー<br> <strong class="text-primary"><font size="3">@user.get_this_beFollowed_list(user.id).size()</font></strong></a>
+                            <a href="@routes.FollowsController.show_ver2(user.id, 0)">フォロワー<br> <strong class="text-primary"><font size="3">@user.get_this_beFollowed_list(user.id).size()</font></strong></a>
                         </li>
                     </ul>
                 </div><!--/.nav-collapse -->

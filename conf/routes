@@ -50,4 +50,5 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET     /follows/:id                controllers.FollowsController.follow(id: Integer)
 GET     /follows/user/:id           controllers.FollowsController.show(id: Integer, p: Integer ?= 0)
 GET     /follows/user/:id/:p        controllers.FollowsController.show(id: Integer, p: Integer)
-GET     /follows/user2/:id          controllers.FollowsController.show_ver2(id: Integer)
+GET     /follows/user2/:id          controllers.FollowsController.show_ver2(id: Integer, p: Integer ?= 0)
+GET     /follows/user2/:id/:p       controllers.FollowsController.show_ver2(id: Integer, p: Integer)

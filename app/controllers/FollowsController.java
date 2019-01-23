@@ -151,7 +151,7 @@ public class FollowsController extends Controller {
         return ok(show.render(user, p, new_list, tables.size()));
     }
 
-    public Result show_ver2(Integer id){
+    public Result show_ver2(Integer id, Integer p){
 
         System.out.println(id + "  idの出力");
         User user = User.find.byId(id);
@@ -187,6 +187,24 @@ public class FollowsController extends Controller {
             System.out.println("フォローしてない");
         }
 
-        return ok(show2.render(user, tables));
+        //降順にする
+        Collections.reverse(tables);
+
+        final Integer pre_num = 10;
+        List<Integer> new_list = new ArrayList<>();
+        //        要素数が足りる場合と、足りない場合がある。
+        try {
+            new_list = tables.subList(pre_num * p, pre_num * p + 10);
+            //要素数が10未満の場合次のエラーになるのでキャッチ
+        }catch (IndexOutOfBoundsException e) {
+            System.out.println("例外のキャッチ");
+            new_list = tables.subList(pre_num * p, tables.size());
+        }
+
+        if(user.get_whitch_follow_or(user.id)){
+            System.out.println("フォローしてない");
+        }
+
+        return ok(show2.render(user, p, new_list, tables.size()));
     }
 }
