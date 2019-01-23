@@ -140,6 +140,7 @@
                 )
                 <br><br>
                 <a class="text-muted">@User.find.byId(i).getTweets.last.formatDate(User.find.byId(i).getTweets.last.createdDate)</a>
+                <a class="text-muted">　最新のつぶやき</a>
                 　　　　　<!--空白注意-->
                 <!--セッション制御で、削除を表示-->
                 @if(session.get("userID").equals(User.find.byId(i).userID)){

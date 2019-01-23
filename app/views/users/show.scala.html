@@ -131,6 +131,7 @@
                     )
                     <br><br>
                     <a class="text-muted">@tweet.formatDate(tweet.createdDate)</a>
+                    <a class="text-muted">　最新のつぶやき</a>
                     　　　　　<!--空白注意-->
                     <!--セッション制御で、削除を表示-->
                     @if(session.get("userID").equals(tweet.getUser.userID)){
