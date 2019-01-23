@@ -92,7 +92,7 @@
                             <a>ツイート<br> <strong class="text-primary"><font size="3">@user.getTweets.size()</font></strong></a>
                         </li>
                         <li>
-                            <a href="@routes.FollowsController.show(user.id)">フォロー<br>
+                            <a href="@routes.FollowsController.show(user.id, 0)">フォロー<br>
                                 <strong class="text-primary">
                                     <font size="3">
                                         @user.get_this_Followed_list(user.id).size()

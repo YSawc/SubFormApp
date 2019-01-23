@@ -13,6 +13,7 @@ import play.mvc.Result;
 import views.html.follows.follow;
 import views.html.follows.show;
 import views.html.follows.show2;
+import views.html.users.done_serch;
 
 import javax.inject.Singleton;
 import java.sql.ResultSet;
@@ -74,7 +75,7 @@ public class FollowsController extends Controller {
         return redirect(routes.UsersController.show(id));
     }
 
-    public Result show(Integer id){
+    public Result show(Integer id, Integer p){
 
         System.out.println(id + "  idの出力");
         User user = User.find.byId(id);
@@ -126,6 +127,20 @@ public class FollowsController extends Controller {
             }
         }
 
+        //降順にする
+        Collections.reverse(tables);
+
+        final Integer pre_num = 10;
+        List<Integer> new_list = new ArrayList<>();
+        //        要素数が足りる場合と、足りない場合がある。
+        try {
+            new_list = tables.subList(pre_num * p, pre_num * p + 10);
+            //要素数が10未満の場合次のエラーになるのでキャッチ
+        }catch (IndexOutOfBoundsException e) {
+            System.out.println("例外のキャッチ");
+            new_list = tables.subList(pre_num * p, tables.size());
+        }
+
         if(user.get_whitch_follow_or(user.id)){
             System.out.println("フォローしてない");
         }
@@ -133,7 +148,7 @@ public class FollowsController extends Controller {
         //ツイート内容は逆順にし、新しいもの順にする
         Collections.reverse(tables_2);
         System.out.println(user.getName() + "ユーザー詳細画面　ユーザー名");
-        return ok(show.render(user, tables, tables_2));
+        return ok(show.render(user, p, new_list, tables.size()));
     }
 
     public Result show_ver2(Integer id){

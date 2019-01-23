@@ -165,6 +165,7 @@ public class UsersController extends Controller {
         Form<User> userForm = formFactory.form(User.class);
         String user_name;
 
+        //セッション管理している検索結果のユーザーを、外部のビューから飛んできたときにセッション削除する
         if(out_or == 1){
             session("searched_name", "");
         }

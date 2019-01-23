@@ -1,4 +1,4 @@
-@(user : User, tables : List[Integer], tables_2 : List[Integer])
+@(user : User, p : Integer, tables : List[Integer], tables_size : Integer)
 
 
 <head>
@@ -94,7 +94,7 @@
                         <a>ツイート<br> <strong class="text-primary"><font size="3">@user.getTweets.size()</font></strong></a>
                     </li>
                     <li>
-                        <a href="@routes.FollowsController.show(user.id)">フォロー<br> <strong class="text-primary"><font size="3">@user.get_this_Followed_list(user.id).size()</font></strong></a>
+                        <a href="@routes.FollowsController.show(user.id, 0)">フォロー<br> <strong class="text-primary"><font size="3">@user.get_this_Followed_list(user.id).size()</font></strong></a>
                     </li>
                     <li>
                         <a href="@routes.FollowsController.show_ver2(user.id)">フォロワー<br> <strong class="text-primary"><font size="3">@user.get_this_beFollowed_list(user.id).size()</font></strong></a>
@@ -152,4 +152,37 @@
     </div>
         <!-- フォローユーザーの呟き一覧終了 -->
     }
+
+    <ul class="pagination pull-right">
+        @if(tables != null){
+        @if(p == 0){
+        <li class="disabled"><a><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+        }else{
+        <li><a href="@routes.FollowsController.show(user.id, p - 1)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+        }
+        <!-- ページには3パターン考えられる -->
+        <!-- ツイート数が10未満の時、10以上の時、ページ末端で例えば6個分のツイートだと表示させる数字を切り替える -->
+        <li>
+            @if(tables.size() < 10){
+            @if(tables.size() != 0){
+            <a>[ @(p * 10 + 1) ~ @((p * 10) + tables.size()) ] of @(tables_size)</a>
+            }else{
+            <a>0</a>
+            }
+            }else{@if(tables.size() == 10){
+            <a>[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(tables_size)</a>
+            }}
+        </li>
+        @if(((p + 1) * 10) >= (tables_size)){
+        <li class="disabled"><a><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+        }else{
+        <li>
+            <a href="@routes.FollowsController.show(user.id, p + 1)">
+                        <span class="glyphicon glyphicon-chevron-right">
+                        </span>
+            </a>
+        </li>
+        }
+        }
+    </ul>
 }
