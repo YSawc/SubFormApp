@@ -1,4 +1,4 @@
-@(tweets : List[Tweet], user : User )
+@(tweets : List[Tweet], p : Integer, user : User, tweets_size : Integer)
 
 
 <head>
@@ -115,14 +115,39 @@
 
     @for(tweet <- tweets){
         @if(! (user.private_or) ){
-            <div class="panel panel-info">
+            @if( (p == 0 ) && ( tweet == tweets.head ) ) {
+                <div class="panel panel-danger">
+                    <p>
+                        <!--セッションの場合に分けてリンク先を変える-->
+                        <a href="@routes.UsersController.show(tweet.getUser.id, 0)">
+                            <strong>@tweet.getUser.getUserName</strong>
+                        </a>
+                    </p>
+                    <p href="@routes.UsersController.show(tweet.id, 0)" class="col">
+                        <!-- @tweet.mutter -->
+                    </p>
+                    @Html(
+                    tweet.mutter
+                    )
+                    <br><br>
+                    <a class="text-muted">@tweet.formatDate(tweet.createdDate)</a>
+                    　　　　　<!--空白注意-->
+                    <!--セッション制御で、削除を表示-->
+                    @if(session.get("userID").equals(tweet.getUser.userID)){
+                    <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
+                        <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
+                    </a>
+                    }
+                </div>
+                }else{
+                <div class="panel panel-info">
                 <p>
                     <!--セッションの場合に分けてリンク先を変える-->
-                    <a href="@routes.UsersController.show(tweet.getUser.id)">
+                    <a href="@routes.UsersController.show(tweet.getUser.id, 0)">
                         <strong>@tweet.getUser.getUserName</strong>
                     </a>
                 </p>
-                <p href="@routes.UsersController.show(tweet.id)" class="col">
+                <p href="@routes.UsersController.show(tweet.id, 0)" class="col">
                     <!-- @tweet.mutter -->
                 </p>
                 @Html(
@@ -138,11 +163,42 @@
                     </a>
                 }
             </div>
+            }
         }
     }
+
+
 
     @if(user.private_or){
         <br>
         <h5>このユーザーは非公開設定です</h5>
+    }else{
+        <ul class="pagination pull-right">
+            @if(! (tweets.isEmpty()) ){
+                @if(p == 0){
+                    <li class="disabled"><a><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                }else{
+                    <li><a href="@routes.UsersController.show(user.id, p - 1)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                }
+                <!-- ページには3パターン考えられる -->
+                <!-- ツイート数が10未満の時、10以上の時、ページ末端で例えば6個分のツイートだと表示させる数字を切り替える -->
+                <li>
+                    @if(tweets.size() < 10){
+                        @if(tweets.size() != 0){
+                            <a>[ @(p * 10 + 1) ~ @((p * 10) + tweets.size()) ] of @(tweets_size)</a>
+                        }else{
+                            <a>0</a>
+                        }
+                    }else{@if(tweets.size() == 10){
+                        <a >[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(tweets_size)</a>
+                    }}
+                </li>
+                @if(((p + 1) * 10) >= (tweets_size)){
+                    <li class="disabled"><a><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                }else{
+                    <li><a href="@routes.UsersController.show(user.id, p + 1)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                }
+            }
+        </ul>
     }
 }

@@ -23,7 +23,7 @@
             <div class="panel panel-danger">
                 <p>
                     <!--セッションの場合に分けてリンク先を変える-->
-                    <a href="@routes.UsersController.show(User.find.byId(i).id)">
+                    <a href="@routes.UsersController.show(User.find.byId(i).id, 0)">
                         <strong>@User.find.byId(i).getUserName</strong>
                     </a>
                     <span class="">　</span>@User.find.byId(i).getName

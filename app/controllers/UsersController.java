@@ -124,7 +124,7 @@ public class UsersController extends Controller {
         return TODO;
     }
 
-    public Result show(Integer id) {
+    public Result show(Integer id, Integer p) {
 
         User user = User.find.byId(id);
         String user_name = user.getUserName();
@@ -140,7 +140,18 @@ public class UsersController extends Controller {
         Collections.reverse(tweetList);
 //        System.out.println(relationshipList + "　このユーザーをフォローするユーザーの総計");
 
-        return ok(show.render(tweetList, user));
+        final Integer pre_num = 10;
+        List<Tweet> new_list = new ArrayList<>();
+        //        要素数が足りる場合と、足りない場合がある。
+        try {
+            new_list = tweetList.subList(pre_num * p, pre_num * p + 10);
+            //要素数が10未満の場合次のエラーになるのでキャッチ
+        }catch (IndexOutOfBoundsException e) {
+            System.out.println("例外のキャッチ");
+            new_list = tweetList.subList(pre_num * p, tweetList.size());
+        }
+
+        return ok(show.render(new_list, p, user, tweetList.size()));
     }
 
 //    public Result destroy(Integer id){

@@ -11,14 +11,14 @@
                     <div class="panel panel-danger">
                         <p>
                             <!--セッションの場合に分けてリンク先を変える-->
-                            <a href="@routes.UsersController.show(tweet.getUser.id)">
+                            <a href="@routes.UsersController.show(tweet.getUser.id, 0)">
                                 <strong>@tweet.getUser.getName</strong>
                             </a>
                             <span class="">@@</span>@tweet.getUser.getUserName
                             • @tweet.createdDate
 
                         </p>
-                        <p href="@routes.UsersController.show(tweet.id)" class="col">
+                        <p href="@routes.UsersController.show(tweet.id, 0)" class="col">
                             <!-- @tweet.mutter -->
                         </p>
                         @Html(
@@ -45,14 +45,14 @@
                     <div class="panel panel-info">
                         <p>
                             <!--セッションの場合に分けてリンク先を変える-->
-                            <a href="@routes.UsersController.show(tweet.getUser.id)">
+                            <a href="@routes.UsersController.show(tweet.getUser.id, 0)">
                                 <strong>@tweet.getUser.getName</strong>
                             </a>
                             <span class="">@@</span>@tweet.getUser.getUserName
                             • @tweet.formatDate(tweet.createdDate)
 
                         </p>
-                        <p href="@routes.UsersController.show(tweet.id)" class="col">
+                        <p href="@routes.UsersController.show(tweet.id, 0)" class="col">
                             <!-- @tweet.mutter -->
                         </p>
                         @Html(

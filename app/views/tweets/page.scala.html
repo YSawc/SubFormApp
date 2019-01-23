@@ -48,7 +48,7 @@
                 <li>
                 <li class="active">
                     @if(session.get("userID") != null){
-                    <a href="@routes.UsersController.show(user.id)">@session.get("userID")</a>
+                    <a href="@routes.UsersController.show(user.id, 0)">@session.get("userID")</a>
                     }
                 </li>
                 <li>
@@ -71,7 +71,7 @@
                         <a>　　　</a>
                     </li>
                     <li class="bg-success">
-                        <a href="@routes.UsersController.show(user.id)">@user.getUserName</a>
+                        <a href="@routes.UsersController.show(user.id, 0)">@user.getUserName</a>
                     </li>
                     <li>
                         <a>ツイート<br> <strong class="text-primary"><font size="3">@user.getTweets.size()</font></strong></a>
@@ -103,16 +103,16 @@
 
     @for(i <- tables){
         @if(! (tables.isEmpty()) ){
-                @if(! (Tweet.find.byId(i).getUser.private_or) ){
-                    @if( (p == 0 ) && ( i == tables.head ) ) {
-                        <div class="panel panel-danger">
+            @if(! (Tweet.find.byId(i).getUser.private_or) ){
+                @if( (p == 0 ) && ( i == tables.head ) ) {
+                    <div class="panel panel-danger">
                             <p>
                                 <!--セッションの場合に分けてリンク先を変える-->
-                                <a href="@routes.UsersController.show(Tweet.find.byId(i).getUser.id)">
+                                <a href="@routes.UsersController.show(Tweet.find.byId(i).getUser.id, 0)">
                                     <strong>@Tweet.find.byId(i).getUser.getUserName</strong>
                                 </a>
                             </p>
-                            <p href="@routes.UsersController.show(Tweet.find.byId(i).id)" class="col">
+                            <p href="@routes.UsersController.show(Tweet.find.byId(i).id, 0)" class="col">
                             </p>
                             @Html(
                             Tweet.find.byId(i).mutter
@@ -128,15 +128,15 @@
                             </a>
                             }
                         </div>
-                    }else{
-                        <div class="panel panel-info">
+                }else{
+                    <div class="panel panel-info">
                             <p>
                                 <!--セッションの場合に分けてリンク先を変える-->
-                                <a href="@routes.UsersController.show(Tweet.find.byId(i).getUser.id)">
+                                <a href="@routes.UsersController.show(Tweet.find.byId(i).getUser.id, 0)">
                                     <strong>@Tweet.find.byId(i).getUser.getUserName</strong>
                                 </a>
                             </p>
-                            <p href="@routes.UsersController.show(Tweet.find.byId(i).id)" class="col">
+                            <p href="@routes.UsersController.show(Tweet.find.byId(i).id, 0)" class="col">
                             </p>
                             @Html(
                                 Tweet.find.byId(i).mutter
@@ -152,7 +152,7 @@
                                 </a>
                             }
                         </div>
-                    }
+                }
             }
         }
     }

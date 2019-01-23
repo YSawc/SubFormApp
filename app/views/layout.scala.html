@@ -83,7 +83,7 @@
                     <li>
                     <li class="active">
                         @if(session.get("userID") != null){
-                            <a href="@routes.UsersController.show(Integer.parseInt(session.get("id")))">@session.get("userID")</a>
+                            <a href="@routes.UsersController.show(Integer.parseInt(session.get("id")), 0)">@session.get("userID")</a>
                         }
                     </li>
                     <li>

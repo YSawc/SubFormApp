@@ -63,7 +63,7 @@ public class FollowsController extends Controller {
             delete_follow.delete();
             System.out.println("削除テスト");
 
-            return redirect(routes.UsersController.show(id));
+            return redirect(routes.UsersController.show(id, 0));
         }
 
         Follow new_follow = new Follow();
@@ -72,7 +72,7 @@ public class FollowsController extends Controller {
         new_follow.save();
 
 //        return redirect(routes.TweetsController.index());
-        return redirect(routes.UsersController.show(id));
+        return redirect(routes.UsersController.show(id, 0));
     }
 
     public Result show(Integer id, Integer p){
