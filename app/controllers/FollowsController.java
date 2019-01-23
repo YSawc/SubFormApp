@@ -6,6 +6,7 @@ import com.avaje.ebean.SqlRow;
 import models.Follow;
 import models.Tweet;
 import models.User;
+import org.joda.convert.ToString;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -80,6 +81,8 @@ public class FollowsController extends Controller {
         System.out.println(user + "userの出力");
         String sql = "SELECT be_followed_id FROM follow WHERE follow_id="
                 + (user.id);
+//                + "OR SELECT follow_id FROM follow WHERE be_followed_id="
+//                + (user.id);
         SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
         List<SqlRow> result = sqlQuery.findList();
         List<Integer> tables = new ArrayList<Integer>();
@@ -104,25 +107,10 @@ public class FollowsController extends Controller {
         }
 
         System.out.println(user.get_this_Followed_list(user.id) + "  モデル側設置のsql文のデバッグ確認");
-//        フォロー中のユーザーの呟きを一覧表示させるためのリスト取得を行う---------------
-//        SELECT id FROM tweet WHERE user_id IN + (1111, 2222) +  ORDER BY created_date
-//        SELECT id FROM tweet WHERE user_id IN  [1]  ORDER BY created_date
-//        SELECT id FROM tweet WHERE user_id IN (1) ORDER BY created_date
-//        int [] int_ary = new int[tables.size()];
-//        for(int i = 0 ; i < tables.size(); i++){
-//            int_ary[i] = tables.indexOf(i);
-//            System.out.println(tables.indexOf(i) + "index_if(i)の出力");
-//            System.out.println(int_ary[i] + " int_ary[i]の出力");
-//        }
-
-//        String sql_2 = "SELECT id FROM tweet WHERE user_id IN "
-//                + tables.toArray() +
-//                " ORDER BY created_date";
-        //複数sql文によるsql分の作成----------------
-            String sql_2 = "SELECT id FROM tweet WHERE user_id IN( "
-                    + "SELECT be_followed_id FROM follow WHERE follow_id="
-                    + (user.id)
-                    + ") ORDER BY created_date";
+        String sql_2 = "SELECT id FROM tweet WHERE user_id IN( "
+                + "SELECT be_followed_id FROM follow WHERE follow_id="
+                + (user.id)
+                + ") ORDER BY created_date";
         SqlQuery sqlQuery_2 = Ebean.createSqlQuery(sql_2);
         List<SqlRow> result_2 = sqlQuery_2.findList();
         List<Integer> tables_2 = new ArrayList<Integer>();
@@ -137,7 +125,6 @@ public class FollowsController extends Controller {
                 System.out.println(i + " table_2の出力");
             }
         }
-        //----------------------------------------------------------------------
 
         if(user.get_whitch_follow_or(user.id)){
             System.out.println("フォローしてない");
@@ -165,7 +152,6 @@ public class FollowsController extends Controller {
             result.forEach(sqlRow ->{
                 tables.add(Integer.parseInt(sqlRow.getString("follow_id")));
             });
-
             System.out.println(tables + "  tablesの出力");
             for(Integer table : tables){
                 System.out.println(table + "  tableの出力");

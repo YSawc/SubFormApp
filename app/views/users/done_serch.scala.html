@@ -9,15 +9,13 @@
 
 @layout("ユーザー検索結果"){
     <div class="container">
-        @if(user_name != null){
-            <p class="lead">@user_name の検索結果</p>
-        }
 
+        <p class="lead">@user_name の検索結果</p>
         <p class="lead">ユーザー名や名前で検索</p>
-        @helper.form(action = routes.UsersController.do_search(0)){
+        @helper.form(action = routes.UsersController.do_search(0, 1)){
         @helper.inputText(userForm("name_search")
-        , 'rows-> 4, '_label-> "", 'class->"form-control", 'size->"40")
-        <input type="submit" value="送信" class="btn btn-primary">
+            , 'rows-> 4, '_label-> "", 'class->"form-control", 'size->"40")
+        <input type="submit" value="検索" class="btn btn-primary">
         }
     </div>
     @if(tables != null){
@@ -70,7 +68,7 @@
             @if(p == 0){
                 <li class="disabled"><a><span class="glyphicon glyphicon-chevron-left"></span></a></li>
             }else{
-                <li><a href="@routes.UsersController.do_search(p - 1)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                <li><a href="@routes.UsersController.do_search(p - 1, 0)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
             }
             <!-- ページには3パターン考えられる -->
             <!-- ツイート数が10未満の時、10以上の時、ページ末端で例えば6個分のツイートだと表示させる数字を切り替える -->
@@ -89,7 +87,7 @@
                 <li class="disabled"><a><span class="glyphicon glyphicon-chevron-right"></span></a></li>
             }else{
                 <li>
-                    <a >
+                    <a href="@routes.UsersController.do_search(p + 1, 0)">
                         <span class="glyphicon glyphicon-chevron-right">
                         </span>
                     </a>

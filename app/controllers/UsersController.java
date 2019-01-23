@@ -156,27 +156,38 @@ public class UsersController extends Controller {
 
     public Result search(){
         Form<User> userForm = formFactory.form(User.class);
+        session("searched_name", "");
         return ok(search.render(userForm));
     }
 
     //ユーザー検索アクション
-    public Result do_search(Integer p){
+    public Result do_search(Integer p,Integer out_or){
         Form<User> userForm = formFactory.form(User.class);
         String user_name;
-        user_name = formFactory.form().bindFromRequest().get("name_search");
-        //受け取った文字列から、sql分でユーザー検索（曖昧検索が要）
-        System.out.println(user_name + " user_name の出力（検索欄　あいまい検索）");
+
+        if(out_or == 1){
+            session("searched_name", "");
+        }
+
+        //2ページ目以降ならば、strに渡した値をフォームの値の代わりにする
+        if(! (session("searched_name").equals("")) ){
+            user_name = session("searched_name");
+            System.out.println(user_name + " セッションからの検索ユーザー名");
+            System.out.println(session("searched_name") + "セッションにハマってるユーザー名の出力");
+        }else{
+            user_name = formFactory.form().bindFromRequest().get("name_search");
+            session("searched_name", user_name);
+        }
 
         if(user_name.length() == 0){
             flash("danger", "対象のユーザーは見つかりません");
-//            return redirect(routes.UsersController.search());
             return ok(done_serch.render(userForm, 0, null, null, 0));
         }else if(user_name.matches("^[\\s_]*?$")){
             System.out.println("nullのテスト");
             flash("danger", "対象のユーザーは見つかりません");
-//            return redirect(routes.UsersController.search());
             return ok(done_serch.render(userForm, 0, user_name, null, 0));
         }
+
         System.out.println(user_name.length() + " user_name の出力（検索欄　あいまい検索）");
         String sql = "SELECT id FROM user WHERE name LIKE  '%"
                 + user_name
@@ -194,20 +205,16 @@ public class UsersController extends Controller {
                 tables.add(Integer.parseInt(sqlRow.getString("id")));
 //                userList.add(sqlRow.getString("name"));
             } );
-
             final Integer pre_num = 10;
             List<Integer> new_list = new ArrayList<>();
-
             //        要素数が足りる場合と、足りない場合がある。
             try {
                 new_list = tables.subList(pre_num * p, pre_num * p + 10);
-
                 //要素数が10未満の場合次のエラーになるのでキャッチ
             }catch (IndexOutOfBoundsException e) {
                 System.out.println("例外のキャッチ");
                 new_list = tables.subList(pre_num * p, tables.size());
             }
-
             return ok(done_serch.render(userForm, p, user_name, new_list, tables.size()));
         }
 

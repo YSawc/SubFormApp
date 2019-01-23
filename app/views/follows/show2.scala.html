@@ -111,16 +111,46 @@
     <!--navバー終了-->
     <br>
 
-    <h5>フォロワーー覧</h5>
+    <h5>フォロワー一覧</h5>
 
     <ul>
-        @for(i <- tables){
-        <ul>
-            <a href="@routes.UsersController.show(i)"><font size="3">@User.find.byId(i).getName</font></a>
-            <span>@@@User.find.byId(i).getUserName</span>
-        </ul>
-        <br>
-        }
-        <br>
-    </ul>
+    @for(i <- tables){
+        <div class="panel panel-info">
+            <p>
+                <!--セッションの場合に分けてリンク先を変える-->
+                <a href="@routes.UsersController.show(User.find.byId(i).id)">
+                    <strong>@User.find.byId(i).getUserName</strong>
+                </a>
+                <span class="">　</span>@User.find.byId(i).getName
+                <span>　</span>
+                <a>
+                    @if(!(session.get("userID").equals(User.find.byId(i).userID))){
+                        @if(User.find.byId(i).get_whitch_follow_or(i, Integer.parseInt(session.get("id")))){
+                            <a href="@routes.FollowsController.follow(User.find.byId(i).id)">フォローする</a>
+                        }
+                        @if(!(User.find.byId(i).get_whitch_follow_or(i, Integer.parseInt(session.get("id"))))){
+                            <a href="@routes.FollowsController.follow(User.find.byId(i).id)">フォローを外す</a>
+                        }
+                    }
+                </a>
+            </p>
+            @if(! (User.find.byId(i).getTweets.isEmpty) ){
+                @Html(
+                    User.find.byId(i).getTweets.last.mutter
+                )
+                <br><br>
+                <a class="text-muted">@User.find.byId(i).getTweets.last.formatDate(User.find.byId(i).getTweets.last.createdDate)</a>
+                　　　　　<!--空白注意-->
+                <!--セッション制御で、削除を表示-->
+                @if(session.get("userID").equals(User.find.byId(i).userID)){
+                    <a href="@routes.TweetsController.destroy(User.find.byId(i).getTweets.last.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
+                        <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
+                    </a>
+                }
+            }else{
+                <p class="text-danger">※このユーザーはツイートしていません</p>
+            }
+        </div>
+        <!-- フォローユーザーの呟き一覧終了 -->
+    }
 }

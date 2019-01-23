@@ -56,4 +56,19 @@ public class Follow extends Model {
     public void setBeFollowed_id(Integer beFollowed_id) {
         this.beFollowed_id = beFollowed_id;
     }
+
+    public boolean follow_this_user_or(Integer user1_id, Integer user2_id){
+        String sql = "SELECT be_followed_id="
+                + (user1_id)
+                + " FROM follow WHERE follow_id="
+                + (user2_id);
+        SqlQuery sqlQuery = Ebean.createSqlQuery(sql);
+        List<SqlRow> result = sqlQuery.findList();
+        System.out.println(result.size() + "result.size()の出力");
+        if (result.isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

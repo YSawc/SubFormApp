@@ -19,8 +19,9 @@ GET     /users                      controllers.UsersController.index(i: Integer
 GET     /users/create               controllers.UsersController.create()
 GET     /users/switch               controllers.UsersController.switch_pub_or()
 GET     /users/search               controllers.UsersController.search()
-POST    /users/search               controllers.UsersController.do_search(p: Integer ?= 0)
-GET     /users/search/:p            controllers.UsersController.do_search(p: Integer)
+GET     /users/search/:p            controllers.UsersController.do_search(p: Integer, out_or: Integer ?= 1)
+POST    /users/search/              controllers.UsersController.do_search(p: Integer ?= 0, out_or: Integer)
+
 GET     /users/:id                  controllers.UsersController.show(id: Integer)
 GET     /users/edit/:id             controllers.UsersController.edit(id: Integer)
 POST    /users/edit/                controllers.UsersController.update()
@@ -31,8 +32,8 @@ POST    /users/create               controllers.UsersController.save()
 
 #ツイート用
 #GET     /tweets/                    controllers.TweetsController.index()
-GET     /tweets/               controllers.TweetsController.page(p: Integer ?= 0)
-GET     /tweets/:p             controllers.TweetsController.page(p: Integer)
+GET     /tweets/                    controllers.TweetsController.page(p: Integer ?= 0)
+GET     /tweets/:p                  controllers.TweetsController.page(p: Integer)
 #GET     /tweets/create              controllers.TweetsController.create()
 GET     /tweets/:id                 controllers.TweetsController.show(id: Integer)
 POST    /tweets/create              controllers.TweetsController.save()

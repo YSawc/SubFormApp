@@ -8,10 +8,10 @@
         <div class="container">
             <h3 class="display-4">友達を見つけてフォローしましょう</h3>
             <p class="lead">ユーザー名や名前で検索</p>
-            @helper.form(action = routes.UsersController.do_search(0)){
+            @helper.form(action = routes.UsersController.do_search(0, 1)){
                 @helper.inputText(userForm("name_search")
                 , 'rows-> 4, '_label-> "", 'class->"form-control", 'size->"40")
-                <input type="submit" value="送信" class="btn btn-primary">
+                <input type="submit" value="検索" class="btn btn-primary">
             }
         </div>
     </div>
