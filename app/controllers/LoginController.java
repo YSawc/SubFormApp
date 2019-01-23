@@ -27,6 +27,9 @@ public class LoginController extends Controller {
     private Authenticator auth;
 
     public Result login(){
+        if(session("id") != null){
+            return  redirect(routes.TweetsController.page(0));
+        }
         Form<User> userForm = formFactory.form(User.class);
         return ok(login.render(userForm));
     }

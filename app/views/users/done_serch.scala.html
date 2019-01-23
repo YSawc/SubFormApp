@@ -1,4 +1,4 @@
-@(userForm : Form[User],user_name : String, tables : List[Integer])
+@(userForm : Form[User], p : Int, user_name : String, tables : List[Integer], tables_size : Int)
 
 
 <head>
@@ -9,9 +9,12 @@
 
 @layout("ユーザー検索結果"){
     <div class="container">
-        <p class="lead">@user_name の検索結果</p>
+        @if(user_name != null){
+            <p class="lead">@user_name の検索結果</p>
+        }
+
         <p class="lead">ユーザー名や名前で検索</p>
-        @helper.form(action = routes.UsersController.do_search()){
+        @helper.form(action = routes.UsersController.do_search(0)){
         @helper.inputText(userForm("name_search")
         , 'rows-> 4, '_label-> "", 'class->"form-control", 'size->"40")
         <input type="submit" value="送信" class="btn btn-primary">
@@ -61,4 +64,37 @@
         }
         <br>
     }
+
+    <ul class="pagination pull-right">
+        @if(tables != null){
+            @if(p == 0){
+                <li class="disabled"><a><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+            }else{
+                <li><a href="@routes.UsersController.do_search(p - 1)"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+            }
+            <!-- ページには3パターン考えられる -->
+            <!-- ツイート数が10未満の時、10以上の時、ページ末端で例えば6個分のツイートだと表示させる数字を切り替える -->
+            <li>
+                @if(tables.size() < 10){
+                    @if(tables.size() != 0){
+                    <a>[ @(p * 10 + 1) ~ @((p * 10) + tables.size()) ] of @(tables_size)</a>
+                    }else{
+                        <a>0</a>
+                    }
+                }else{@if(tables.size() == 10){
+                    <a>[ @(p * 10 + 1) ~ @((p + 1)*10) ] of @(tables_size)</a>
+                }}
+            </li>
+            @if(((p + 1) * 10) >= (tables_size)){
+                <li class="disabled"><a><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+            }else{
+                <li>
+                    <a >
+                        <span class="glyphicon glyphicon-chevron-right">
+                        </span>
+                    </a>
+                </li>
+            }
+        }
+    </ul>
 }

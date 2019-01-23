@@ -29,6 +29,9 @@ public class UsersController extends Controller {
     private Integer pubInt = 0;
 
     public Result index(Integer i){
+        if(session("id") != null){
+            return  redirect(routes.TweetsController.page(0));
+        }
         User user = User.find.byId(i);
         return ok(index.render(user));
     }
@@ -157,7 +160,7 @@ public class UsersController extends Controller {
     }
 
     //ユーザー検索アクション
-    public Result do_search(){
+    public Result do_search(Integer p){
         Form<User> userForm = formFactory.form(User.class);
         String user_name;
         user_name = formFactory.form().bindFromRequest().get("name_search");
@@ -167,14 +170,14 @@ public class UsersController extends Controller {
         if(user_name.length() == 0){
             flash("danger", "対象のユーザーは見つかりません");
 //            return redirect(routes.UsersController.search());
-            return ok(done_serch.render(userForm, user_name, null));
+            return ok(done_serch.render(userForm, 0, null, null, 0));
         }else if(user_name.matches("^[\\s_]*?$")){
             System.out.println("nullのテスト");
             flash("danger", "対象のユーザーは見つかりません");
 //            return redirect(routes.UsersController.search());
-            return ok(done_serch.render(userForm, user_name, null));
+            return ok(done_serch.render(userForm, 0, user_name, null, 0));
         }
-
+        System.out.println(user_name.length() + " user_name の出力（検索欄　あいまい検索）");
         String sql = "SELECT id FROM user WHERE name LIKE  '%"
                 + user_name
                 + "%' OR user_id LIKE '%"
@@ -192,16 +195,25 @@ public class UsersController extends Controller {
 //                userList.add(sqlRow.getString("name"));
             } );
 
-            for (Integer i : tables) {
-                System.out.println(i + " iの出力");
+            final Integer pre_num = 10;
+            List<Integer> new_list = new ArrayList<>();
+
+            //        要素数が足りる場合と、足りない場合がある。
+            try {
+                new_list = tables.subList(pre_num * p, pre_num * p + 10);
+
+                //要素数が10未満の場合次のエラーになるのでキャッチ
+            }catch (IndexOutOfBoundsException e) {
+                System.out.println("例外のキャッチ");
+                new_list = tables.subList(pre_num * p, tables.size());
             }
 
-            return ok(done_serch.render(userForm, user_name, tables));
+            return ok(done_serch.render(userForm, p, user_name, new_list, tables.size()));
         }
 
         flash("danger", "対象のユーザーは見つかりません");
 //        return redirect(routes.UsersController.search());
-        return ok(done_serch.render(userForm, user_name, null));
+        return ok(done_serch.render(userForm, 0, user_name, null, 0));
     }
 
     public Result switch_pub_or(){

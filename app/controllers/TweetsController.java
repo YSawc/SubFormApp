@@ -126,7 +126,7 @@ public class TweetsController extends Controller {
         return redirect(routes.TweetsController.page(0));
     }
 
-    public Result page(Integer p) throws Exception{
+    public Result page(Integer p){
 
         Form<Tweet> tweetForm = formFactory.form(Tweet.class);
         List<Tweet> tweetList = new ArrayList<Tweet>();
