@@ -17,24 +17,24 @@ public class User extends Model{
     @Id
     public Integer id;
     @Constraints.Required(message = "名前を入力してください")
-    @Constraints.Pattern(value = "^[a-zA-Z0-9]*$", message = "名前はローマ字と半角英数字を利用できます")
+    @Constraints.Pattern(value = "^([^\\x01-\\x7E\\xA1-\\xDF]|[a-zA-Z0-9_-])*$", message = "名前は全角文字または a-zA-Z0-9_- で入力してください")
     @Constraints.MinLength(4)
     @Constraints.MaxLength(20)
     public String name;
     @Constraints.Required(message = "ユーザー名を入力してください")
-    @Constraints.Pattern(value = "^[a-zA-Z0-9_-]*$", message = "ユーザー名はローマ字を利用してください。記号は(_,-)だけ利用できます")
+    @Constraints.Pattern(value = "^[a-zA-Z0-9_-]*$", message = "ユーザー名は a-zA-Z0-9_- で入力してください")
     @Constraints.MinLength(4)
     @Constraints.MaxLength(20)
     @Column(unique = true)
     public String userID;
     @Constraints.Required(message = "パスワードを入力してください")
-    @Constraints.Pattern(value = "^[a-zA-Z0-9]*$", message = "パスワードはローマ字と半角英数字を利用できます")
+    @Constraints.Pattern(value = "^[a-zA-Z0-9]*$", message = "パスワードは a-zA-Z0-9 で入力してください")
     @Constraints.MinLength(4)
     @Constraints.MaxLength(8)
     public String password;
     @Constraints.Required(message = "メールアドレスを入力してください")
     @Constraints.MaxLength(100)
-    @Constraints.Email(message = "メールアドレスを入力してください")
+    @Constraints.Email(message = "メールアドレスはRFCに準拠した形式で入力してください")
     public String email;
     @Constraints.Required
     public boolean private_or;

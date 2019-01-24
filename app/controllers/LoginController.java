@@ -64,7 +64,7 @@ public class LoginController extends Controller {
 
         if(user == null){
             flash("danger", "ユーザー名、パスワードの組み合わせが違います");
-            return ok(login.render(str_array, userForm));
+            return badRequest(login.render(str_array, userForm));
         }
         setSession(user);
         flash("info", "ログインに成功しました");

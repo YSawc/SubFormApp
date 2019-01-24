@@ -38,17 +38,24 @@ public class UsersController extends Controller {
 
     public Result create(){
         Form<User> userForm = formFactory.form(User.class);
+        List<String> str_array = new ArrayList<String>();
         return ok(create.render(userForm));
     }
 
     public Result save(){
 
         Form<User> userForm = formFactory.form(User.class).bindFromRequest();
+        List<String> str_array = new ArrayList<String>();
+
+        if(formFactory.form().bindFromRequest().get("data[userID]").isEmpty()){
+            str_array.add("ユーザーIDを入力してください");
+        }else if(formFactory.form().bindFromRequest().get("data[userID]").length() < 4 || 20 < formFactory.form().bindFromRequest().get("data[userID]").length() ){
+            str_array.add("ユーザー名は4文字〜20文字で入力してください");
+        }
 
         //フォームエラーチェック
         if(userForm.hasErrors()){
             System.out.println(userForm + "ユーザーフォーム失敗時の出力");
-
 
             //確認用パスワードの不一致
             if(!(formFactory.form().bindFromRequest().get("password_confirm").equals
@@ -76,7 +83,7 @@ public class UsersController extends Controller {
             flash("danger", "ユーザーIDはすでに利用されています");
             return badRequest(create.render(userForm));
         }
-
+        String user_name = formFactory.form().bindFromRequest().get("data[name]");
         User user = userForm.get();
 
         user.save();
