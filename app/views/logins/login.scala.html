@@ -1,8 +1,17 @@
-@(userForm : Form[User])
+@(lists : List[String], userForm : Form[User])
 
 @import helper._
 
+
 @layout("ログイン画面"){
+
+@if(lists.size() != 0){
+@for(list <- lists){
+<p class="text-danger">
+    @list
+</p>
+}
+}
     <h1>ログインフォーム</h1>
     @helper.form(action = routes.LoginController.doLogin()){
         @helper.inputText(userForm("userID"), 'placeholder ->"ユーザー名", '_label->"ユーザー名", 'size->"30")

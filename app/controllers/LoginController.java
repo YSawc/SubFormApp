@@ -31,16 +31,40 @@ public class LoginController extends Controller {
             return  redirect(routes.TweetsController.page(0));
         }
         Form<User> userForm = formFactory.form(User.class);
-        return ok(login.render(userForm));
+        ArrayList<String> str_array = new ArrayList<String>();
+        return ok(login.render(str_array, userForm));
     }
 
     public Result doLogin(){
         LoginRequest req = formFactory.form(LoginRequest.class).bindFromRequest().get();
         User user = auth.login(req);
+        List<String> str_array = new ArrayList<String>();
+
+        if(formFactory.form().bindFromRequest().get("data[userID]").isEmpty()){
+            str_array.add("ユーザーIDを入力してください");
+        }else if(formFactory.form().bindFromRequest().get("data[userID]").length() < 4 || 20 < formFactory.form().bindFromRequest().get("data[userID]").length() ){
+            str_array.add("ユーザー名は4文字〜20文字で入力してください");
+        }
+
+        if(! (formFactory.form().bindFromRequest().get("data[userID]").matches("^[a-zA-Z0-9_-]*?$")) ){
+            str_array.add("ユーザー名は a-zA-Z0-9_- で入力してください");
+        }
+
+        if(formFactory.form().bindFromRequest().get("data[password]").isEmpty()){
+            str_array.add("パスワードを入力してください");
+        }else if(formFactory.form().bindFromRequest().get("data[password]").length() < 4 || 8 < formFactory.form().bindFromRequest().get("data[password]").length() ){
+            str_array.add("パズワードは4文字〜8文字で入力してください");
+        }
+
+        if(! (formFactory.form().bindFromRequest().get("data[password]").matches("^[a-zA-Z0-9]*?$")) ){
+            str_array.add("パスワードは a-zA-Z0-9 で入力してください");
+        }
+
+        Form<User> userForm = formFactory.form(User.class);
 
         if(user == null){
-            flash("danger", "ログインに失敗しました");
-            return redirect(routes.LoginController.login());
+            flash("danger", "ユーザー名、パスワードの組み合わせが違います");
+            return ok(login.render(str_array, userForm));
         }
         setSession(user);
         flash("info", "ログインに成功しました");
