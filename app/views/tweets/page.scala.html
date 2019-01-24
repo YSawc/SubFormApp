@@ -106,19 +106,18 @@
             @if(! (Tweet.find.byId(i).getUser.private_or) ){
                 @if( (p == 0 ) && ( i == tables.head ) ) {
                     <div class="panel panel-danger">
-                            <p>
+                            <span>
                                 <!--セッションの場合に分けてリンク先を変える-->
                                 <a href="@routes.UsersController.show(Tweet.find.byId(i).getUser.id, 0)">
                                     <strong>@Tweet.find.byId(i).getUser.getUserName</strong>
                                 </a>
-                            </p>
-                            <p href="@routes.UsersController.show(Tweet.find.byId(i).id, 0)" class="col">
-                            </p>
-                            @Html(
-                            Tweet.find.byId(i).mutter
-                            )
-                            <br><br>
+                            </span>
+                            <span style="white-space: pre;">
+@Html(Tweet.find.byId(i).mutter)
+                            </span>
+                            <br>
                             <a class="text-muted">@Tweet.find.byId(i).formatDate(Tweet.find.byId(i).createdDate)</a>
+                            <a class="text-muted">　最新のつぶやき</a>
                             　　　　　<!--空白注意-->
                             </a>
                             <!--セッション制御で、削除を表示-->
@@ -144,7 +143,6 @@
 
                             <br><br>
                             <a class="text-muted">@Tweet.find.byId(i).formatDate(Tweet.find.byId(i).createdDate)</a>
-                            <a class="text-muted">　最新のつぶやき</a>
                             　　　　　<!--空白注意-->
                             <!--セッション制御で、削除を表示-->
                             @if(session.get("userID").equals(Tweet.find.byId(i).getUser.userID)){

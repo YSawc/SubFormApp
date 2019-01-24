@@ -110,7 +110,6 @@ public class TweetsController extends Controller {
         System.out.println(tweet.convURLLink(tweet.mutter) + "url変換後");
         tweet.mutter = tweet.convURLLink(tweet.mutter);
         //-----------------------------------------------------------------
-//        pubInt += 1;
         tweet.save();
         return  redirect(routes.TweetsController.page(0));
     }

@@ -117,19 +117,16 @@
         @if(! (user.private_or) ){
             @if( (p == 0 ) && ( tweet == tweets.head ) ) {
                 <div class="panel panel-danger">
-                    <p>
+                    <span>
                         <!--セッションの場合に分けてリンク先を変える-->
                         <a href="@routes.UsersController.show(tweet.getUser.id, 0)">
                             <strong>@tweet.getUser.getUserName</strong>
                         </a>
-                    </p>
-                    <p href="@routes.UsersController.show(tweet.id, 0)" class="col">
-                        <!-- @tweet.mutter -->
-                    </p>
-                    @Html(
-                    tweet.mutter
-                    )
-                    <br><br>
+                    </span>
+                    <span style="white-space: pre;">
+@Html(tweet.mutter)
+                    </span>
+                    <br>
                     <a class="text-muted">@tweet.formatDate(tweet.createdDate)</a>
                     <a class="text-muted">　最新のつぶやき</a>
                     　　　　　<!--空白注意-->
@@ -142,19 +139,16 @@
                 </div>
                 }else{
                 <div class="panel panel-info">
-                <p>
+                <span>
                     <!--セッションの場合に分けてリンク先を変える-->
                     <a href="@routes.UsersController.show(tweet.getUser.id, 0)">
                         <strong>@tweet.getUser.getUserName</strong>
                     </a>
-                </p>
-                <p href="@routes.UsersController.show(tweet.id, 0)" class="col">
-                    <!-- @tweet.mutter -->
-                </p>
-                @Html(
-                    tweet.mutter
-                )
-                <br><br>
+                </span>
+                    <span style="white-space: pre;">
+@Html(tweet.mutter)
+                    </span>
+                <br>
                 <a class="text-muted">@tweet.formatDate(tweet.createdDate)</a>
                 　　　　　<!--空白注意-->
                 <!--セッション制御で、削除を表示-->

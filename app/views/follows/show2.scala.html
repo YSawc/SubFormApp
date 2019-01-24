@@ -116,7 +116,7 @@
     <ul>
     @for(i <- tables){
         <div class="panel panel-danger">
-            <p>
+            <span>
                 <!--セッションの場合に分けてリンク先を変える-->
                 <a href="@routes.UsersController.show(User.find.byId(i).id, 0)">
                     <strong>@User.find.byId(i).getUserName</strong>
@@ -133,12 +133,12 @@
                         }
                     }
                 </a>
-            </p>
+            </span>
             @if(! (User.find.byId(i).getTweets.isEmpty) ){
-                @Html(
-                    User.find.byId(i).getTweets.last.mutter
-                )
-                <br><br>
+                <span style="white-space: pre;">
+@Html(User.find.byId(i).getTweets.last.mutter)
+                </span>
+                <br>
                 <a class="text-muted">@User.find.byId(i).getTweets.last.formatDate(User.find.byId(i).getTweets.last.createdDate)</a>
                 <a class="text-muted">　最新のつぶやき</a>
                 　　　　　<!--空白注意-->
