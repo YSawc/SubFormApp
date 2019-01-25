@@ -137,28 +137,28 @@
                     </a>
                     }
                 </div>
-                }else{
-                <div class="panel panel-info">
-                <span>
-                    <!--セッションの場合に分けてリンク先を変える-->
-                    <a href="@routes.UsersController.show(tweet.getUser.id, 0)">
-                        <strong>@tweet.getUser.getUserName</strong>
-                    </a>
-                </span>
+                    }else{
+                    <div class="panel panel-info">
+                    <span>
+                        <!--セッションの場合に分けてリンク先を変える-->
+                        <a href="@routes.UsersController.show(tweet.getUser.id, 0)">
+                            <strong>@tweet.getUser.getUserName</strong>
+                        </a>
+                    </span>
                     <span style="white-space: pre;">
 @Html(tweet.mutter)
                     </span>
-                <br>
-                <a class="text-muted">@tweet.formatDate(tweet.createdDate)</a>
-                　　　　　<!--空白注意-->
-                <!--セッション制御で、削除を表示-->
-                @if(session.get("userID").equals(tweet.getUser.userID)){
-                    <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
-                        <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
-                    </a>
+                    <br>
+                    <a class="text-muted">@tweet.formatDate(tweet.createdDate)</a>
+                    　　　　　<!--空白注意-->
+                    <!--セッション制御で、削除を表示-->
+                    @if(session.get("userID").equals(tweet.getUser.userID)){
+                        <a href="@routes.TweetsController.destroy(tweet.id)" onclick="return(confirm('このツイートを本当に削除しますか？'))">
+                            <span class="glyphicon glyphicon-trash">　　　　<!--空白注意--></span>
+                        </a>
+                    }
+                    </div>
                 }
-            </div>
-            }
         }
     }
 

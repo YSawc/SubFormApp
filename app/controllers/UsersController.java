@@ -225,6 +225,7 @@ public class UsersController extends Controller {
 //                userList.add(sqlRow.getString("name"));
             } );
             final Integer pre_num = 10;
+            Collections.reverse(result);
             List<Integer> new_list = new ArrayList<>();
             //        要素数が足りる場合と、足りない場合がある。
             try {
