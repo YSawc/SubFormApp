@@ -129,18 +129,15 @@
                         </div>
                 }else{
                     <div class="panel panel-info">
-                            <p>
+                            <span>
                                 <!--セッションの場合に分けてリンク先を変える-->
                                 <a href="@routes.UsersController.show(Tweet.find.byId(i).getUser.id, 0)">
                                     <strong>@Tweet.find.byId(i).getUser.getUserName</strong>
                                 </a>
-                            </p>
-                            <p href="@routes.UsersController.show(Tweet.find.byId(i).id, 0)" class="col">
-                            </p>
-                            @Html(
-                                Tweet.find.byId(i).mutter
-                            )
-
+                            </span>
+                            <span style="white-space: pre;">
+@Html(Tweet.find.byId(i).mutter)
+                            </span>
                             <br><br>
                             <a class="text-muted">@Tweet.find.byId(i).formatDate(Tweet.find.byId(i).createdDate)</a>
                             　　　　　<!--空白注意-->
