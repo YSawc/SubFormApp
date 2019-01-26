@@ -40,7 +40,7 @@
                     </a>
                 </span>
                 @if(! (User.find.byId(i).getTweets.isEmpty) ){
-                    <span style="white-space: pre;">
+                    <span style="white-space: pre-wrap;">
 @Html(User.find.byId(i).getTweets.last.mutter)
                     </span>
                     <br>
